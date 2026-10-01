@@ -30,6 +30,9 @@ Usage:
 import argparse, json, sys, urllib.request, urllib.parse
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "db"))
+from readonly_guard import check_sql, SqlNotAllowed   # single read-only gate
+
 
 def substitute(sql, params):
     for k, v in (params or {}).items():
@@ -43,7 +46,10 @@ def strip_comments(sql):
 
 
 def ch_post(dsn, query, timeout=30):
-    # dsn like http://user:pass@host:8123 ; CH http takes the SQL as the body
+    # dsn like http://user:pass@host:8123 ; CH http takes the SQL as the body.
+    # EVERY statement sent to ClickHouse passes the read-only gate first — this
+    # is the single choke point for the CH HTTP path (probes, EXPLAIN, runs).
+    check_sql(query)
     data = query.encode("utf-8")
     req = urllib.request.Request(dsn, data=data, method="POST")
     with urllib.request.urlopen(req, timeout=timeout) as r:

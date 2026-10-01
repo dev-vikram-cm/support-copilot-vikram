@@ -7,9 +7,9 @@
     "note": "'hindsighting' is the repo's default branch (origin/HEAD), not 'main' — confirmed on clone 2026-08-07."
   },
   "etl": {
-    "repo": "<git-url-or-local-path>/etl-aeo-batch",
-    "branch": "<unconfirmed>",
+    "repo": "https://github.com/s5-stratos/etl-aeo-batch",
+    "branch": "hindsighting",
     "local": "",
-    "note": "ETL repo not yet cloned/confirmed — fill in when known"
+    "note": "URL/branch confirmed by user 2026-09-17 (SUP-4330). Not yet cloned in this hub — repo is private under the s5-stratos org; this session's tools (sandbox git, in-app browser) have no authenticated GitHub access, so I can't clone or browse it myself. Need either: user clones it to customers/AEO/ (matching aeo-configs' pattern) and updates 'local', or pastes specific file contents (e.g. the job building ly_p_dc_assort_pd_month) for SUP-4330 Mechanism B."
   }
 }

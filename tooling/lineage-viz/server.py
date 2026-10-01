@@ -57,6 +57,13 @@ def db_for(c: dict) -> str:
     return str(p)
 
 
+def graph_db_or_none(c: dict):
+    """ETL view DB, or None if not built yet — lets ETL-scope endpoints degrade
+    gracefully (empty) instead of 503, so Pivot/End-to-End still work."""
+    p = (ROOT / c["graph_db"]).resolve()
+    return str(p) if p.exists() else None
+
+
 @app.get("/api/customers")
 def customers():
     return [{"id": c["id"], "name": c["name"], "engines": c.get("engines", []),
@@ -66,13 +73,19 @@ def customers():
 
 @app.get("/api/customers/{cid}/batches")
 def batches(cid: str):
-    with gs.connect_ro(db_for(customer(cid))) as con:
+    db = graph_db_or_none(customer(cid))
+    if not db:                      # ETL view DB not built — degrade to empty
+        return []
+    with gs.connect_ro(db) as con:
         return gs.list_batches(con)
 
 
 @app.get("/api/customers/{cid}/tables")
 def tables(cid: str, batch: Optional[str] = None):
-    with gs.connect_ro(db_for(customer(cid))) as con:
+    db = graph_db_or_none(customer(cid))
+    if not db:                      # ETL view DB not built — degrade to empty
+        return []
+    with gs.connect_ro(db) as con:
         return gs.list_tables(con, batch)
 
 

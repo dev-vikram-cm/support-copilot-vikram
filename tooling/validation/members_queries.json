@@ -1,0 +1,67 @@
+{
+  "_readme": "Live scope/filter members per client. Each dimension (product/location/time/cluster) is a single PG table partitioned by `levelid`. Product levels are CONFIRMED (lowercase). Run `python3 members.py --client TRD --list-levels` to print every dimension's distinct levelids, then set the location/time/cluster `level` values below to match. Requires the read-only conn (connections.json) + VPN.",
+  "TRD": {
+    "env": "qa",
+    "dimensions": {
+      "product":  {"table": "trd_d_product",  "engine": "postgres"},
+      "location": {"table": "trd_d_location", "engine": "postgres"},
+      "time":     {"table": "trd_d_time",     "engine": "postgres"},
+      "cluster":  {"table": "trd_d_cluster",  "engine": "postgres"},
+      "prodlife": {"table": "trd_d_prodlife", "engine": "postgres"}
+    },
+    "kinds": {
+      "department": {"dim": "product", "level": "department"},
+      "class":      {"dim": "product", "level": "class"},
+      "subclass":   {"dim": "product", "level": "subclass"},
+      "style":      {"dim": "product", "level": "style"},
+      "stylecolor": {"dim": "product", "level": "stylecolor", "limit": 5000},
+      "store":      {"dim": "location", "level": "store"},
+      "channel":    {"dim": "location", "level": "channel"},
+      "selling_channel": {"dim": "location", "level": "selling_channel"},
+      "region":     {"dim": "location", "level": "region"},
+      "district":   {"dim": "location", "level": "district"},
+      "grade":      {"dim": "cluster",  "level": "grade"},
+      "week":       {"dim": "time",     "level": "week", "limit": 5000},
+      "floorset":   {"dim": "time",     "level": "floorset"},
+      "month":      {"dim": "time",     "level": "month"},
+      "quarter":    {"dim": "time",     "level": "quarter"},
+      "season":     {"dim": "time",     "level": "season"},
+      "year":       {"dim": "time",     "level": "year"},
+      "prodlife":   {"dim": "prodlife", "level": "merchcat"}
+    },
+    "time": {
+      "_readme": "Resolve any time selection to a concrete set of WEEK ids (the agg's `time` grain). All read-only PG. `time` is an opaque ordered String — we never parse the week id, we order by `indx` (confirmed: week indx is contiguous, format-agnostic across calendar `2025_W26` and fiscal `FY26_W48` tenants).",
+      "dim_table": "trd_d_time",
+      "week_level": "week",
+      "calendar_hier": "trd_h_timestd",
+      "calendar_ancestors": ["ancestor0", "ancestor1", "ancestor2", "ancestor3"],
+      "calendar_levels": {"month": "ancestor0", "quarter": "ancestor1", "season": "ancestor2", "year": "ancestor3"},
+      "floorset_attr_table": "trd_ma_dptflrsetattributes",
+      "floorset_key_col": "time",
+      "floorset_dept_col": "product",
+      "floorset_windows": {"sales": ["slsstart", "slsend"], "receipt": ["rcptstart", "rcptend"], "life": ["rcptstart", "exit_week"]},
+      "floorset_default_window": "sales"
+    },
+    "ch_hierarchy": {
+      "_readme": "ClickHouse-side hierarchy attribute tables — used to scope the agg query by a compact SUBQUERY (product IN (SELECT stylecolor FROM … WHERE department IN (…))) instead of inlining thousands of ids or a cross-DB expansion. All in CH, same DB as the agg.",
+      "product":  {"table": "trd_stylecolor_hier_attr", "leaf": "stylecolor", "version_col": "updated_at",
+                   "scopes": {"department": "department", "class": "class", "subclass": "subclass", "style": "style", "division": "division"}},
+      "location": {"table": "trd_store_hier_attr", "leaf": "store",
+                   "scopes": {"channel": "channel", "selling_channel": "selling_channel"}}
+    },
+    "expansions": {
+      "_readme": "Expand a scope member to the agg table's grain ids, via the PG ancestor closure tables. Column mapping confirmed live: prodstd id=stylecolorsize, a0=stylecolor..a4=department..a7=total_brand; locstd id=store, a0=district..a4=channel.",
+      "department": {"engine": "postgres", "table": "trd_h_prodstd",
+                     "scope_col": "ancestor4", "leaf_col": "ancestor0", "target": "product"},
+      "channel":    {"engine": "postgres", "table": "trd_h_locstd",
+                     "scope_col": "ancestor4", "leaf_col": "id", "target": "location"}
+    },
+    "static": {
+      "flow_status": [
+        {"id": "0", "name": "New"},
+        {"id": "1", "name": "Carryover"},
+        {"id": "2", "name": "Sell-down"}
+      ]
+    }
+  }
+}

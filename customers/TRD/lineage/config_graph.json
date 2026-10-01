@@ -1,17 +1,17 @@
 {
  "meta": {
-  "generated_at": "2026-07-04 00:10:20",
+  "generated_at": "2026-09-11 13:52:01",
   "repo": "trd-configs",
   "stats": {
-   "pivotdefn": 339,
-   "modeldefn": 288,
+   "pivotdefn": 338,
+   "modeldefn": 287,
    "id_filename_mismatch": 146,
    "viewdefn": 586,
    "confdefn": 10
   },
-  "node_count": 1654,
-  "edge_count": 5751,
-  "screens": 177
+  "node_count": 1647,
+  "edge_count": 5732,
+  "screens": 176
  },
  "nodes": [
   {
@@ -173,12 +173,6 @@
   {
    "id": "clickhouse.cc_validsizes_store",
    "name": "cc_validsizes_store",
-   "engine": "clickhouse",
-   "kind": "clickhouse"
-  },
-  {
-   "id": "clickhouse.clause",
-   "name": "clause",
    "engine": "clickhouse",
    "kind": "clickhouse"
   },
@@ -687,12 +681,6 @@
    "kind": "clickhouse"
   },
   {
-   "id": "clickhouse.stylecolor",
-   "name": "stylecolor",
-   "engine": "clickhouse",
-   "kind": "clickhouse"
-  },
-  {
    "id": "clickhouse.stylecolors",
    "name": "stylecolors",
    "engine": "clickhouse",
@@ -713,12 +701,6 @@
   {
    "id": "clickhouse.thier",
    "name": "thier",
-   "engine": "clickhouse",
-   "kind": "clickhouse"
-  },
-  {
-   "id": "clickhouse.time_std",
-   "name": "time_std",
    "engine": "clickhouse",
    "kind": "clickhouse"
   },
@@ -1557,12 +1539,6 @@
    "kind": "clickhouse"
   },
   {
-   "id": "clickhouse.ttl_boh_u",
-   "name": "ttl_boh_u",
-   "engine": "clickhouse",
-   "kind": "clickhouse"
-  },
-  {
    "id": "clickhouse.tx_temp_carryfwd",
    "name": "tx_temp_carryfwd",
    "engine": "clickhouse",
@@ -2387,12 +2363,6 @@
   {
    "id": "model.FinancialReconciliationGrid",
    "name": "FinancialReconciliationGrid",
-   "engine": "model",
-   "kind": "model"
-  },
-  {
-   "id": "model.FinancialReconciliationGridMDOwnWeekSum",
-   "name": "FinancialReconciliationGridMDOwnWeekSum",
    "engine": "model",
    "kind": "model"
   },
@@ -4845,12 +4815,6 @@
    "kind": "pivot"
   },
   {
-   "id": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "name": "ReconciliationNestedSTD_MDOwnWeekSum",
-   "engine": "pivot",
-   "kind": "pivot"
-  },
-  {
    "id": "pivot.ReconciliationNested_inProg",
    "name": "ReconciliationNested_inProg",
    "engine": "pivot",
@@ -5598,14 +5562,6 @@
    "engine": "screen",
    "kind": "screen",
    "title": "Financial Reconciliation",
-   "conf": "AssortmentUiConf.confdefn"
-  },
-  {
-   "id": "screen.Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialReconMDOwnWeekSum",
-   "name": "Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialReconMDOwnWeekSum",
-   "engine": "screen",
-   "kind": "screen",
-   "title": "Financial Reconciliation (MD Backup - Own Week Sum)",
    "conf": "AssortmentUiConf.confdefn"
   },
   {
@@ -6837,7 +6793,7 @@
    "name": "AllocLinePlanByFloorset",
    "engine": "view",
    "kind": "view",
-   "columns": 188
+   "columns": 189
   },
   {
    "id": "view.AllocLinePlanByFloorsetHoldbacks_ECOM_DC_View",
@@ -6865,7 +6821,7 @@
    "name": "AllocLinePlanByFloorsetHoldbacks_STORE_DC_View",
    "engine": "view",
    "kind": "view",
-   "columns": 83
+   "columns": 84
   },
   {
    "id": "view.AllocLinePlanByFloorsetHoldbacks_STORE_DC_View_LG",
@@ -6907,7 +6863,7 @@
    "name": "AllocOverriceDefaultRules_ByStylecolor_View",
    "engine": "view",
    "kind": "view",
-   "columns": 97
+   "columns": 99
   },
   {
    "id": "view.AllocOverriceDefaultRules_ByStylecolor_Worklist",
@@ -6977,7 +6933,7 @@
    "name": "AllocResults_Store_View",
    "engine": "view",
    "kind": "view",
-   "columns": 37
+   "columns": 38
   },
   {
    "id": "view.AllocResults_Store_View_LG",
@@ -7033,14 +6989,14 @@
    "name": "AllocResults_StyleColor_View",
    "engine": "view",
    "kind": "view",
-   "columns": 93
+   "columns": 94
   },
   {
    "id": "view.AllocResults_StyleColor_ViewApprove",
    "name": "AllocResults_StyleColor_ViewApprove",
    "engine": "view",
    "kind": "view",
-   "columns": 91
+   "columns": 92
   },
   {
    "id": "view.AllocResults_StyleColor_ViewApprove_LG",
@@ -7061,7 +7017,7 @@
    "name": "AllocResults_StyleColor_ViewArchive",
    "engine": "view",
    "kind": "view",
-   "columns": 91
+   "columns": 92
   },
   {
    "id": "view.AllocResults_StyleColor_ViewDiscrepancy",
@@ -7075,7 +7031,7 @@
    "name": "AllocResults_StyleColor_ViewRelease",
    "engine": "view",
    "kind": "view",
-   "columns": 93
+   "columns": 94
   },
   {
    "id": "view.AllocResults_StyleColor_ViewRelease_LG",
@@ -7250,14 +7206,14 @@
    "name": "AllocTransferVNA_View_Archives",
    "engine": "view",
    "kind": "view",
-   "columns": 70
+   "columns": 71
   },
   {
    "id": "view.AllocationAddToWorklist_View",
    "name": "AllocationAddToWorklist_View",
    "engine": "view",
    "kind": "view",
-   "columns": 100
+   "columns": 102
   },
   {
    "id": "view.AllocationAddToWorklist_Worklist",
@@ -7278,7 +7234,7 @@
    "name": "AllocationWorklistGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 49
+   "columns": 50
   },
   {
    "id": "view.AllocationWorklistSortBy",
@@ -7334,7 +7290,7 @@
    "name": "AssortmentAggregateViewsNestedAttributeConfigureSize",
    "engine": "view",
    "kind": "view",
-   "columns": 201
+   "columns": 204
   },
   {
    "id": "view.AssortmentAggregateViewsNestedAttributeGridSize",
@@ -7614,7 +7570,7 @@
    "name": "AssortmentAnalysisGridNestedViewConfigure",
    "engine": "view",
    "kind": "view",
-   "columns": 195
+   "columns": 198
   },
   {
    "id": "view.AssortmentAnalysisGridNestedViewGrid",
@@ -7670,14 +7626,14 @@
    "name": "AssortmentAnalysisNestedAttributeConfigure",
    "engine": "view",
    "kind": "view",
-   "columns": 198
+   "columns": 201
   },
   {
    "id": "view.AssortmentAnalysisNestedAttributeConfigure_IR",
    "name": "AssortmentAnalysisNestedAttributeConfigure_IR",
    "engine": "view",
    "kind": "view",
-   "columns": 198
+   "columns": 201
   },
   {
    "id": "view.AssortmentAnalysisNestedAttributeGrid",
@@ -7936,14 +7892,14 @@
    "name": "AssortmentBuildNestedOvertime",
    "engine": "view",
    "kind": "view",
-   "columns": 145
+   "columns": 147
   },
   {
    "id": "view.AssortmentBuildNestedOvertime_Month",
    "name": "AssortmentBuildNestedOvertime_Month",
    "engine": "view",
    "kind": "view",
-   "columns": 145
+   "columns": 147
   },
   {
    "id": "view.AssortmentBuildPricingGrid",
@@ -7957,7 +7913,7 @@
    "name": "AssortmentBuildRPSnapshotView",
    "engine": "view",
    "kind": "view",
-   "columns": 67
+   "columns": 69
   },
   {
    "id": "view.AssortmentBuildRPSnapshotWorklist",
@@ -8069,7 +8025,7 @@
    "name": "AssortmentBuildStyleColorTYLYGridGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 59
+   "columns": 60
   },
   {
    "id": "view.AssortmentBuildStyleColorTYLYGridList",
@@ -8167,7 +8123,7 @@
    "name": "AssortmentBuildStyleTYLYGridGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 35
+   "columns": 36
   },
   {
    "id": "view.AssortmentBuildStyleTYLYGridList",
@@ -8244,21 +8200,21 @@
    "name": "AssortmentBySupersetGrid_AllChoices",
    "engine": "view",
    "kind": "view",
-   "columns": 322
+   "columns": 323
   },
   {
    "id": "view.AssortmentBySupersetGrid_RecOnly_Detail",
    "name": "AssortmentBySupersetGrid_RecOnly_Detail",
    "engine": "view",
    "kind": "view",
-   "columns": 357
+   "columns": 358
   },
   {
    "id": "view.AssortmentBySupersetGrid_RecOnly_Quick",
    "name": "AssortmentBySupersetGrid_RecOnly_Quick",
    "engine": "view",
    "kind": "view",
-   "columns": 356
+   "columns": 357
   },
   {
    "id": "view.AssortmentBySupersetGrid_UDA",
@@ -8300,7 +8256,7 @@
    "name": "AssortmentCatRecapGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 60
+   "columns": 61
   },
   {
    "id": "view.AssortmentCompanionListSort",
@@ -8314,14 +8270,14 @@
    "name": "AssortmentGridNestedViewConfigureSKU",
    "engine": "view",
    "kind": "view",
-   "columns": 189
+   "columns": 192
   },
   {
    "id": "view.AssortmentGridNestedViewConfigureSize",
    "name": "AssortmentGridNestedViewConfigureSize",
    "engine": "view",
    "kind": "view",
-   "columns": 195
+   "columns": 198
   },
   {
    "id": "view.AssortmentGridNestedViewGridSKU",
@@ -8391,7 +8347,7 @@
    "name": "AssortmentLinePlanByFloorset_S5",
    "engine": "view",
    "kind": "view",
-   "columns": 456
+   "columns": 460
   },
   {
    "id": "view.AssortmentLinePlanByFloorset_S5_DeleteMe",
@@ -8412,14 +8368,14 @@
    "name": "AssortmentLinePlanByFloorset_S5_EB_POC",
    "engine": "view",
    "kind": "view",
-   "columns": 489
+   "columns": 493
   },
   {
    "id": "view.AssortmentLinePlanByFloorset_S5_EB_POC_Detail",
    "name": "AssortmentLinePlanByFloorset_S5_EB_POC_Detail",
    "engine": "view",
    "kind": "view",
-   "columns": 492
+   "columns": 496
   },
   {
    "id": "view.AssortmentLinePlanByFloorset_S5_EB_POC_oldgood",
@@ -8440,7 +8396,7 @@
    "name": "AssortmentLinePlanByFloorset_StyleColor",
    "engine": "view",
    "kind": "view",
-   "columns": 132
+   "columns": 133
   },
   {
    "id": "view.AssortmentLinePlanByFloorset_StyleColorMasterBreadcrumb_PSSR",
@@ -8552,7 +8508,7 @@
    "name": "AssortmentStyleCanvasViewGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 37
+   "columns": 38
   },
   {
    "id": "view.AssortmentStyleCanvasViewRollUp",
@@ -8573,28 +8529,28 @@
    "name": "AssortmentStyleColorCanvasViewGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 54
+   "columns": 55
   },
   {
    "id": "view.AssortmentStyleColorReviewGroupBy",
    "name": "AssortmentStyleColorReviewGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 60
+   "columns": 61
   },
   {
    "id": "view.AssortmentStyleColorVisualLinePlanDetails",
    "name": "AssortmentStyleColorVisualLinePlanDetails",
    "engine": "view",
    "kind": "view",
-   "columns": 10
+   "columns": 12
   },
   {
    "id": "view.AssortmentStyleColorVisualLinePlanGroupBy",
    "name": "AssortmentStyleColorVisualLinePlanGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 61
+   "columns": 63
   },
   {
    "id": "view.AssortmentStyleDetailsPane",
@@ -8734,14 +8690,14 @@
    "name": "AssortmentStyleReviewGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 36
+   "columns": 37
   },
   {
    "id": "view.AssortmentStyleVisualLinePlanDetails",
    "name": "AssortmentStyleVisualLinePlanDetails",
    "engine": "view",
    "kind": "view",
-   "columns": 10
+   "columns": 12
   },
   {
    "id": "view.AssortmentanalysisVsnWorklist",
@@ -8790,7 +8746,7 @@
    "name": "CloningStyleColorAttributes_Grid",
    "engine": "view",
    "kind": "view",
-   "columns": 134
+   "columns": 135
   },
   {
    "id": "view.CloningStyleColorAttributes_Worklist",
@@ -8947,13 +8903,6 @@
    "columns": 102
   },
   {
-   "id": "view.FinancialReconciliationGridMDOwnWeekSum",
-   "name": "FinancialReconciliationGridMDOwnWeekSum",
-   "engine": "view",
-   "kind": "view",
-   "columns": 102
-  },
-  {
    "id": "view.FinancialReconciliationList",
    "name": "FinancialReconciliationList",
    "engine": "view",
@@ -8986,14 +8935,14 @@
    "name": "HistoryAggregateViewsNestedAttributeConfigure",
    "engine": "view",
    "kind": "view",
-   "columns": 198
+   "columns": 201
   },
   {
    "id": "view.HistoryAggregateViewsNestedAttributeConfigureSize",
    "name": "HistoryAggregateViewsNestedAttributeConfigureSize",
    "engine": "view",
    "kind": "view",
-   "columns": 201
+   "columns": 204
   },
   {
    "id": "view.HistoryAggregateViewsNestedAttributeGrid",
@@ -9140,7 +9089,7 @@
    "name": "HistoryCatRecapGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 60
+   "columns": 61
   },
   {
    "id": "view.HistoryCatRecapProductMixGroupBy",
@@ -9231,28 +9180,28 @@
    "name": "HistoryHistoryGridNestedViewConfigure",
    "engine": "view",
    "kind": "view",
-   "columns": 195
+   "columns": 198
   },
   {
    "id": "view.HistoryHistoryGridNestedViewConfigureSKU",
    "name": "HistoryHistoryGridNestedViewConfigureSKU",
    "engine": "view",
    "kind": "view",
-   "columns": 207
+   "columns": 210
   },
   {
    "id": "view.HistoryHistoryGridNestedViewConfigureSize",
    "name": "HistoryHistoryGridNestedViewConfigureSize",
    "engine": "view",
    "kind": "view",
-   "columns": 195
+   "columns": 198
   },
   {
    "id": "view.HistoryHistoryGridNestedViewConfigure_StyleToColorView",
    "name": "HistoryHistoryGridNestedViewConfigure_StyleToColorView",
    "engine": "view",
    "kind": "view",
-   "columns": 195
+   "columns": 198
   },
   {
    "id": "view.HistoryHistoryGridNestedViewGrid",
@@ -9595,7 +9544,7 @@
    "name": "HistoryStyleColorReviewGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 60
+   "columns": 61
   },
   {
    "id": "view.HistoryStyleColorSummaryViewDetails",
@@ -9658,7 +9607,7 @@
    "name": "HistoryStyleColorTYLYGridGroupBy",
    "engine": "view",
    "kind": "view",
-   "columns": 59
+   "columns": 60
   },
   {
    "id": "view.HistoryStyleColorTYLYGridList",
@@ -9889,7 +9838,7 @@
    "name": "LinePlanFloorsetSnapshot",
    "engine": "view",
    "kind": "view",
-   "columns": 157
+   "columns": 160
   },
   {
    "id": "view.LinePlanFloorsetSnapshotTest",
@@ -10065,6 +10014,13 @@
    "engine": "view",
    "kind": "view",
    "columns": 63
+  },
+  {
+   "id": "view.TD_AssortmentStyleColorVisualLinePlanGroupBy",
+   "name": "TD_AssortmentStyleColorVisualLinePlanGroupBy",
+   "engine": "view",
+   "kind": "view",
+   "columns": 64
   },
   {
    "id": "view.TD_AssortmentStyleReviewGroupBy",
@@ -13837,26 +13793,6 @@
    "provenance": [
     {
      "script": "pivot/StyleColorAvailableSizes_OG_Bkp.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.clause",
-   "dst": "pivot.ReconciliationNestedSTD",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.clause",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
     }
    ]
   },
@@ -22501,26 +22437,6 @@
    ]
   },
   {
-   "src": "clickhouse.stylecolor",
-   "dst": "pivot.ReconciliationNestedSTD",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.stylecolor",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
-    }
-   ]
-  },
-  {
    "src": "clickhouse.stylecolors",
    "dst": "pivot.AssortmentFitFloorsetComparison",
    "type": "queried_by",
@@ -22682,16 +22598,6 @@
   },
   {
    "src": "clickhouse.the",
-   "dst": "pivot.ReconciliationNestedSTD",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.the",
    "dst": "pivot.RunAllocationPlanningx_09152025",
    "type": "queried_by",
    "provenance": [
@@ -22797,16 +22703,6 @@
    "provenance": [
     {
      "script": "pivot/TargetSettingActualsLY.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.time_std",
-   "dst": "pivot.ReconciliationNestedSTD",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD.pivotdefn"
     }
    ]
   },
@@ -26582,6 +26478,16 @@
   },
   {
    "src": "clickhouse.trd_d_product",
+   "dst": "pivot.AssortmentFit_VLP",
+   "type": "queried_by",
+   "provenance": [
+    {
+     "script": "pivot/AssortmentFit_VLP.pivotdefn"
+    }
+   ]
+  },
+  {
+   "src": "clickhouse.trd_d_product",
    "dst": "pivot.TD_VsnStatus",
    "type": "queried_by",
    "provenance": [
@@ -27882,16 +27788,6 @@
   },
   {
    "src": "clickhouse.trd_h_timestd",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_h_timestd",
    "dst": "pivot.ReconciliationNested_inProg",
    "type": "queried_by",
    "provenance": [
@@ -28992,16 +28888,6 @@
   },
   {
    "src": "clickhouse.trd_ly_p_dc_assort_pd_month",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_ly_p_dc_assort_pd_month",
    "dst": "pivot.TargetReviewFloorsetUDA_Companion",
    "type": "queried_by",
    "provenance": [
@@ -29027,16 +28913,6 @@
    "provenance": [
     {
      "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_ly_p_dc_assort_pd_month_tbl",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
     }
    ]
   },
@@ -32027,16 +31903,6 @@
    "provenance": [
     {
      "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_ma_stylecolorchannelattributes",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
     }
    ]
   },
@@ -35732,16 +35598,6 @@
   },
   {
    "src": "clickhouse.trd_p_dc_assort_pd_month",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_p_dc_assort_pd_month",
    "dst": "pivot.ReconciliationNested_inProg",
    "type": "queried_by",
    "provenance": [
@@ -38512,16 +38368,6 @@
   },
   {
    "src": "clickhouse.trd_p_mfp_class_dept_month_view_hier",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_p_mfp_class_dept_month_view_hier",
    "dst": "pivot.ReconciliationNested_inProg",
    "type": "queried_by",
    "provenance": [
@@ -40357,16 +40203,6 @@
    "provenance": [
     {
      "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_p_onorder_by_po",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
     }
    ]
   },
@@ -43642,16 +43478,6 @@
   },
   {
    "src": "clickhouse.trd_planmeta",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_planmeta",
    "dst": "pivot.ReconciliationNested_inProg",
    "type": "queried_by",
    "provenance": [
@@ -45197,6 +45023,16 @@
    "provenance": [
     {
      "script": "pivot/FlowSheetStyle_wLY.pivotdefn"
+    }
+   ]
+  },
+  {
+   "src": "clickhouse.trd_s_flowsheet",
+   "dst": "pivot.LinePlanFloorsetFull",
+   "type": "queried_by",
+   "provenance": [
+    {
+     "script": "pivot/LinePlanFloorsetFull.pivotdefn"
     }
    ]
   },
@@ -50242,6 +50078,26 @@
   },
   {
    "src": "clickhouse.trd_store_hier_attr",
+   "dst": "pivot.AllocStyleColorConstraints_Pivot",
+   "type": "queried_by",
+   "provenance": [
+    {
+     "script": "pivot/AllocStyleColorConstraints_Pivot.pivotdefn"
+    }
+   ]
+  },
+  {
+   "src": "clickhouse.trd_store_hier_attr",
+   "dst": "pivot.AllocStyleColorStoreConstraints",
+   "type": "queried_by",
+   "provenance": [
+    {
+     "script": "pivot/AllocStyleColorStoreConstraints.pivotdefn"
+    }
+   ]
+  },
+  {
+   "src": "clickhouse.trd_store_hier_attr",
    "dst": "pivot.AllocationFit",
    "type": "queried_by",
    "provenance": [
@@ -52067,16 +51923,6 @@
    "provenance": [
     {
      "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_store_hier_attr",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
     }
    ]
   },
@@ -54507,16 +54353,6 @@
    "provenance": [
     {
      "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_stylecolor_hier_attr",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
     }
    ]
   },
@@ -57592,16 +57428,6 @@
   },
   {
    "src": "clickhouse.trd_time_attributes_tbl",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_time_attributes_tbl",
    "dst": "pivot.ReconciliationNested_inProg",
    "type": "queried_by",
    "provenance": [
@@ -57672,16 +57498,6 @@
   },
   {
    "src": "clickhouse.trd_ytd_qtd_mtd_mapping",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.trd_ytd_qtd_mtd_mapping",
    "dst": "pivot.ReconciliationNested_inProg",
    "type": "queried_by",
    "provenance": [
@@ -57707,26 +57523,6 @@
    "provenance": [
     {
      "script": "pivot/TD_HistoryTrendSummaryChoiceProductivity.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.ttl_boh_u",
-   "dst": "pivot.ReconciliationNestedSTD",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD.pivotdefn"
-    }
-   ]
-  },
-  {
-   "src": "clickhouse.ttl_boh_u",
-   "dst": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "type": "queried_by",
-   "provenance": [
-    {
-     "script": "pivot/ReconciliationNestedSTD_MDOwnWeekSum.pivotdefn"
     }
    ]
   },
@@ -58287,6 +58083,26 @@
    "provenance": [
     {
      "script": "pivot/DeptClusters_Approval.pivotdefn"
+    }
+   ]
+  },
+  {
+   "src": "clickhouse.user_metadata",
+   "dst": "pivot.LinePlanFloorsetFull",
+   "type": "queried_by",
+   "provenance": [
+    {
+     "script": "pivot/LinePlanFloorsetFull.pivotdefn"
+    }
+   ]
+  },
+  {
+   "src": "clickhouse.user_metadata",
+   "dst": "pivot.LinePlanFloorsetSnapshot",
+   "type": "queried_by",
+   "provenance": [
+    {
+     "script": "pivot/LinePlanFloorsetSnapshot.pivotdefn"
     }
    ]
   },
@@ -62901,16 +62717,6 @@
    ]
   },
   {
-   "src": "pivot.ReconciliationNestedSTD_MDOwnWeekSum",
-   "dst": "model.FinancialReconciliationGridMDOwnWeekSum",
-   "type": "feeds",
-   "provenance": [
-    {
-     "script": "uidefn/model/FinancialReconciliationGridMDOwnWeekSum.modeldefn"
-    }
-   ]
-  },
-  {
    "src": "pivot.RunAllocationPlanning",
    "dst": "model.RunAllocationPlanning",
    "type": "feeds",
@@ -67031,16 +66837,6 @@
    ]
   },
   {
-   "src": "view.FinancialReconciliationConfigure",
-   "dst": "screen.Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialReconMDOwnWeekSum",
-   "type": "presents",
-   "provenance": [
-    {
-     "script": "uidefn/conf/AssortmentUiConf.confdefn"
-    }
-   ]
-  },
-  {
    "src": "view.FinancialReconciliationGrid",
    "dst": "screen.Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialRecon",
    "type": "presents",
@@ -67051,16 +66847,6 @@
    ]
   },
   {
-   "src": "view.FinancialReconciliationGridMDOwnWeekSum",
-   "dst": "screen.Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialReconMDOwnWeekSum",
-   "type": "presents",
-   "provenance": [
-    {
-     "script": "uidefn/conf/AssortmentUiConf.confdefn"
-    }
-   ]
-  },
-  {
    "src": "view.FinancialReconciliationList",
    "dst": "screen.Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialRecon",
    "type": "presents",
@@ -67071,28 +66857,8 @@
    ]
   },
   {
-   "src": "view.FinancialReconciliationList",
-   "dst": "screen.Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialReconMDOwnWeekSum",
-   "type": "presents",
-   "provenance": [
-    {
-     "script": "uidefn/conf/AssortmentUiConf.confdefn"
-    }
-   ]
-  },
-  {
    "src": "view.FinancialReconciliationMacro",
    "dst": "screen.Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialRecon",
-   "type": "presents",
-   "provenance": [
-    {
-     "script": "uidefn/conf/AssortmentUiConf.confdefn"
-    }
-   ]
-  },
-  {
-   "src": "view.FinancialReconciliationMacro",
-   "dst": "screen.Assortment/Assortment/AnalysisAndRecon/Reconciliation/FinancialReconMDOwnWeekSum",
    "type": "presents",
    "provenance": [
     {

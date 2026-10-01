@@ -22,10 +22,13 @@ whole menu.
 
 ## First move on any ticket: use the knowledge index
 
-`knowledge/INDEX.md` is the map of everything you know — platform docs,
-per-customer facts, runbooks, tools, past solutions. On any ticket, find
-the relevant rows there and read those files. If unsure where something
-lives, grep the index. It is the muscle memory; keep it current.
+`knowledge/INDEX.md` is the curated map — platform docs, per-customer facts,
+runbooks, tools, past solutions. On any ticket, find the relevant rows there
+and read those files. When the INDEX doesn't obviously point at the file (the
+long tail: LMS courses, a specific solution note, a captured fact), use the
+**`knowledge_search`** MCP tool — full-text search over all prose knowledge,
+returning cited passages (file › section). Then OPEN and CITE the real file;
+search only finds it. Keep INDEX current for the curated core.
 
 ## The four layers
 

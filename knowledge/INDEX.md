@@ -25,6 +25,7 @@ file gets a row here.**
 |---|---|
 | `knowledge/domain/glossary.md` | Any term/metric (choice count, APS, OTB, flow status, sell-through, TY/LY/LLY…) — business meaning + the **↔ tech** anchor. Grep this to fill the "functional" half of `knowledge_gained` |
 | `knowledge/domain/assortment-planning-primer.md` | Need the retail mental model: the 6 products, the L3 process phases, pre/in-season, planning vs forecasting. Place a ticket on the process map |
+| `knowledge/domain/lms/` (3 courses + README) | **Deep functional training** (S5 LMS, verbatim): Course 1 concepts/process · Course 2 retail foundations (channels, floorsets, attributes, flow status, pricing, sizes, POs) · Course 3 the S5 app module-by-module (Hindsighting/Clustering/Strategy/Build/Analysis/Recon/Exceptions/In-Season). Onboarding + explaining how a screen/concept works |
 
 ## Platform knowledge — how the product works
 
@@ -72,6 +73,7 @@ app-level short name before creating a new folder**, they can differ (EE).
 | `tooling/lineage-viz/` (web tool) | Human visual explorer — 3 scopes (ETL / Pivot / End-to-End), expand-pivot. `cd tooling/lineage-viz && python3 server.py`. NOT how the agent uses lineage (that's the MCP) |
 | db read-only MCP (`.mcp.json` → `tooling/db/mcp_server.py`) | Run SELECT/SHOW against a customer's QA Vertica/PG/CH over SSH. PG via that endpoint is admin-proxied — prefer Vertica; CH pending infra |
 | clickhouse-docs MCP (`.mcp.json` → `https://clickhouse.com/docs/mcp`) | Look up ClickHouse SQL/functions/engines/settings from official docs when composing or debugging CH queries. Docs-only (no DB). **Caveat:** docs reflect current CH; for 21.4-specific truth, confirm with `tooling/validation/ch_validate.py` version+capability probe |
+| knowledge MCP (`.mcp.json` → `tooling/knowledge/mcp_server.py`) | **`knowledge_search`** — full-text (FTS5) search across ALL prose knowledge (this INDEX is the curated map; search finds the long tail: LMS, notes, solution notes, captured facts, customer profiles). Cited to file › section. Build/refresh with `tooling/knowledge/index_build.py`. Use it when INDEX doesn't obviously point at the file |
 | `tooling/lineage/diff.py` | PR data-impact report (edge diff between two graphs) |
 | `tooling/metrics/rollup.py` + `server.py` | **ADMIN** — copilot utilization/quality/knowledge dashboard from `state.json` + notes + learning logs. `./run.sh` → :8771 |
 | `tooling/triage/` | **Deterministic triage engine** — the backbone that shrinks the LLM's trust surface. See `tooling/triage/README.md`. |

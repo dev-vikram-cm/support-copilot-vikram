@@ -53,6 +53,13 @@
   .hint{color:var(--muted);font-size:12px;margin-top:8px}
   .crit{background:var(--chip);border:1px solid var(--line);border-radius:6px;padding:6px 8px;margin:4px 0;font:12px ui-monospace,monospace;color:#b9c6e6;word-break:break-all}
   .pill{display:inline-block;padding:1px 7px;border-radius:6px;border:1px solid var(--line);color:var(--muted);font-size:11px;margin:2px 4px 2px 0}
+  #timebox{margin-bottom:6px}
+  #tmode{margin-bottom:8px;flex-wrap:wrap}
+  #tmode button{padding:5px 8px;font-size:11px}
+  .tpanel{display:flex;flex-direction:column;gap:6px}
+  #tnote{margin-top:6px;color:var(--muted);font-size:11.5px}
+  #repobar{padding:7px 14px;background:#332611;border-bottom:1px solid #5a4212;color:#ffd98a;font-size:12.5px}
+  #repobar code{background:#0d1322;color:#ffe9b0}
   #exec{border-top:1px solid var(--line);background:var(--panel);padding:10px 14px;max-height:40%;overflow:auto}
   #exec .exhead{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   #exec b{font-size:12px}
@@ -68,6 +75,10 @@
 <body>
 <header>
   <b>Data Validation Studio</b><span class="sub" id="clienttag"></span>
+  <label class="f">config source<select id="cfgsource" title="Repo = git base; QA = base + live OCI overlay"></select></label>
+  <button id="syncqa" title="Sync live QA config from OCI (git base + oci overlay)">⟳ Sync QA</button>
+  <span id="cfgstate" class="sub"></span>
+  <label class="f">app URL<input id="appurl" placeholder="paste an S5 screen URL → auto-selects" style="min-width:250px" title="Paste the browser URL (the #/… route) of an S5 screen to jump straight to it"/></label>
   <label class="f">module<select id="module"></select></label>
   <label class="f">screen<select id="screen"></select></label>
   <label class="f">view<select id="view" style="min-width:220px"></select></label>
@@ -75,11 +86,15 @@
   <label class="f">criteria
     <div class="seg" id="critseg"><button data-c="hist" class="on">HIST</button><button data-c="flow">FLOW</button></div>
   </label>
-  <label class="f">flowStatus<input id="flow" placeholder="(all)" style="width:80px"/></label>
-  <label class="f">topMembers<input id="top" placeholder="e.g. DP-48" style="width:110px"/></label>
+  <label class="f">metric labels
+    <div class="seg" id="lblseg"><button data-l="view" class="on">UI view</button><button data-l="raw">Raw cols</button></div>
+  </label>
+  <span class="sub">scope &amp; filters →</span>
   <button class="primary" id="go">Compose ▸</button>
+  <span id="roauth" class="sub" title="Database account used for all queries"></span>
   <span id="status"></span>
 </header>
+<div id="repobar" style="display:none"></div>
 <div id="main">
   <div id="left">
     <div id="verdict"><div class="vbar" id="vbar"></div></div>
@@ -92,7 +107,7 @@
       <div class="exhead">
         <b>Execute &amp; compare</b>
         <span id="chstate" class="hint"></span>
-        <input id="weeks" placeholder="weeks e.g. 202540,202541,202542" style="width:230px"/>
+        <input id="weeks" placeholder="weeks override (else uses Time picker)" style="width:230px" title="Optional: overrides the Time picker's resolved weeks"/>
         <input id="expected" placeholder='expected UI JSON e.g. {&quot;choice_count&quot;:125}' style="flex:1;min-width:180px"/>
         <button class="primary" id="run" disabled>Run &amp; compare ▸</button>
       </div>
@@ -100,6 +115,57 @@
     </div>
   </div>
   <div id="side">
+    <h3>Time <span id="tstate" class="hint" style="text-transform:none;letter-spacing:0"></span></h3>
+    <div id="timebox">
+      <div class="seg" id="tmode">
+        <button data-m="range" class="on">Range</button>
+        <button data-m="floorset">Floorset</button>
+        <button data-m="quarter">Quarter</button>
+        <button data-m="season">Season</button>
+        <button data-m="weeks">Weeks</button>
+      </div>
+      <div class="tpanel" data-m="range">
+        <label class="f">from week<select id="t_start"></select></label>
+        <label class="f">to week<select id="t_end"></select></label>
+      </div>
+      <div class="tpanel" data-m="floorset" style="display:none">
+        <label class="f">floorset<select id="t_floorset" multiple size="4"></select></label>
+        <label class="f">window<select id="t_window">
+          <option value="sales">sales (slsstart→slsend)</option>
+          <option value="receipt">receipt (rcptstart→rcptend)</option>
+          <option value="life">life (rcptstart→exit_week)</option></select></label>
+        <div class="hint">floorset is dept-specific — pick a Department below to disambiguate.</div>
+      </div>
+      <div class="tpanel" data-m="quarter" style="display:none">
+        <label class="f">quarter<select id="t_quarter" multiple size="4"></select></label>
+      </div>
+      <div class="tpanel" data-m="season" style="display:none">
+        <label class="f">season<select id="t_season" multiple size="4"></select></label>
+      </div>
+      <div class="tpanel" data-m="weeks" style="display:none">
+        <label class="f">weeks (comma)<input id="t_weeks" placeholder="2025_W26,2025_W27"/></label>
+      </div>
+      <div class="hint" id="tnote">resolves to the week set the query filters on</div>
+    </div>
+    <h3>Specific item <span class="hint" style="text-transform:none;letter-spacing:0">(validate one id — skips scope expansion)</span></h3>
+    <div id="itembox" style="display:flex;gap:6px;align-items:flex-end;margin-bottom:6px">
+      <label class="f" style="flex:1">id(s)<input id="f_item" placeholder="e.g. 12345.001 (comma for a few)"/></label>
+      <label class="f">column<select id="f_itemcol">
+        <option value="product">stylecolor</option>
+        <option value="location">store</option>
+        <option value="cluster">cluster</option>
+        <option value="prodlife">prodlife</option>
+      </select></label>
+    </div>
+    <h3>Scope &amp; filters <span id="fstate" class="hint" style="text-transform:none;letter-spacing:0"></span></h3>
+    <div id="filters">
+      <label class="f">Department <span class="hint" style="text-transform:none">(product scope)</span><select id="f_dept" multiple size="3"></select></label>
+      <label class="f">Channel <span class="hint" style="text-transform:none">(location scope)</span><select id="f_loc" multiple size="3"></select></label>
+      <label class="f">Cluster (grade)<select id="f_grade" multiple size="3"></select></label>
+      <label class="f">Product lifecycle <span class="hint" style="text-transform:none">(prodlife)</span><select id="f_prodlife" multiple size="3"></select></label>
+      <label class="f">Flow status<select id="f_flow"><option value="">(all)</option></select></label>
+      <div class="hint" id="fhint"></div>
+    </div>
     <h3>Pivot contract</h3>
     <div id="contract"><div class="hint">Select a view to see its pivot, base table, grain, per-metric aggregation, and consistency verdict.</div></div>
   </div>
@@ -107,7 +173,8 @@
 <script>
 const $=(id)=>document.getElementById(id);
 const api=(p)=>fetch(p).then(r=>{if(!r.ok)return r.json().then(e=>Promise.reject(e.detail||r.statusText));return r.json();});
-let S={module:null,screen:null,view:null,pivot:null,grain:'stylecolor',criteria:'hist'};
+let S={module:null,screen:null,view:null,pivot:null,grain:'stylecolor',criteria:'hist',
+       tmode:'range',weeks:[],metrics:null,allMetrics:[],labels:'view'};
 
 async function init(){
   let cfg;
@@ -120,22 +187,121 @@ async function init(){
   if(cfg.ch_available){ $('run').disabled=false; $('chstate').textContent='ClickHouse connected'; }
   else { $('chstate').textContent='set CH_DSN on the server to enable execution'; }
   $('run').onclick=runExec;
-  const mods=await api('/api/modules');
-  $('module').innerHTML=mods.map(m=>`<option value="${m.module}">${m.module} (${m.views})</option>`).join('');
-  S.module=(mods.find(m=>m.module==='Hindsighting')||mods[0]).module;
-  $('module').value=S.module;
-  await loadScreens();
+  await reloadModules();
   $('module').onchange=async e=>{S.module=e.target.value;await loadScreens();};
   $('screen').onchange=async e=>{S.screen=e.target.value;await loadViews();};
   $('view').onchange=e=>{pickView(e.target.value);};
   $('grain').onchange=e=>{S.grain=e.target.value;if(S.pivot)doCompose();};
-  $('flow').oninput=()=>{};$('top').oninput=()=>{};
   $('critseg').querySelectorAll('button').forEach(b=>b.onclick=()=>{
     S.criteria=b.dataset.c;$('critseg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    if(S.pivot)doCompose();});
+  $('lblseg').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    S.labels=b.dataset.l;$('lblseg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
     if(S.pivot)doCompose();});
   $('go').onclick=()=>{if(S.pivot)doCompose();};
   $('copy').onclick=()=>{navigator.clipboard.writeText($('sql').textContent);
     $('copy').textContent='Copied ✓';setTimeout(()=>$('copy').textContent='Copy SQL',1200);};
+  loadFilters();
+  loadWhoami();
+  loadSources();
+  loadRepoFreshness();
+  $('cfgsource').onchange=e=>setSource(e.target.value);
+  $('syncqa').onclick=syncQA;
+  const resolveNow=()=>resolveAppUrl();
+  $('appurl').addEventListener('keydown',e=>{if(e.key==='Enter')resolveNow();});
+  $('appurl').addEventListener('paste',()=>setTimeout(resolveNow,50));
+}
+// Paste an app URL → resolve to module/screen/view via the confdefn pathSlots,
+// then auto-select those dropdowns (which composes the query).
+async function resolveAppUrl(){
+  const url=$('appurl').value.trim(); if(!url) return;
+  $('status').textContent='resolving URL…';
+  let r; try{ r=await api('/api/resolve-url?url='+encodeURIComponent(url)); }
+  catch(e){ $('status').textContent='⚠ '+e; return; }
+  const cm=r.catalog_match;
+  if(!cm){
+    $('status').textContent=`⚠ URL → model ${r.model||'?'} / pivot ${r.pivot||'?'}`
+      +(r.warnings&&r.warnings.length?` — ${r.warnings.join('; ')}`:' — no catalog match');
+    return;
+  }
+  const has=(id,val)=>[...$(id).options].some(o=>o.value===val);
+  if(has('module',cm.module)){ S.module=cm.module; $('module').value=cm.module; }
+  await loadScreens();
+  if(has('screen',cm.screen)){ S.screen=cm.screen; $('screen').value=cm.screen; }
+  await loadViews();
+  let idx=VIEWS.findIndex(v=>v.view===cm.view);
+  if(idx<0) idx=VIEWS.findIndex(v=>v.pivot===cm.pivot);
+  if(idx>=0){ $('view').value=String(idx); pickView(String(idx)); }
+  const extra=(r.candidates&&r.candidates.length>1)?`  (+${r.candidates.length-1} more view(s) on this model)`:'';
+  $('status').textContent=`from URL → ${cm.module} / ${cm.screen} / ${cm.view||cm.pivot}`+extra;
+}
+// Show WHICH DB account the composer queries through, and whether it is
+// read-only — so it is explicit every query runs via the read-only account.
+// Nudge UI-only users to sync the tool repo before working, same as the ticket workflow.
+async function loadRepoFreshness(){
+  let r; try{ r=await api('/api/repo-freshness?fetch=true'); }catch(e){ return; }
+  const bar=$('repobar');
+  const msgs=[];
+  if(r.behind) msgs.push(`⚠ support-copilot is <b>${r.behind}</b> commit(s) behind <code>${r.upstream||'origin'}</code> — sync before working: <code>git pull --rebase</code>`+(r.changed_areas&&r.changed_areas.length?`  (updates in: ${r.changed_areas.join(', ')})`:''));
+  if(r.dirty_files) msgs.push(`${r.dirty_files} uncommitted local change(s) — commit/stash before pulling.`);
+  if(msgs.length){ bar.innerHTML=msgs.join(' &nbsp;·&nbsp; '); bar.style.display='block'; }
+  else { bar.style.display='none'; }
+}
+async function loadWhoami(){
+  const el=$('roauth');
+  try{
+    const w=await api('/api/whoami');
+    const accts=w.accounts||{};
+    const parts=Object.entries(accts).map(([eng,a])=>{
+      if(a.error) return `${eng}: ⚠ ${a.error}`;
+      const ro=a.read_only===true?'read-only ✓':(a.read_only===false?'⚠ WRITABLE':'read-only?');
+      return `${eng}: ${a.user||'?'} · ${ro}`;
+    });
+    el.textContent='🔒 '+parts.join('   ');
+    const anyWritable=Object.values(accts).some(a=>a.read_only===false);
+    el.style.color=anyWritable?'var(--bad)':'var(--ok)';
+    el.title='DB accounts used for all queries (details, scope expansion, execution)';
+  }catch(e){ el.textContent='🔒 db account: unverified'; el.style.color='var(--muted)'; }
+}
+async function reloadModules(){
+  const mods=await api('/api/modules');
+  $('module').innerHTML=mods.map(m=>`<option value="${m.module}">${m.module} (${m.views})</option>`).join('');
+  S.module=(mods.find(m=>m.module==='Hindsighting')||mods[0]||{}).module;
+  if(S.module){ $('module').value=S.module; await loadScreens(); }
+}
+function agestr(s){ if(s==null)return 'never'; if(s<90)return 'just now';
+  if(s<3600)return Math.round(s/60)+'m ago'; if(s<86400)return Math.round(s/3600)+'h ago';
+  return Math.round(s/86400)+'d ago'; }
+async function loadSources(){
+  let st; try{ st=await api('/api/config-sources'); }catch(e){ $('cfgstate').textContent=''; return; }
+  const opt=st.sources.map(s=>{
+    const label = s.source==='repo' ? 'Repo (git base)'
+      : `QA live${s.present?'':' — not synced'}`;
+    return s.source==='repo'||s.source==='qa' ? `<option value="${s.source}" ${s.source===st.active?'selected':''}>${label}</option>` : '';
+  }).join('');
+  $('cfgsource').innerHTML=opt;
+  const qa=st.sources.find(s=>s.source==='qa')||{};
+  $('cfgstate').textContent = st.active==='qa'
+    ? `QA synced ${agestr(qa.age_seconds)}${qa.fingerprint?' · '+qa.fingerprint.slice(0,6):''}`
+    : (qa.present?`QA available (synced ${agestr(qa.age_seconds)})`:'QA not synced yet');
+}
+async function setSource(source){
+  $('status').textContent=`switching to ${source}…`;
+  try{ await fetch('/api/config-source?source='+encodeURIComponent(source),{method:'POST'})
+        .then(r=>{if(!r.ok)return r.json().then(e=>Promise.reject(e.detail||r.statusText));}); }
+  catch(e){ $('status').textContent='⚠ '+e; loadSources(); return; }
+  await reloadModules(); loadSources();
+  $('status').textContent=`config source → ${source}`;
+}
+async function syncQA(){
+  if(!confirm('Sync live QA config from OCI?\nRuns git + oci on this machine (needs creds + VPN). May take a minute.')) return;
+  $('syncqa').disabled=true; $('cfgstate').textContent='syncing QA (git + oci)…';
+  let r; try{ r=await fetch('/api/sync-config?env=qa',{method:'POST'}).then(x=>x.json()); }
+  catch(e){ $('cfgstate').textContent='⚠ sync failed'; $('syncqa').disabled=false; return; }
+  $('syncqa').disabled=false;
+  if(r&&r.ok){ $('cfgstate').textContent=`QA synced: ${r.effective?r.effective.files+' files':''}${r.catalog_built?' · catalog built':''}`; }
+  else { $('cfgstate').textContent='⚠ sync failed — '+((r&&r.hint)||'see server log'); }
+  loadSources();
 }
 async function loadScreens(){
   const s=await api(`/api/screens?module=${encodeURIComponent(S.module)}`);
@@ -161,19 +327,30 @@ async function loadContract(){
   const co=p.consistency||{};
   const vclass=co.verdict||'';
   const aggs=p.metric_aggs||{};
-  const mrows=Object.keys(aggs).sort().map(m=>`<div class="mrow"><code>${m}</code><span class="badge ${aggs[m].family}">${aggs[m].family}</span></div>`).join('')||'<div class="hint">—</div>';
+  const metricKeys=Object.keys(aggs).sort();
+  S.allMetrics=metricKeys; S.metrics=new Set(metricKeys);   // default: all selected
+  const mrows=metricKeys.map(m=>`<label class="mrow" style="cursor:pointer"><span><input type="checkbox" class="mchk" value="${m}" checked style="vertical-align:-2px;margin-right:6px"><code>${m}</code></span><span class="badge ${aggs[m].family}">${aggs[m].family}</span></label>`).join('')||'<div class="hint">—</div>';
   const grain=(p.grain||[]).map(g=>`<span class="pill">${g}</span>`).join('')||'—';
   $('contract').innerHTML=`
     <div class="kv"><b>${p.pivot}</b> ${co.verdict?`<span class="badge ${vclass}">${co.verdict}</span>`:''}</div>
     <div class="kv">base view: <code>${p.base||'(derived / nested)'}</code></div>
     <h3>Grain (bottomLevels)</h3><div>${grain}</div>
-    <h3>Per-metric aggregation (CH)</h3>${mrows}
+    <h3>Metrics <span class="hint" style="text-transform:none;letter-spacing:0">— compose only these · <a href="#" id="m_all">all</a> / <a href="#" id="m_none">none</a></span></h3>${mrows}
     <h3>Selection criteria</h3>
     <div class="crit">HIST: ${p.hist||'—'}${p.hist_noop?'  ⚠ NO-OP':''}</div>
     <div class="crit">FLOW: ${p.flow||'—'}${p.flow_noop?'  ⚠ NO-OP':''}</div>
     ${co.verdict==='outlier'?`<div class="hint">Majority on ${co.base}: <code>${co.majority_hist}</code></div>`:''}
     ${p.siblings&&p.siblings.length?`<h3>Reconcile against (same base)</h3><div>${p.siblings.map(s=>`<span class="pill">${s}</span>`).join('')}</div>`:''}
   `;
+  // metric picker — recompose with only the checked metrics
+  document.querySelectorAll('.mchk').forEach(cb=>cb.addEventListener('change',()=>{
+    cb.checked?S.metrics.add(cb.value):S.metrics.delete(cb.value);
+    if(S.pivot)doCompose();
+  }));
+  const setAll=(on)=>{document.querySelectorAll('.mchk').forEach(cb=>cb.checked=on);
+    S.metrics=on?new Set(S.allMetrics):new Set(); if(S.pivot)doCompose();};
+  if($('m_all')) $('m_all').onclick=e=>{e.preventDefault();setAll(true);};
+  if($('m_none')) $('m_none').onclick=e=>{e.preventDefault();setAll(false);};
   // verdict bar
   const vb=$('vbar');
   if(co.verdict==='majority'){vb.className='vbar show ok';vb.innerHTML=`✓ Consistent — criteria matches the majority (${co.n_siblings} pivots) on <code>${co.base}</code>.`;}
@@ -181,24 +358,110 @@ async function loadContract(){
   else if(co.verdict==='noop'){vb.className='vbar show bad';vb.innerHTML=`⚠ No-op criteria — filtering is effectively disabled for this view. Rows are unfiltered.`;}
   else{vb.className='vbar';}
 }
+function sel2csv(id){return Array.from($(id).selectedOptions||[]).map(o=>o.value).join(',');}
+// --- Time picker: build the timeKind/timeValues params for the active mode ---
+function timeParams(p){
+  const m=S.tmode;
+  if(m==='range'){
+    const s=$('t_start').value, e=$('t_end').value;
+    if(s&&e){ p.set('timeKind','range'); p.set('timeValues',`${s},${e}`); }
+  }else if(m==='floorset'){
+    const fs=sel2csv('t_floorset');
+    if(fs){ p.set('timeKind','floorset'); p.set('timeValues',fs);
+      p.set('timeWindow',$('t_window').value);
+      const d=sel2csv('f_dept').split(',')[0]; if(d) p.set('timeDept',d); }
+  }else if(m==='quarter'){
+    const q=sel2csv('t_quarter'); if(q){ p.set('timeKind','quarter'); p.set('timeValues',q); }
+  }else if(m==='season'){
+    const s=sel2csv('t_season'); if(s){ p.set('timeKind','season'); p.set('timeValues',s); }
+  }else if(m==='weeks'){
+    const w=$('t_weeks').value.trim(); if(w){ p.set('timeKind','weeks'); p.set('timeValues',w); }
+  }
+}
+function scopeQS(){
+  const p=new URLSearchParams();
+  timeParams(p);
+  const d=sel2csv('f_dept'); if(d) p.set('department',d);
+  const l=sel2csv('f_loc'); if(l) p.set('channel',l);
+  const g=sel2csv('f_grade'); if(g) p.set('cluster',g);
+  const pl=sel2csv('f_prodlife'); if(pl) p.set('prodlife',pl);
+  const fl=$('f_flow').value; if(fl) p.set('flowStatus',fl);
+  const item=$('f_item').value.trim(); if(item){ p.set('items',item); p.set('itemCol',$('f_itemcol').value); }
+  // metrics: send only when a strict subset is chosen (else compose defaults to all)
+  if(S.metrics&&S.allMetrics&&S.metrics.size>0&&S.metrics.size<S.allMetrics.length)
+    p.set('metrics',[...S.metrics].join(','));
+  return p.toString();
+}
+async function loadFilters(){
+  // scope/attribute filters + time member lists — all live from the read-only DB
+  const map={f_flow:'flow_status', f_dept:'department', f_loc:'channel', f_grade:'grade',
+             f_prodlife:'prodlife', t_floorset:'floorset', t_quarter:'quarter', t_season:'season'};
+  let failed=[];
+  for(const [el,kind] of Object.entries(map)){
+    try{
+      const rows=await api(`/api/members/${kind}`);
+      const opts=rows.map(r=>`<option value="${r.id}">${r.name||r.id}</option>`).join('');
+      if(el==='f_flow') $('f_flow').innerHTML='<option value="">(all)</option>'+opts;
+      else $(el).innerHTML=opts;
+    }catch(e){ failed.push(kind); }
+  }
+  // weeks feed the Range start/end selects (and are the fallback source of truth)
+  try{
+    const wk=await api('/api/members/week');
+    // no auto-pick: the week list runs into future planning weeks, so a default
+    // would silently select an empty future window. Force a deliberate pick.
+    const blank='<option value="">— pick week —</option>';
+    const opts=wk.map(r=>`<option value="${r.id}">${r.id}</option>`).join('');
+    $('t_start').innerHTML=blank+opts; $('t_end').innerHTML=blank+opts;
+  }catch(e){ failed.push('week'); }
+  $('fhint').innerHTML = failed.length
+    ? `⚠ couldn't load: ${[...new Set(failed)].join(', ')} — on VPN & DB reachable?`
+    : 'members loaded live from the read-only DB';
+  // recompose on any change
+  ['f_dept','f_loc','f_grade','f_prodlife','f_flow','f_itemcol',
+   't_start','t_end','t_floorset','t_window','t_quarter','t_season'].forEach(id=>{
+    if($(id)) $(id).addEventListener('change',()=>{if(S.pivot)doCompose();});
+  });
+  ['t_weeks','f_item'].forEach(id=>{ if($(id)) $(id).addEventListener('input',()=>{if(S.pivot)doCompose();}); });
+  // time-mode segment
+  $('tmode').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    S.tmode=b.dataset.m;
+    $('tmode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    document.querySelectorAll('.tpanel').forEach(p=>p.style.display=(p.dataset.m===S.tmode)?'flex':'none');
+    if(S.pivot)doCompose();
+  });
+}
 async function doCompose(){
   $('status').textContent='composing…';
-  const fs=encodeURIComponent($('flow').value.trim());
-  const tm=encodeURIComponent($('top').value.trim());
-  let r; try{ r=await api(`/api/compose?pivot=${encodeURIComponent(S.pivot)}&grain=${S.grain}&criteria=${S.criteria}&flowStatus=${fs}&topMembers=${tm}`);}
+  const qs=scopeQS();
+  let r; try{ r=await api(`/api/compose?pivot=${encodeURIComponent(S.pivot)}&grain=${S.grain}&criteria=${S.criteria}`
+      +`&view=${encodeURIComponent(S.view||'')}&labels=${S.labels}${qs?'&'+qs:''}`);}
   catch(e){$('status').textContent='⚠ '+e;return;}
   renderSQL(r.sql);
-  $('status').textContent=`composed · ${S.pivot} @ ${S.grain} · ${S.criteria}`;
+  S.weeks=r.weeks||[];
+  if(S.weeks.length){
+    $('tnote').style.color='';
+    $('tnote').textContent = (r.time_note||`${S.weeks.length} weeks`)
+      + `  [${S.weeks[0]} … ${S.weeks[S.weeks.length-1]}]`;
+    $('tstate').textContent = `· ${S.weeks.length} wk`;
+    $('status').textContent=`composed · ${S.pivot} @ ${S.grain} · ${S.criteria}`;
+  } else {
+    $('tnote').style.color='var(--warn)';
+    $('tnote').textContent = '⚠ pick a Time selection (range / weeks) — query uses :HISTORY_WEEKS and will not run until set';
+    $('tstate').textContent = '· ⚠ no time';
+    $('status').textContent=`composed (no time set) · ${S.pivot}`;
+  }
 }
 async function runExec(){
   if(!S.pivot){return;}
-  const weeks=$('weeks').value.trim(), expected=$('expected').value.trim()||'{}';
-  if(!weeks){$('exresult').innerHTML='<div class="hint" style="color:#e7b45a">Enter the history weeks (comma list) to run.</div>';return;}
+  const weeks=((S.weeks&&S.weeks.length)?S.weeks.join(','):$('weeks').value.trim());
+  const expected=$('expected').value.trim()||'{}';
+  if(!weeks){$('exresult').innerHTML='<div class="hint" style="color:#e7b45a">Pick a Time selection (or type weeks in the box) to run.</div>';return;}
   $('run').disabled=true; $('exresult').innerHTML='<div class="hint">running on ClickHouse…</div>';
-  const fs=encodeURIComponent($('flow').value.trim()), tm=encodeURIComponent($('top').value.trim());
+  const qs=scopeQS();   // department + channel + cluster + prodlife + flowStatus (+ time)
   let r;
   try{ r=await api(`/api/execute?pivot=${encodeURIComponent(S.pivot)}&grain=${S.grain}&criteria=${S.criteria}`
-      +`&weeks=${encodeURIComponent(weeks)}&expected=${encodeURIComponent(expected)}&flowStatus=${fs}&topMembers=${tm}`);}
+      +`&${qs}&weeks=${encodeURIComponent(weeks)}&expected=${encodeURIComponent(expected)}`);}
   catch(e){ $('exresult').innerHTML='<div class="hint" style="color:#ffb4a0">⚠ '+e+'</div>'; $('run').disabled=false; return; }
   $('run').disabled=false;
   const sumRows=Object.entries(r.summary).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');

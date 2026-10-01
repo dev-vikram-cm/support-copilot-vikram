@@ -27,7 +27,9 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent / "db"))
 import ch_validate as chv
+from readonly_guard import check_sql, SqlNotAllowed   # enforce read-only on CH too
 
 
 def weeks_clause(weeks):
@@ -95,6 +97,10 @@ def compare(summary, expected, tol=1e-6):
 
 def run(sql, dsn, weeks, max_rows):
     sql = chv.strip_comments(chv.substitute(sql, {"HISTORY_WEEKS": weeks_clause(weeks)}))
+    # HARD read-only gate: the composed statement is validated as a single
+    # SELECT-family query BEFORE it touches ClickHouse. LIMIT/FORMAT are appended
+    # by us afterwards (never user-supplied), so the guard sees only the body.
+    check_sql(sql)
     q = f"{sql}\nLIMIT {max_rows}\nFORMAT TabSeparatedWithNames"
     text = chv.ch_post(dsn, q)
     header, rows = parse_tsv(text)

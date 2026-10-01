@@ -1,19 +1,19 @@
 {
  "meta": {
-  "generated_at": "2026-07-04 00:20:31",
+  "generated_at": "2026-09-11 13:51:58",
   "repo": "etl-trd-batch",
   "client_prefix": "trd",
   "stats": {
-   "python_calls": 146,
-   "engine_commands": 620,
-   "inline_sql": 446,
-   "statements": 1920,
-   "sql_files": 108,
+   "python_calls": 155,
+   "engine_commands": 640,
+   "inline_sql": 461,
+   "statements": 1945,
+   "sql_files": 111,
    "sql_files_orphan": 8,
    "inbound_mappings": 65
   },
-  "node_count": 1025,
-  "edge_count": 1712
+  "node_count": 1040,
+  "edge_count": 1739
  },
  "nodes": [
   {
@@ -737,6 +737,12 @@
    "kind": "table"
   },
   {
+   "id": "clickhouse.snapshot_op_publisher",
+   "name": "snapshot_op_publisher",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
    "id": "clickhouse.snapshot_op_stylecolors",
    "name": "snapshot_op_stylecolors",
    "engine": "clickhouse",
@@ -779,8 +785,44 @@
    "kind": "table"
   },
   {
+   "id": "clickhouse.sync_outbound_master_data_archives",
+   "name": "sync_outbound_master_data_archives",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.sync_outbound_master_data_archives_new",
+   "name": "sync_outbound_master_data_archives_new",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.sync_outbound_master_data_archives_staging",
+   "name": "sync_outbound_master_data_archives_staging",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
    "id": "clickhouse.sync_outbound_master_data_memory_final",
    "name": "sync_outbound_master_data_memory_final",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.sync_outbound_order_flow_archives",
+   "name": "sync_outbound_order_flow_archives",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.sync_outbound_order_flow_archives_new",
+   "name": "sync_outbound_order_flow_archives_new",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.sync_outbound_order_flow_archives_staging",
+   "name": "sync_outbound_order_flow_archives_staging",
    "engine": "clickhouse",
    "kind": "table"
   },
@@ -1039,6 +1081,30 @@
   {
    "id": "clickhouse.trd_an_is_forecastable_check_tbl_archives",
    "name": "trd_an_is_forecastable_check_tbl_archives",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.trd_an_store_master_allocation_attr_update_tbl",
+   "name": "trd_an_store_master_allocation_attr_update_tbl",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.trd_an_store_master_attr_update_tbl",
+   "name": "trd_an_store_master_attr_update_tbl",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.trd_an_store_master_tbl",
+   "name": "trd_an_store_master_tbl",
+   "engine": "clickhouse",
+   "kind": "table"
+  },
+  {
+   "id": "clickhouse.trd_an_store_master_tbl_allocation",
+   "name": "trd_an_store_master_tbl_allocation",
    "engine": "clickhouse",
    "kind": "table"
   },
@@ -4361,6 +4427,12 @@
    "kind": "file"
   },
   {
+   "id": "file.trd_plan_data_wide.tsv",
+   "name": "trd_plan_data_wide.tsv",
+   "engine": "file",
+   "kind": "file"
+  },
+  {
    "id": "file.trd_planmeta_tbl.tsv",
    "name": "trd_planmeta_tbl.tsv",
    "engine": "file",
@@ -4645,6 +4717,12 @@
   {
    "id": "postgres.perf_assortperiod_week",
    "name": "perf_assortperiod_week",
+   "engine": "postgres",
+   "kind": "table"
+  },
+  {
+   "id": "postgres.plan_data_export",
+   "name": "plan_data_export",
    "engine": "postgres",
    "kind": "table"
   },
@@ -5101,6 +5179,18 @@
   {
    "id": "postgres.tyly",
    "name": "tyly",
+   "engine": "postgres",
+   "kind": "table"
+  },
+  {
+   "id": "postgres.user_metadata",
+   "name": "user_metadata",
+   "engine": "postgres",
+   "kind": "table"
+  },
+  {
+   "id": "postgres.user_metadata_get_api",
+   "name": "user_metadata_get_api",
    "engine": "postgres",
    "kind": "table"
   },
@@ -8190,7 +8280,7 @@
   {
    "src": "clickhouse.s5_analytics_inseason_aps_band_prep_input",
    "dst": "clickhouse.s5_analytics_inseason_sls_rnk_final",
-   "type": "regex_dml",
+   "type": "create_table_as",
    "provenance": [
     {
      "script": null,
@@ -8205,7 +8295,7 @@
   {
    "src": "clickhouse.s5_analytics_inseason_band_prep_from_rnk_sc",
    "dst": "clickhouse.s5_analytics_inseason_sls_rnk_final",
-   "type": "regex_dml",
+   "type": "create_table_as",
    "provenance": [
     {
      "script": null,
@@ -9268,8 +9358,83 @@
    ]
   },
   {
+   "src": "clickhouse.snapshot_op_publisher",
+   "dst": "clickhouse.trd_s_assort_loc_arr_tbl",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/snapshot_op.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.snapshot_op_publisher",
+   "dst": "clickhouse.trd_s_assort_sku_loc_arr_tbl",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/snapshot_op.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.snapshot_op_publisher",
+   "dst": "clickhouse.trd_s_flowsheet_arr_tbl",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/snapshot_op.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.snapshot_op_publisher",
+   "dst": "clickhouse.trd_s_flowsheet_sku_arr_tbl",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/snapshot_op.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
    "src": "clickhouse.snapshot_op_stylecolors",
    "dst": "clickhouse.last_max_plan_time_session",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/snapshot_op.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.snapshot_op_stylecolors",
+   "dst": "clickhouse.snapshot_op_publisher",
    "type": "create_table_as",
    "provenance": [
     {
@@ -9479,6 +9644,36 @@
   },
   {
    "src": "clickhouse.sync_last",
+   "dst": "clickhouse.sync_outbound_master_data_archives",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/generate_output.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.sync_last",
+   "dst": "clickhouse.sync_outbound_order_flow_archives",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/generate_output.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.sync_last",
    "dst": "clickhouse.sync_outbound_pre_stylecolor_memory",
    "type": "create_table_as",
    "provenance": [
@@ -9538,6 +9733,51 @@
    ]
   },
   {
+   "src": "clickhouse.sync_outbound_master_data_archives",
+   "dst": "clickhouse.sync_outbound_master_data_archives_new",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/weekly/21_purge_archives.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "weekly"
+   ]
+  },
+  {
+   "src": "clickhouse.sync_outbound_master_data_archives_staging",
+   "dst": "clickhouse.sync_outbound_master_data_archives",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": "outbound_archives.sh",
+     "sql_file": null,
+     "line": 1
+    }
+   ],
+   "flows": [
+    "outbound_archives"
+   ]
+  },
+  {
+   "src": "clickhouse.sync_outbound_master_data_memory_final",
+   "dst": "clickhouse.sync_outbound_master_data_archives",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/generate_output.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
    "src": "clickhouse.sync_outbound_master_data_memory_final",
    "dst": "file.s5outboundprodmasterdata",
    "type": "export",
@@ -9553,9 +9793,54 @@
    ]
   },
   {
+   "src": "clickhouse.sync_outbound_order_flow_archives",
+   "dst": "clickhouse.sync_outbound_order_flow_archives_new",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/weekly/21_purge_archives.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "weekly"
+   ]
+  },
+  {
+   "src": "clickhouse.sync_outbound_order_flow_archives_staging",
+   "dst": "clickhouse.sync_outbound_order_flow_archives",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": "outbound_archives.sh",
+     "sql_file": null,
+     "line": 1
+    }
+   ],
+   "flows": [
+    "outbound_archives"
+   ]
+  },
+  {
    "src": "clickhouse.sync_outbound_order_flow_memory_final",
    "dst": "clickhouse.sync_outbound_master_data_memory_final",
    "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/generate_output.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.sync_outbound_order_flow_memory_final",
+   "dst": "clickhouse.sync_outbound_order_flow_archives",
+   "type": "insert",
    "provenance": [
     {
      "script": null,
@@ -9750,6 +10035,36 @@
   {
    "src": "clickhouse.sync_start",
    "dst": "clickhouse.sync_outbound_delta_tbl",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/generate_output.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.sync_start",
+   "dst": "clickhouse.sync_outbound_master_data_archives",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/generate_output.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
+   ]
+  },
+  {
+   "src": "clickhouse.sync_start",
+   "dst": "clickhouse.sync_outbound_order_flow_archives",
    "type": "insert",
    "provenance": [
     {
@@ -10612,6 +10927,66 @@
    "flows": [
     "allocation",
     "allocation_v3"
+   ]
+  },
+  {
+   "src": "clickhouse.trd_an_store_master_allocation_attr_update_tbl",
+   "dst": "clickhouse.trd_an_store_master_tbl_allocation",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/weekly/17_08_store_master_attr_update.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "weekly"
+   ]
+  },
+  {
+   "src": "clickhouse.trd_an_store_master_attr_update_tbl",
+   "dst": "clickhouse.trd_an_store_master_tbl",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/weekly/17_08_store_master_attr_update.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "weekly"
+   ]
+  },
+  {
+   "src": "clickhouse.trd_an_store_master_tbl",
+   "dst": "clickhouse.trd_an_store_master_attr_update_tbl",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/weekly/17_08_store_master_attr_update.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "weekly"
+   ]
+  },
+  {
+   "src": "clickhouse.trd_an_store_master_tbl_allocation",
+   "dst": "clickhouse.trd_an_store_master_allocation_attr_update_tbl",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/weekly/17_08_store_master_attr_update.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "weekly"
    ]
   },
   {
@@ -13178,6 +13553,21 @@
    "flows": [
     "allocation",
     "allocation_v3"
+   ]
+  },
+  {
+   "src": "clickhouse.trd_p_dc_adj",
+   "dst": "clickhouse.snapshot_op_publisher",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/cyclic/snapshot_op.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "cyclic"
    ]
   },
   {
@@ -17170,6 +17560,36 @@
   },
   {
    "src": "clickhouse.trd_store_hier_attr",
+   "dst": "clickhouse.trd_an_store_master_allocation_attr_update_tbl",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/weekly/17_08_store_master_attr_update.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "weekly"
+   ]
+  },
+  {
+   "src": "clickhouse.trd_store_hier_attr",
+   "dst": "clickhouse.trd_an_store_master_attr_update_tbl",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": null,
+     "sql_file": "ch/weekly/17_08_store_master_attr_update.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "weekly"
+   ]
+  },
+  {
+   "src": "clickhouse.trd_store_hier_attr",
    "dst": "clickhouse.trd_annual_ly_no_prodlife",
    "type": "insert",
    "provenance": [
@@ -19676,7 +20096,7 @@
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 332
+     "line": 342
     }
    ],
    "flows": [
@@ -19691,7 +20111,7 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 140
+     "line": 150
     }
    ],
    "flows": [
@@ -22802,12 +23222,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 93
+     "line": 103
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 262
+     "line": 272
     }
    ],
    "flows": [
@@ -23266,7 +23686,7 @@
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 272
+     "line": 282
     }
    ],
    "flows": [
@@ -23281,12 +23701,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 197
+     "line": 207
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 385
+     "line": 395
     }
    ],
    "flows": [
@@ -23302,12 +23722,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 76
+     "line": 86
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 245
+     "line": 255
     }
    ],
    "flows": [
@@ -23338,7 +23758,7 @@
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 230
+     "line": 240
     }
    ],
    "flows": [
@@ -23353,7 +23773,7 @@
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 225
+     "line": 235
     }
    ],
    "flows": [
@@ -23503,12 +23923,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 66
+     "line": 76
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 235
+     "line": 245
     }
    ],
    "flows": [
@@ -23539,12 +23959,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 71
+     "line": 81
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 240
+     "line": 250
     }
    ],
    "flows": [
@@ -23575,12 +23995,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 103
+     "line": 113
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 277
+     "line": 287
     }
    ],
    "flows": [
@@ -23668,12 +24088,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 120
+     "line": 130
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 299
+     "line": 309
     }
    ],
    "flows": [
@@ -23731,12 +24151,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 82
+     "line": 92
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 251
+     "line": 261
     }
    ],
    "flows": [
@@ -23773,12 +24193,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 88
+     "line": 98
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 257
+     "line": 267
     }
    ],
    "flows": [
@@ -24064,7 +24484,7 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 375
+     "line": 385
     }
    ],
    "flows": [
@@ -24109,7 +24529,7 @@
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 282
+     "line": 292
     }
    ],
    "flows": [
@@ -24283,12 +24703,12 @@
     {
      "script": "bash/daily/10_load_pgsql.sh",
      "sql_file": "pgsql/daily/load_pgsql.sql",
-     "line": 306
+     "line": 316
     },
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
-     "line": 495
+     "line": 505
     }
    ],
    "flows": [
@@ -24456,6 +24876,22 @@
    ]
   },
   {
+   "src": "postgres.plan_data_export",
+   "dst": "file.trd_plan_data_wide.tsv",
+   "type": "export",
+   "provenance": [
+    {
+     "script": "mfp_plan_data_outbound_daily.sh",
+     "sql_file": "pgsql/mfpapsync/mfp_plan_data_outbound_daily.sql",
+     "line": 268
+    }
+   ],
+   "flows": [
+    "daily",
+    "fullload"
+   ]
+  },
+  {
    "src": "postgres.plan_data_wide",
    "dst": "file.plan_data_wide_tbl.tsv",
    "type": "export",
@@ -24468,6 +24904,22 @@
    ],
    "flows": [
     "mfpapsync"
+   ]
+  },
+  {
+   "src": "postgres.plan_data_wide",
+   "dst": "postgres.plan_data_export",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": "mfp_plan_data_outbound_daily.sh",
+     "sql_file": "pgsql/mfpapsync/mfp_plan_data_outbound_daily.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "daily",
+    "fullload"
    ]
   },
   {
@@ -24529,6 +24981,22 @@
    ],
    "flows": [
     "mfpapsync"
+   ]
+  },
+  {
+   "src": "postgres.plans",
+   "dst": "postgres.plan_data_export",
+   "type": "create_table_as",
+   "provenance": [
+    {
+     "script": "mfp_plan_data_outbound_daily.sh",
+     "sql_file": "pgsql/mfpapsync/mfp_plan_data_outbound_daily.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "daily",
+    "fullload"
    ]
   },
   {
@@ -24926,12 +25394,24 @@
    "type": "update",
    "provenance": [
     {
+     "script": "bash/daily/10_load_pgsql.sh",
+     "sql_file": "pgsql/daily/load_pgsql.sql",
+     "line": 1
+    },
+    {
      "script": "bash/intraday/10_load_pgsql.sh",
      "sql_file": "pgsql/intraday/load_pgsql.sql",
+     "line": 1
+    },
+    {
+     "script": "bash/weekly/10_load_pgsql.sh",
+     "sql_file": "pgsql/weekly/load_pgsql.sql",
      "line": 1
     }
    ],
    "flows": [
+    "daily",
+    "fullload",
     "intraday"
    ]
   },
@@ -25042,6 +25522,27 @@
    ],
    "flows": [
     "weekly"
+   ]
+  },
+  {
+   "src": "postgres.trd_l_ticketprice",
+   "dst": "postgres.trd_ma_stylecolorattributes",
+   "type": "update",
+   "provenance": [
+    {
+     "script": "bash/daily/10_load_pgsql.sh",
+     "sql_file": "pgsql/daily/load_pgsql.sql",
+     "line": 1
+    },
+    {
+     "script": "bash/weekly/10_load_pgsql.sh",
+     "sql_file": "pgsql/weekly/load_pgsql.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "daily",
+    "fullload"
    ]
   },
   {
@@ -25867,6 +26368,22 @@
     {
      "script": "bash/weekly/10_load_pgsql.sh",
      "sql_file": "pgsql/weekly/load_pgsql.sql",
+     "line": 1
+    }
+   ],
+   "flows": [
+    "daily",
+    "fullload"
+   ]
+  },
+  {
+   "src": "postgres.user_metadata_get_api",
+   "dst": "postgres.user_metadata",
+   "type": "insert",
+   "provenance": [
+    {
+     "script": "bash/get_fusionauth_users.sh",
+     "sql_file": null,
      "line": 1
     }
    ],
@@ -31719,12 +32236,12 @@
     {
      "script": "bash/daily/04_vertica_validate_inbound.sh",
      "sql_file": "vsql/daily/001_check_inbound_rejects.sql",
-     "line": 891
+     "line": 895
     },
     {
      "script": "bash/fullload/04_vertica_validate_inbound.sh",
      "sql_file": "vsql/fullload/001_check_inbound_rejects.sql",
-     "line": 875
+     "line": 880
     },
     {
      "script": "bash/intraday/04_vertica_validate_inbound.sh",
@@ -31734,7 +32251,7 @@
     {
      "script": "bash/weekly/04_vertica_validate_inbound.sh",
      "sql_file": "vsql/weekly/001_check_inbound_rejects.sql",
-     "line": 926
+     "line": 930
     }
    ],
    "flows": [
@@ -36151,6 +36668,16 @@
    "line": 149
   },
   {
+   "src": "mfp_plan_data_outbound_daily.sh",
+   "dst": "bash/func.sh",
+   "line": 13
+  },
+  {
+   "src": "mfp_plan_data_outbound_daily.sh",
+   "dst": "bash/env.sh",
+   "line": 14
+  },
+  {
    "src": "mfp_sync.sh",
    "dst": "bash/func.sh",
    "line": 11
@@ -36262,23 +36789,33 @@
   },
   {
    "src": "run_daily.sh",
+   "dst": "bash/get_fusionauth_users.sh",
+   "line": 28
+  },
+  {
+   "src": "run_daily.sh",
    "dst": "bash/daily/update_dept_plan_items_pgsql.sh",
-   "line": 31
+   "line": 34
   },
   {
    "src": "run_daily.sh",
    "dst": "bash/daily/start_batch_run_daily.sh",
-   "line": 43
+   "line": 46
   },
   {
    "src": "run_daily.sh",
    "dst": "bash/daily/failed_items_replan.sh",
-   "line": 49
+   "line": 52
   },
   {
    "src": "run_daily.sh",
    "dst": "bash/weekly/post_bulk_plan.sh",
-   "line": 62
+   "line": 65
+  },
+  {
+   "src": "run_daily.sh",
+   "dst": "mfp_plan_data_outbound_daily.sh",
+   "line": 71
   },
   {
    "src": "run_daily_allocation.sh",
@@ -36652,23 +37189,28 @@
   },
   {
    "src": "run_weekly_without_plan.sh",
-   "dst": "bash/util/drop_memory_tables.sh",
-   "line": 42
+   "dst": "bash/get_fusionauth_users.sh",
+   "line": 38
   },
   {
    "src": "run_weekly_without_plan.sh",
-   "dst": "bash/weekly/update_dept_plan_items_pgsql.sh",
+   "dst": "bash/util/drop_memory_tables.sh",
    "line": 45
   },
   {
    "src": "run_weekly_without_plan.sh",
+   "dst": "bash/weekly/update_dept_plan_items_pgsql.sh",
+   "line": 48
+  },
+  {
+   "src": "run_weekly_without_plan.sh",
    "dst": "bash/weekly/14_cleanup_daily_agg.sh",
-   "line": 55
+   "line": 58
   },
   {
    "src": "run_weekly_without_plan.sh",
    "dst": "target_and_clustering_etl/scripts/000_Run_All.sh",
-   "line": 58
+   "line": 61
   },
   {
    "src": "target_and_clustering_etl/scripts/000_Run_All.sh",
@@ -36749,6 +37291,16 @@
    "src": "weekly.sh",
    "dst": "bash/weekly/17_inseason_planning.sh",
    "line": 320
+  },
+  {
+   "src": "weekly.sh",
+   "dst": "mfp_plan_data_outbound_daily.sh",
+   "line": 347
+  },
+  {
+   "src": "weekly.sh",
+   "dst": "bash/weekly/21_purge_archives.sh",
+   "line": 363
   }
  ]
 }

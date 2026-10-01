@@ -22,9 +22,24 @@ customers/*/lineage/pivot_graph.json
 customers/*/lineage/*.html
 tooling/lineage-viz/workspaces/
 unified_load.py
+# timestamped lineage snapshots taken before a regen — same regenerable artifacts, different folder name
+customers/*/lineage.bak_*/
 
 # Personal learning artifacts — your practice data, regenerable, keep out of git
 tooling/learning/deck.json
 tooling/learning/calibration_log.jsonl
 tooling/learning/skill_ledger.jsonl
 customers/*/lineage/catalog.db
+
+# knowledge full-text index (regenerable via tooling/knowledge/index_build.py)
+knowledge/knowledge_fts.db
+
+# runtime members cache (regenerable from the DB)
+tooling/validation/.members_cache/
+
+# local virtualenv, don't commit third-party packages
+tooling/validation/ui/.venv/
+
+# Validation Studio's local config clone + pulled OCI overlay — regenerable
+# via tooling/validation/config_sync.py, same reasoning as tickets/*/live-config/
+customers/*/config/

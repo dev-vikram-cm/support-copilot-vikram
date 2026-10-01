@@ -16,7 +16,7 @@ Usage:
   python3 compose.py --url "<listData URL>" --config-dir <trd-configs>
   python3 compose.py --url "<URL>" --config-dir <cfg> --criteria hist|flow
 """
-import argparse, sqlite3, sys
+import argparse, re, sqlite3, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -60,6 +60,13 @@ PROD_LEVEL_COL = {
     "stylecolor": "product",     # 'product' IS the stylecolor id in this view
     "style": "x_style",
 }
+# Pivot-DERIVED metrics that are NOT physical columns on the agg view — they are
+# counts the pivot computes. Compose them as the correct count expression instead
+# of referencing a non-existent column (was causing UNKNOWN_IDENTIFIER on the agg).
+DERIVED_METRICS = {
+    "cccount":    "count(DISTINCT product)",    # choice / style-color count
+    "storecount": "count(DISTINCT location)",   # store count
+}
 # fixed lower-grain dimensions available directly on the agg view
 FIXED_DIMS = {"location", "time", "merchcat", "grade", "prodlife", "cluster"}
 DEFAULT_METRICS = ["dmd_u", "shp_u", "eoh_u", "dmd_r", "shp_r"]
@@ -83,7 +90,31 @@ def resolve_pivot(defn_id, config_dir):
     return None, f"could not resolve defnId '{defn_id}' to a pivotdefn"
 
 
-def compose(url, config_dir, which="hist", catalog=None):
+def _inlist(vals):
+    return ", ".join("'" + str(v).replace("'", "''") + "'" for v in vals if str(v).strip())
+
+
+def _alias(label):
+    """Quote an output alias when it isn't a plain identifier (view labels like
+    'R$ Sales', 'FGM %' need backticks in ClickHouse)."""
+    return str(label) if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", str(label)) \
+        else "`" + str(label).replace("`", "``") + "`"
+
+
+def _scope_clause(col, ids, subquery, note):
+    """Scope predicate for a grain column. Prefer a compact ClickHouse subquery
+    against the hierarchy (readable, no thousands of inlined ids); otherwise fall
+    back to an inline IN list (annotated with its size)."""
+    if subquery:
+        return f"  AND {col} IN (\n      {subquery}\n  )   -- {note} (hierarchy subquery)"
+    n = len([i for i in ids if str(i).strip()])
+    return f"  AND {col} IN ({_inlist(ids)})   -- {note} ({n} ids)"
+
+
+def compose(url, config_dir, which="hist", catalog=None, filters=None):
+    filters = filters or {}          # {weeks:[], time_note, location:[], cluster:[],
+                                     #  prodlife:[], flowStatus, department:[], channel:[], product:[],
+                                     #  metrics:[]  (subset of the pivot's metrics; default all)}
     scope = listdata_parse.parse(url)
     pivot = scope["defnId"]
     if not pivot:
@@ -95,9 +126,17 @@ def compose(url, config_dir, which="hist", catalog=None):
 
     table = c["runtime_table"] or "trd_p_history_agg"
     maggs = c.get("metric_aggs", {})
-    # core display metrics (correct per-metric aggregation), only those this pivot uses
+    # metrics, ordered core-first then the rest — the full set the pivot exposes.
     CORE = ["dmd_u", "shp_u", "ret_u", "dmd_r", "shp_r", "eoh_u", "boh_u"]
-    show = [m for m in CORE if m in maggs] or list(maggs)[:8]
+    ordered = [m for m in CORE if m in maggs] + [m for m in sorted(maggs) if m not in CORE]
+    if not ordered:
+        ordered = list(maggs)[:8]
+    # metric picker: if the caller chose a subset, emit ONLY those (+ grain +
+    # choice count); each metric's ch_expr already pulls its own related columns
+    # (e.g. argMax(eoh_u, time)). Default = all of the pivot's metrics.
+    want = filters.get("metrics") or []
+    missing = [m for m in want if m not in maggs]
+    show = [m for m in ordered if m in set(want)] if want else ordered
     crit = c["hist_criteria"] if which == "hist" else c["flow_criteria"]
     crit_kind = "HIST (sum-based)" if which == "hist" else "FLOW (avg-based)"
 
@@ -136,37 +175,135 @@ def compose(url, config_dir, which="hist", catalog=None):
     L.append(f"-- CH DIALECT    : `time` is a String week id → filter with IN (not a date BETWEEN).")
     L.append(f"--   additive metrics use sum(); POINT-IN-TIME stock metrics use "
              f"argMax(m, time) (EOH=last) / argMin(m, time) (BOH=first) — NOT sum.")
-    # flag any metric we couldn't classify
-    unclass = [m for m in show if m not in maggs]
-    if unclass:
-        L.append(f"-- TODO/CONFIRM : unclassified aggregation for {unclass} — verify vs pivot.")
+    # metric selection provenance
+    if filters.get("view_metrics"):
+        vv = filters["view_metrics"]
+        okn = sum(1 for v in vv if v.get("ok", True))
+        L.append(f"-- metrics     : {okn}/{len(vv)} VIEW-label metrics from the viewdefn "
+                 f"(output columns match the screen; formulas grounded to agg columns)")
+    elif want:
+        L.append(f"-- metrics     : subset ({len(show)}/{len(maggs)}): {', '.join(show) or '(none matched)'}")
+        if missing:
+            L.append(f"-- TODO/CONFIRM : requested metric(s) not on this pivot: {', '.join(missing)}")
+    else:
+        L.append(f"-- metrics     : all {len(show)} on this pivot: {', '.join(show)}")
     L.append("")
 
-    # build (sql, comment) items; comma is emitted BEFORE the comment so an
-    # inline note never comments out the separator.
-    items = [(d, None) for d in select_dims]
-    for m in show:
-        info = maggs.get(m)
-        expr = info["ch_expr"] if info else f"sum({m})"
-        fam = info["family"] if info else "TODO confirm aggregation (unclassified)"
-        items.append((f"{expr} AS {m}", fam))
-    items.append(("count(DISTINCT product) AS stylecolor_count", "choice count (exact in CH)"))
-    L.append("SELECT")
-    for i, (txt, cmt) in enumerate(items):
-        comma = "," if i < len(items) - 1 else ""
-        L.append(f"    {txt}{comma}" + (f"   -- {cmt}" if cmt else ""))
-    L.append(f"FROM {table}")
-    L.append("WHERE time IN (:HISTORY_WEEKS)               -- REQUIRED: string week ids from the UI's window")
-    if scope["flowStatus"] not in (None, ""):
-        L.append(f"--  AND prodlife = '{scope['flowStatus']}'    -- CONFIRM: is prodlife the flow-status column?")
-    if scope["topMembers"]:
-        L.append(f"--  AND <product-hierarchy scope for {scope['topMembers']}>   -- TODO: join M_Meta/product dim")
-    L.append(f"GROUP BY {', '.join(group_cols)}")
+    # --- inner aggregate SELECT --------------------------------------------
+    # Inner aggregate aliases are PREFIXED (m_/c_) so an alias can never equal a
+    # base column that another aggregate references — that is the ClickHouse
+    # ILLEGAL_AGGREGATION trap (e.g. `argMax(eoh_u,time) AS eoh_u` next to
+    # `sum(eoh_u)` makes eoh_u resolve to the alias). The outer query renames
+    # m_<metric> back to the clean display name.
+    dim_aliases = [d.split(" AS ")[-1].strip() for d in select_dims]
+    inner = list(select_dims)
+    disp = []                             # (label, inner_alias) for outer rename
+    expr2alias = {}                       # ch_expr (spaces stripped) -> inner alias
+    todo_notes = []
+    vms = filters.get("view_metrics")     # [{label, expr, ok, missing, formula}]
+    if vms:
+        # compose the user-facing VIEW metrics (labels + formulas) so the DB
+        # output matches the screen; ungroundable ones become explicit TODOs.
+        for i, vm in enumerate(vms):
+            if not vm.get("ok", True):
+                todo_notes.append(f"-- TODO metric '{vm['label']}': not groundable on {table} "
+                                  f"({', '.join(vm.get('missing', []))}); UI formula: {vm.get('formula','')}")
+                continue
+            ia = f"m_{i}"
+            inner.append(f"{vm['expr']} AS {ia}")
+            disp.append((vm["label"], ia))
+            expr2alias[vm["expr"].replace(' ', '')] = ia
+    else:
+        for m in show:
+            if m in DERIVED_METRICS:
+                expr = DERIVED_METRICS[m]         # a count, not an agg column
+            else:
+                info = maggs.get(m)
+                expr = info["ch_expr"] if info else f"sum({m})"
+            ia = f"m_{m}"
+            inner.append(f"{expr} AS {ia}")
+            disp.append((m, ia))
+            expr2alias[expr.replace(' ', '')] = ia
+    inner.append("count(DISTINCT product) AS stylecolor_count")
+
+    # --- WHERE lines (scope/filters) — built once, used by flat or wrapped ---
+    wl = []
+    weeks = filters.get("weeks") or []
+    if weeks:
+        if filters.get("time_note"):
+            wl.append(f"-- time window: {filters['time_note']}")
+        wl.append(f"WHERE time IN ({_inlist(weeks)})")
+    else:
+        wl.append("WHERE time IN (:HISTORY_WEEKS)               -- REQUIRED: string week ids (Time picker: range/floorset/quarter → weeks)")
+    # specific item override — validate ONE (or a few) grain ids directly, no
+    # whole-scope expansion. item_col must be a real agg column (product=stylecolor,
+    # location=store, cluster, prodlife, time).
+    if filters.get("items"):
+        icol = filters.get("item_col") or "product"
+        wl.append(f"  AND {icol} IN ({_inlist(filters['items'])})   -- specific item(s) [{icol}]")
+    if filters.get("cluster"):
+        wl.append(f"  AND cluster IN ({_inlist(filters['cluster'])})   -- Cluster/Grade (direct: agg.cluster)")
+    if filters.get("prodlife"):
+        wl.append(f"  AND prodlife IN ({_inlist(filters['prodlife'])})   -- Product lifecycle (trd_d_prodlife: FP/MD/OOL)")
+    fs = filters.get("flowStatus", scope.get("flowStatus"))
+    if fs not in (None, ""):
+        wl.append(f"--  flowStatus={fs}: pivot-derived (New/Carryover/Sell-down) via flow_status_<PID> — reconcile vs this pivot's FLOW criteria")
+    # Product scope (Department → stylecolors) and Location scope (Channel → stores)
+    if filters.get("product_subquery") or filters.get("product"):
+        wl.append(_scope_clause("product", filters.get("product") or [], filters.get("product_subquery"),
+                                "Department scope → stylecolors (trd_stylecolor_hier_attr)"))
+    elif filters.get("department") or scope.get("topMembers"):
+        d = filters.get("department") or scope.get("topMembers")
+        wl.append(f"--  AND product IN (SELECT stylecolor FROM trd_stylecolor_hier_attr WHERE department IN ('{d}'))   -- (scope not resolved)")
+    if filters.get("location_subquery") or filters.get("location"):
+        wl.append(_scope_clause("location", filters.get("location") or [], filters.get("location_subquery"),
+                                "Location scope → stores (trd_store_hier_attr)"))
+    elif filters.get("channel"):
+        wl.append(f"--  AND location IN (SELECT store FROM trd_store_hier_attr WHERE channel IN ('{filters['channel']}'))   -- (scope not resolved)")
+
+    # --- criteria: move to an OUTER WHERE over a subquery, remapping each
+    # aggregate to an inner alias. This avoids the ClickHouse nested-aggregate
+    # error (an alias like `dmd_u` shadowing the column inside HAVING sum(dmd_u))
+    # AND reads far cleaner. ------------------------------------------------
+    outer_where = None
     if crit:
-        L.append(f"HAVING {crit.strip()}")
+        agg_re = re.compile(r"(?:sum|avg|count|min|max|any|uniq|uniqExact|argMax|argMin)\s*\([^()]*\)", re.I)
+        cm = crit.strip()
+        seen = {}
+        for e in agg_re.findall(cm):
+            key = e.replace(' ', '')
+            if key in expr2alias:
+                alias = expr2alias[key]
+            elif key in seen:
+                alias = seen[key]
+            else:
+                alias = f"c_{len(seen)}"
+                seen[key] = alias
+                inner.append(f"{e} AS {alias}")
+            cm = cm.replace(e, alias)
+        outer_where = cm
+
+    # Always wrap: aggregate (with safe prefixed aliases) in the subquery, then
+    # rename to clean display names and apply the criteria outside — no alias can
+    # shadow a column inside an aggregate anywhere.
+    for n in todo_notes:
+        L.append(n)
+    outer_cols = list(dim_aliases) + [f"{ia} AS {_alias(label)}" for (label, ia) in disp] + ["stylecolor_count"]
+    L.append("SELECT " + ", ".join(outer_cols))
+    L.append("FROM (")
+    L.append("  SELECT")
+    for i, it in enumerate(inner):
+        L.append(f"    {it}{',' if i < len(inner) - 1 else ''}")
+    L.append(f"  FROM {table}")
+    for w in wl:
+        L.append("  " + w)
+    L.append(f"  GROUP BY {', '.join(group_cols)}")
+    L.append(") AS agg")
     if catalog:
-        L += consistency_banner(cpath.stem, catalog)   # cpath.stem = resolved pivot name
-    L.append(f"ORDER BY {', '.join(group_cols)}")
+        L += consistency_banner(cpath.stem, catalog)
+    if outer_where:
+        L.append(f"WHERE {outer_where}          -- pivot selection criteria (references the aggregates by alias)")
+    L.append(f"ORDER BY {', '.join(dim_aliases)}")
     L.append(";")
     L.append("")
     L.append("-- Compare to the UI for the SAME scope:")

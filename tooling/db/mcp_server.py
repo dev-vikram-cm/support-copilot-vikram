@@ -37,10 +37,8 @@ import sys
 from pathlib import Path
 
 HUB = Path(__file__).resolve().parent.parent.parent
-READONLY_RE = re.compile(r"^\s*(select|with|show|explain|describe|desc)\b", re.I)
-FORBIDDEN_RE = re.compile(
-    r"\b(insert|update|delete|truncate|drop|alter|create|grant|revoke|copy"
-    r"|attach|detach|optimize|rename|set\s)\b", re.I)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from readonly_guard import check_sql, SqlNotAllowed  # single source of truth
 SSH_TIMEOUT = 60
 
 
@@ -53,17 +51,6 @@ def connections():
         except Exception as e:
             out[client] = {"_error": str(e)}
     return out
-
-
-def check_sql(sql: str) -> str:
-    s = sql.strip().rstrip(";")
-    if ";" in s:
-        raise ValueError("multiple statements are not allowed")
-    if not READONLY_RE.match(s):
-        raise ValueError("only SELECT/WITH/SHOW/EXPLAIN/DESCRIBE allowed")
-    if FORBIDDEN_RE.search(s):
-        raise ValueError("statement contains a forbidden keyword")
-    return s
 
 
 def tool_targets(_args):
@@ -109,6 +96,51 @@ def tool_query(args):
     return out or "(no rows)"
 
 
+# --- read-only identity probe -------------------------------------------------
+# Confirms WHICH account actually runs our queries and that it cannot write, so
+# the composer/Studio can display and verify it is on the read-only account
+# (s5_copilot_ro) rather than an admin proxy. Engine-appropriate, read-only SQL.
+_IDENTITY_SQL = {
+    "postgres":   "SELECT current_user AS db_user, "
+                  "current_setting('is_superuser') AS is_superuser",
+    "vertica":    "SELECT current_user AS db_user",
+    "clickhouse": "SELECT currentUser() AS db_user",
+}
+
+
+def probe_identity(client, env, engine):
+    """Return {engine, user, is_superuser, read_only, raw} for the account that
+    actually authenticates on client/env/engine. Never raises — reports."""
+    q = _IDENTITY_SQL.get(engine)
+    if not q:
+        return {"engine": engine, "error": f"no identity probe for engine '{engine}'"}
+    out = tool_query({"client": client, "env": env, "engine": engine,
+                      "sql": q, "max_rows": 5})
+    lines = [l for l in out.splitlines()
+             if l.strip() and not re.match(r"^\(\d+ rows?\)$", l.strip())]
+    if not lines or out.lower().startswith(("error", "no connection")) or "denied" in out.lower():
+        return {"engine": engine, "error": out.strip().splitlines()[0] if out.strip() else "no output",
+                "raw": out}
+    vals = (lines[1] if len(lines) > 1 else lines[0]).split("\t")
+    user = vals[0].strip() if vals else None
+    is_super = None
+    if len(vals) > 1:
+        is_super = vals[1].strip().lower() in ("on", "t", "true", "1", "yes")
+    return {"engine": engine, "user": user, "is_superuser": is_super,
+            # read-only is asserted only when we can prove superuser is OFF;
+            # unknown (other engines) stays None -> the UI shows "unverified".
+            "read_only": (is_super is False) if is_super is not None else None,
+            "raw": out.strip()}
+
+
+def tool_whoami(args):
+    client, env = args["client"], args["env"]
+    engs = list((connections().get(client, {}).get(env, {}) or {}).keys())
+    if args.get("engine"):
+        engs = [args["engine"]]
+    return json.dumps([probe_identity(client, env, e) for e in engs], indent=1)
+
+
 TOOLS = [
     {"name": "db_targets",
      "description": "List configured database connections (client/env/engine).",
@@ -128,6 +160,18 @@ TOOLS = [
                          "sql": {"type": "string"},
                          "max_rows": {"type": "integer", "default": 200}}},
      "fn": tool_query},
+    {"name": "db_whoami",
+     "description": "Report which DB account actually runs our queries and "
+                    "whether it is read-only (superuser off). Verifies the "
+                    "read-only account is in effect, not an admin proxy.",
+     "inputSchema": {"type": "object",
+                     "required": ["client", "env"],
+                     "properties": {
+                         "client": {"type": "string"},
+                         "env": {"type": "string"},
+                         "engine": {"type": "string",
+                                    "enum": ["postgres", "clickhouse", "vertica"]}}},
+     "fn": tool_whoami},
 ]
 TOOL_BY_NAME = {t["name"]: t for t in TOOLS}
 

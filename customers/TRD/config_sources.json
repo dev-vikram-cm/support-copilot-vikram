@@ -1,0 +1,15 @@
+{
+  "_readme": "Config sources for the Validation Studio. 'repo' = git base branch; each env = base OVERLAID with its OCI bucket (drift lives in OCI, honoring .delete tombstones) — see knowledge/runbooks/fetch-live-config.md. Local folders are created under customers/<client>/config/.",
+  "client": "TRD",
+  "root": "config",
+  "config_repo": {
+    "repo": "git@github.com:s5-stratos/trd-configs.git",
+    "branch": "allocation-configs",
+    "local": "repo"
+  },
+  "envs": {
+    "qa": {"bucket": "internal-qa-config", "region": "us-chicago-1", "prefix": "trd/asst/"},
+    "staging": {"bucket": "trd-trd-1-staging-config", "region": "us-ashburn-1", "prefix": "trd/asst/"},
+    "prod": {"bucket": "trd-trd-1-prod-config", "region": "us-ashburn-1", "prefix": "trd/asst/"}
+  }
+}

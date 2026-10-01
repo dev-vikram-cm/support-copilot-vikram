@@ -1,9 +1,14 @@
 {
- "generated_at": "2026-07-04 00:20:31",
- "statements_total": 1920,
- "statements_unparsed": 12,
- "parse_rate_pct": 99.4,
+ "generated_at": "2026-09-11 13:51:58",
+ "statements_total": 1945,
+ "statements_unparsed": 13,
+ "parse_rate_pct": 99.3,
  "unparsed": [
+  {
+   "origin": "bash/get_fusionauth_users.sh",
+   "line": 1,
+   "sql": "INSERT INTO ${PG_TABLE} (uid, email) VALUES ${INSERT_VALUES}"
+  },
   {
    "origin": "bash/weekly/03_insert_data.sh",
    "line": 8,

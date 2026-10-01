@@ -153,10 +153,46 @@ def write_db(db_path, pivots, screens, verdict, base_summary, cfg):
     con.commit(); con.close()
 
 
+def export_json(out_path, pivots, screens, verdict, base_summary, cfg):
+    """Dump the catalog as portable JSON — the data a browser artifact needs to
+    compose queries client-side (no Python/DB at runtime, fully deterministic)."""
+    import datetime
+    piv = {}
+    for c in pivots.values():
+        piv[c["pivot"]] = {
+            "base": c.get("runtime_table"),
+            "grain": c.get("bottom_levels"),
+            "metrics": c.get("metrics"),
+            "metric_aggs": c.get("metric_aggs"),
+            "flow": cc.norm(c.get("flow_criteria")),
+            "hist": cc.norm(c.get("hist_criteria")),
+            "uses_aggregation_products": c.get("uses_aggregation_products", False),
+        }
+    vidx = []
+    mp_cache = {}
+    for r in screens:
+        model = r["model"]
+        if model not in mp_cache:
+            mp_cache[model] = model_pivot(cfg, model)
+        pv = mp_cache[model]
+        vidx.append({"tab": r["tab"], "screen": r["screen"], "model": model,
+                     "view": r["view"], "pivot": pv,
+                     "base": piv.get(pv, {}).get("base") if pv else None})
+    cons = {pv: {"base": b, "verdict": v, "hist": hist, "flow": flow,
+                 "majority_hist": mh, "n_siblings": ns}
+            for pv, (b, v, hist, flow, mh, ns) in verdict.items()}
+    doc = {"generated": datetime.datetime.now().isoformat(timespec="seconds"),
+           "client": cfg.name, "pivots": piv, "view_index": vidx,
+           "consistency": cons, "base_summary": base_summary}
+    Path(out_path).write_text(json.dumps(doc, indent=1))
+    print(f"exported {len(piv)} pivots + {len(vidx)} views -> {out_path}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config-dir", required=True)
     ap.add_argument("--db", default=None, help="output SQLite (default: <cfg>/lineage/catalog.db)")
+    ap.add_argument("--export", default=None, help="also write catalog JSON (for the browser artifact)")
     ap.add_argument("--stats", action="store_true", help="print summary, don't write")
     a = ap.parse_args()
     cfg = Path(a.config_dir)
@@ -168,6 +204,8 @@ def main():
     print(f"catalog build: {len(pivots)} pivots | {len(screens)} (screen,view) rows "
           f"({linked} with a model) | {len(base_summary)} base tables | "
           f"{rep['inconsistent_bases']} inconsistent, {len(rep['noops'])} no-op")
+    if a.export:
+        export_json(a.export, pivots, screens, verdict, base_summary, cfg)
     if a.stats:
         return
     db = Path(a.db) if a.db else (cfg / "lineage" / "catalog.db")

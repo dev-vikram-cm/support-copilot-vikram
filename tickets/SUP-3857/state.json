@@ -1,0 +1,239 @@
+{
+  "ticket": "SUP-3857",
+  "client": "BOD",
+  "owner": "vikram.chandrasekaran@s5stratos.com",
+  "mode": "pair",
+  "stage": "retro",
+  "updated_at": "2026-09-29",
+
+  "classification": {
+    "type": "bug",
+    "type_source": "reporter-confirmed",
+    "component": ["db"],
+    "component_source": "system-map",
+    "environment": "staging"
+  },
+
+  "requirement": {
+    "statement": "In Boden Upgrade/Staging, when a planner relaunches an item that is already in markdown (sets a new Relaunch Wk, MD Wk and Exit Wk in Style Edit or in the Assortment by Floorset Style Color Parameters popup), the new MD Wk must hold after save and after replan. Today MD Wk reverts to the previous, already-passed week while Relaunch and Exit keep their new values. QA was fixed (Suhel, 2026-06-15); Jatin/Olga (2026-07-09) asked what changed in QA to make it work, since Upgrade still fails.",
+    "confirmed": true,
+    "acceptance": "Relaunch + new MD Wk on an in-MD item holds in both Style Edit and Assortment by Floorset, after save and after replan, in Staging (and Prod), matching QA / Express Staging."
+  },
+
+  "prior_art": [
+    {
+      "ref": "SUP-4069",
+      "why_relevant": "Most recent boden-configs change in the area ('MD/Exit Screen', merged PR #406) — checked first; does not touch the relaunch→MD save path."
+    },
+    {
+      "ref": "customers/EE/postgres_schema.sql:16647",
+      "why_relevant": "Evereve's md_trigger_on_update on the same platform table has both an 'old MD already passed → undo' branch and a relaunch-aware branch — the template that pointed at a Postgres trigger lock as the mechanism."
+    }
+  ],
+
+  "evidence": [
+    {
+      "claim": "Boden's lifecycle views wire Relaunch/MD/Exit editing the same way as Express's (labels/order aside); QA vs Staging viewdefns identical.",
+      "kind": "config",
+      "locator": "boden-configs/uidefn/view/AssortmentStyleEditSectionLifecycle.viewdefn:20-31; user diff of AssortmentLinePlanByFloorset.viewdefn + AssortmentStyleEditSectionLifecycle.viewdefn QA vs Staging (Notes/SUP-3857.txt)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Frontend sends erlstmkdnwk with the new value; darwin's save (AssortmentController.updateLifecycleParams) is attribute-agnostic; Boden's only save plugin inject_dc.groovy only injects the location.",
+      "kind": "file",
+      "locator": "assortmentui Lifecycle.tsx getLifecycleData; darwin AssortmentController.updateLifecycleParams; boden-configs/plugins/modification/inject_dc.groovy",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Replan passes erlstmkdnwk through from the session copy of the Postgres row and appends to ClickHouse history; the git pivot has no Postgres writes.",
+      "kind": "file",
+      "locator": "boden-configs/pivot/FlowSheetPlanPivot.pivotdefn:869 -> :11705; grep for postgresql()/PostgreSQL engine -> none",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Both screens read MD Wk from Postgres bd_ma_stylecolorchannelattributes: Style Edit via /api/assortment/style/lifecycleParams -> AssortmentHelper.fetchLifecycleParams -> AttributeOperation.getAttributesByOwner; Floorset grid column attribute:erlstmkdnwk:id via AttributePostProcessor.loadDecorationTable (pgDataSource from PivotDecorator).",
+      "kind": "file",
+      "locator": "boden-configs/uidefn/view/AssortmentStyleEditSections.viewdefn:93; AssortmentLinePlanByFloorset.viewdefn:664; LinePlanFloorset.modeldefn:302; darwin AssortmentHelper / AttributeOperation / AttributePostProcessor / PivotDecorator",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Ticket's own Floorset repro shows the old MD in the grid right after the popup checkmark, before any replan — the revert happens at save, not replan.",
+      "kind": "reporter",
+      "locator": "SUP-3857 description, steps 9-10",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Older trigger version (seen on 172.16.80.198/bd): md_trigger_on_update WHEN includes 'old.erlstmkdnwk < old.plan_current'; exit_trigger_on_update WHEN includes 'old.exitdate < old.plan_current'. QA has both removed.",
+      "kind": "query_result",
+      "locator": "pgAdmin DDL of bd_ma_stylecolorchannelattributes pasted by user 2026-09-28 (QA vs stale server); snapshot in tickets/SUP-3857/trigger-snapshots.sql",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "md_trigger_on_update_validity_check() does only: UPDATE bd_ma_stylecolorchannelattributes SET erlstmkdnwk = OLD.erlstmkdnwk WHERE product = NEW.product — an undo, run inside the save transaction.",
+      "kind": "query_result",
+      "locator": "pg_get_functiondef output pasted by user 2026-09-29 (QA and Bonus identical)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "The first 'Staging' DB (172.16.80.198:5432 / bd) is a stale primary the app does not use: bd_serviceparams plan_current 2025-W20 / plan_end 2026-W32, max(updated_at) 2025-06-19 19:12:25, pg_is_in_recovery = f — while the Staging UI offers periods from 2026-W40 and ClickHouse is at 2026-W39 (UI range comes from bd_serviceparams via AssortmentHelper.getRange).",
+      "kind": "query_result",
+      "locator": "user psql output 2026-09-28/29; darwin AssortmentHelper.getRange, ScopeDataController.getDateContext",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Correct Staging server ('Bonus') has plan_current 2026-W40 and its bd_ma_stylecolorchannelattributes DDL, all 10 triggers and the 5 lifecycle trigger functions are identical to QA — no lock present.",
+      "kind": "query_result",
+      "locator": "pgAdmin DDL + pg_get_functiondef pasted by user 2026-09-29 (QA vs Bonus)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "In Bonus, B2962AQU @ CG17 (in MD: MD 2026-W39 < plan_current 2026-W40, no relaunch) — Style Edit Relaunch W41/MD W43/Exit W44 held after replan + refresh; Floorset popup W47/W49/W52 left Postgres erlstmkdnwk=2026-W49, exitdate=2026-W52, mkdnwks=3, lastdcorder=2026-W43 after replan.",
+      "kind": "screenshot",
+      "locator": "user screenshots + row query 2026-09-29 (boden-configs session images 4, 6, 7)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "QA works: K0853 Red-REE MD 2026-W52->2026-W51, Exit 2027-W12->2027-W04 held; Floorsheet MD 2026-W50 held.",
+      "kind": "reporter",
+      "locator": "~/Documents/Notes/SUP-3857.txt (Vikram CM)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Bonus already carries QA's trigger fix most likely because it was applied after Olga's 2026-07-09 retest; exact date/author unknown (trigger DDL has no history).",
+      "kind": "reporter",
+      "locator": "inference from evidence[8] vs Jira comments 2026-07-09",
+      "resolved": false,
+      "observed_or_inferred": "inferred"
+    },
+    {
+      "claim": "Reporter accepted the Staging retest: Olga Gervits replied 'Great, I think we can close them' and the ticket was moved to Done.",
+      "kind": "reporter",
+      "locator": "SUP-3857 Jira comment by Olga Gervits + status Done (relayed by Vikram CM, 2026-09-29)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    }
+  ],
+
+  "requested_evidence": [
+    {
+      "item": "Prod's md_trigger_on_update and exit_trigger_on_update definitions — the only place the lock could still be live.",
+      "command": "SELECT tgname, pg_get_triggerdef(oid) FROM pg_trigger WHERE tgrelid = 'public.bd_ma_stylecolorchannelattributes'::regclass AND tgname IN ('md_trigger_on_update','exit_trigger_on_update');",
+      "status": "requested"
+    },
+    {
+      "item": "Olga Gervits' confirmation that relaunch MD holds in Staging.",
+      "command": "Jira comment posted mentioning @Olga Gervits (tickets/SUP-3857/validation-log.md §Jira comments); she replied 'Great, I think we can close them' — ticket Done.",
+      "status": "received"
+    },
+    {
+      "item": "Optional: one Floorset-popup run on a second item still in MD (MD < 2026-W40, no relaunch) with row snapshots before save / after save / after replan.",
+      "command": "tickets/SUP-3857/diagnostic-queries.sql §2 (find in-MD items) + §3 (row snapshot) — skipped: reporter accepted and closed the ticket",
+      "status": "na"
+    },
+    {
+      "item": "Optional hash-level proof that every function touching the table matches QA vs Bonus (only the 5 lifecycle functions were diffed).",
+      "command": "tickets/SUP-3857/diagnostic-queries.sql §5 (md5 of pg_get_functiondef / pg_get_triggerdef) — skipped: reporter accepted and closed the ticket",
+      "status": "na"
+    }
+  ],
+
+  "hypotheses": [
+    {
+      "cause": "UI config drift between QA and Staging (lifecycle viewdefns).",
+      "status": "ruled_out",
+      "evidence_refs": [0],
+      "ruled_out_because": "Viewdefns identical QA vs Staging; no SUP-3857 config commit; f16f915 / 19ecebe don't touch MD."
+    },
+    {
+      "cause": "Frontend doesn't send erlstmkdnwk, or darwin/save plugin drops it.",
+      "status": "ruled_out",
+      "evidence_refs": [1],
+      "ruled_out_because": "Payload carries MD; darwin save is attribute-agnostic; inject_dc.groovy only sets location."
+    },
+    {
+      "cause": "Replan recomputes/overwrites MD Wk.",
+      "status": "ruled_out",
+      "evidence_refs": [2, 3, 4],
+      "ruled_out_because": "Pivot passes erlstmkdnwk through and has no PG writes; grid shows old MD before any replan; screens read PG."
+    },
+    {
+      "cause": "Postgres trigger lock: older md_trigger_on_update / exit_trigger_on_update WHEN has old.<col> < old.plan_current, and the validity-check function resets the column to OLD — reverting relaunch MD edits on any in-MD item. QA removed the clause directly in the DB; triggers aren't in git, so it drifted per env.",
+      "status": "confirmed",
+      "evidence_refs": [5, 6, 8],
+      "ruled_out_because": ""
+    },
+    {
+      "cause": "Staging still has the lock today.",
+      "status": "ruled_out",
+      "evidence_refs": [7, 8, 9],
+      "ruled_out_because": "That conclusion came from the stale server 172.16.80.198/bd. The live Staging DB (Bonus) matches QA, and the relaunch retest passed there."
+    },
+    {
+      "cause": "Staging's Postgres and ClickHouse are out of step (items 'in CH but not PG').",
+      "status": "ruled_out",
+      "evidence_refs": [7],
+      "ruled_out_because": "Artifact of querying the stale server; on Bonus both are at 2026-W39/W40."
+    }
+  ],
+
+  "root_cause": {
+    "statement": "Postgres trigger lock on bd_ma_stylecolorchannelattributes. The older md_trigger_on_update (and exit_trigger_on_update) WHEN clause includes old.erlstmkdnwk < old.plan_current (old.exitdate < old.plan_current). When it's true, md_trigger_on_update_validity_check() sets erlstmkdnwk = OLD.erlstmkdnwk in the same save transaction. For an item already in markdown, a relaunch's new MD Wk is therefore silently undone, while Relaunch and Exit keep their new values. Replan and both screens then show the reverted Postgres value. QA removed the clause directly in the DB. The trigger DDL isn't in any repo or release process, so environments drifted. Bonus (live Staging) already has QA's version today, and the retest passes.",
+    "evidence_refs": [4, 5, 6, 8, 9],
+    "confirmed_by_execution": true
+  },
+
+  "fix": {
+    "changes": [
+      "No code/config change (boden-configs local branch SUP-3857 = main, untouched).",
+      "DB only, already present in QA + Bonus: CREATE OR REPLACE TRIGGER md_trigger_on_update / exit_trigger_on_update with QA's WHEN clauses (tickets/SUP-3857/trigger-snapshots.sql §B; current DDL in customers/BOD/db/bd_ma_stylecolorchannelattributes.sql).",
+      "Prod: apply the same two statements only if Prod still has the lock (check not done before closure — follow-up); save Prod's current definitions first for rollback."
+    ],
+    "branch": "SUP-3857",
+    "pr": null
+  },
+
+  "validation": {
+    "plan": [
+      "QA: set new MD/Exit on an item, confirm it holds — DONE (K0853 Red-REE)",
+      "Staging (Bonus): confirm triggers + functions match QA — DONE",
+      "Staging (Bonus): Style Edit relaunch on an in-MD item, save, replan, refresh — DONE (B2962AQU)",
+      "Staging (Bonus): Floorset popup relaunch, green ✓, replan, check grid + Postgres row — DONE (B2962AQU, but item no longer in MD)",
+      "Optional: Floorset popup run on a second still-in-MD item with before/after-save/after-replan rows — SKIPPED (reporter closed the ticket)",
+      "Prod: pull md/exit trigger defs; if lock present, apply QA's definitions via DB change process and retest — NOT DONE before closure (follow-up)",
+      "Jira: post retest result, mention Olga for confirmation — DONE; Olga: 'Great, I think we can close them'; ticket moved to Done"
+    ],
+    "pre_state_captured": true,
+    "results": [
+      {"check": "QA MD/Exit edit holds (K0853 Red-REE)", "verdict": "pass", "proof": "MD 2026-W52->W51, Exit 2027-W12->2027-W04, Floorsheet MD 2026-W50 (Notes/SUP-3857.txt)"},
+      {"check": "Bonus DB logic identical to QA (table, 10 triggers, 5 functions)", "verdict": "pass", "proof": "pasted DDL/functiondef diff 2026-09-29; snapshot in customers/BOD/db/bd_ma_stylecolorchannelattributes.sql"},
+      {"check": "Bonus Style Edit relaunch on in-MD item (B2962AQU: MD W39 < plan_current W40)", "verdict": "pass", "proof": "Relaunch W41/MD W43/Exit W44 held after replan + refresh (user screenshots 2026-09-29)"},
+      {"check": "Bonus Floorset popup relaunch (B2962AQU)", "verdict": "pass", "proof": "Postgres erlstmkdnwk 2026-W49, exitdate 2026-W52, mkdnwks 3, lastdcorder 2026-W43 after replan; caveat: item was no longer in MD"},
+      {"check": "Reporter (Olga) confirms", "verdict": "pass", "proof": "Olga Gervits on SUP-3857: 'Great, I think we can close them'; ticket moved to Done (2026-09-29)"},
+      {"check": "Prod md/exit triggers free of the old.<col> < old.plan_current lock", "verdict": "pending", "proof": "not checked before closure — see follow_ups"}
+    ]
+  },
+
+  "knowledge_gained": {
+    "technical": "Boden lifecycle rules live in Postgres triggers on bd_ma_stylecolorchannelattributes, and none are in git. AFTER UPDATE OF <col> triggers with WHEN guards call *_validity_check() functions that reset the column to OLD inside the save transaction, with no error back to the UI; pg_trigger_depth()=0 prevents recursion. The UI reads lifecycle weeks (Style Edit REST + Floorset attribute: columns) and its current week/range (bd_serviceparams) from Postgres. ClickHouse bd_ma_stylecolorchannelattributes is append-only history, and item lists come from ClickHouse pivots. So 'reverts after replan' usually means the PG row was already reverted at save. Environments drift silently because trigger DDL has no repo, so identify the app's live DB (bd_serviceparams + max(updated_at) vs the UI week) before trusting a dump.",
+    "functional": "Once an item is in markdown (MD Wk before the current plan week), its MD week is history and is normally locked: the UI picker greys out passed weeks, and the old DB trigger enforced the same lock. A relaunch starts a new lifecycle, so a new future MD week is legitimate even though the old one has passed; the old lock didn't account for relaunch. QA's fix removes the lock entirely, so MD/Exit can now be moved for any in-MD item, not only relaunched ones. That's a product decision to confirm before promoting to Prod."
+  },
+
+  "follow_ups": [
+    "Put bd_ma_stylecolorchannelattributes trigger + function DDL under version control (customers/BOD/db/ snapshot now; ideally a platform/DB repo) so QA/Staging/Prod can be diffed.",
+    "Separate ticket candidate: Wks at FP / Initial Intake Wk are computed from Debut, not Relaunch (AssortmentLinePlanLifecycleTab.viewdefn:43,:70 and update_week_indxes too = mdstart - dbtwk). Express behaves the same.",
+    "Prod trigger check (not done before closure): pull md_trigger_on_update / exit_trigger_on_update on Prod; if the old.<col> < old.plan_current lock is present, the same relaunch bug is live in Prod — apply trigger-snapshots.sql §B via the DB change process.",
+    "Restore test items in Bonus only if the reporter asks (original MD 2026-W39 is now past, so it needs SQL): B2962AQU, B3002ECR, B3180NAV, B3180GRY, B3180LRD @ CG17.",
+    "Environment hygiene: 172.16.80.198 / db bd is a stale Boden 'Staging' copy (last write 2025-06-19); flag it to DevOps so no one else triages against it."
+  ]
+}

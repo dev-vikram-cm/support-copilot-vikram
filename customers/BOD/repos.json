@@ -7,9 +7,9 @@
     "note": "'etl-prod-2025' is the main prod branch (confirmed by user, cloned 2026-08-07)."
   },
   "config": {
-    "repo": "<git-url-or-local-path>/bod-configs",
-    "branch": "<unconfirmed>",
-    "local": "",
-    "note": "config repo not yet cloned/confirmed — fill in when known"
+    "repo": "https://github.com/s5-stratos/boden-configs",
+    "branch": "main",
+    "local": "../boden-configs",
+    "note": "Confirmed during SUP-3857 (2026-09-28). Env sync branches exist (boden_upgrade, autosync/s5-qa, 11.13.2025_fromQA/_fromUpg). QA live config: OCI bucket internal-qa-config, prefix bd/. Postgres trigger/function DDL is NOT in this repo (schema/citus_schema.sql is a stale 2018 TB template) — see customers/BOD/db/."
   }
 }

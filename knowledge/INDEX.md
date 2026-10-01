@@ -51,13 +51,16 @@ file gets a row here.**
 | `customers/<CLIENT>/db/postgres_schema.sql` | Exact PG DDL/triggers/functions/views (grep it) |
 | `customers/<CLIENT>/db/connections.json` | (gitignored) live read-only DB access config for the db MCP |
 | `customers/TRD/weekly-product-master-lineage.md` | TRD product-master pipeline (worked example of ETL lineage) |
+| `customers/BOD/db/bd_ma_stylecolorchannelattributes.sql` | Boden lifecycle triggers + functions (QA = Bonus/Staging, 2026-09-29) — the only copy of this DDL anywhere; diff other envs against it. Any "MD/Exit/Debut week reverts / won't save" ticket |
 | `customers/LP/hindsighting-build-log.md` | **Why each step** of the LP Hindsighting ETL+config build — learning-oriented, cross-client grounded, grows per session. Read when working any LP AP/hindsighting step or learning the inbound→landing→staging→model→PG/CH pipeline generally |
 | `customers/<CLIENT>/captured-knowledge.md` | Facts users dropped during tickets (newest first, provenance-stamped by `learn.py`) — check before asking; promote durable ones into profile.md |
 | `knowledge/captured-knowledge.md` | Same, but platform-wide (not client-specific) |
 
 Known customers: TRD (deepest), EE (Evereve — note: JIRA tag `EE`, but
 repos/app/table-prefix use `eve`/`evereve`, see customers/EE/profile.md
-naming note), BELK, AEO, BOD, KW, TB, EXP, LP (Lilly Pulitzer — MFP in
+naming note), BELK, AEO, BOD (Boden — JIRA tag `[BD]`, table prefix `bd`;
+Staging = Upgrade = "Bonus"; profile + db/README from SUP-3857, no full
+schema dump yet), KW, TB, EXP, LP (Lilly Pulitzer — MFP in
 prod, Hindsighting/AP build in progress; repos.json + build log so far, no
 profile.md/db/ yet). Adding one = a new `customers/<CLIENT>/` folder
 (profile + repos.json, optionally db/) — **check both the JIRA tag and any
@@ -112,14 +115,19 @@ with `regen.sh`.
 | `knowledge/notes/SUP-*.md` | ALWAYS search first (grep symptom/component/table words). Lead with prior art |
 | `knowledge/notes/PROD-<CLIENT>-<YYYYMMDD>-*.md` | Same — prod batch/data incidents worked without a filed JIRA ticket (common: caught via log/monitoring before a ticket exists). If a ticket gets filed later, rename to `SUP-####.md` and update this row |
 
-Notable notes: SUP-4210 (viewdefn `_r`/`_u` formula typo + AEO subsidiary
+Notable notes: SUP-3857 (BOD relaunch MD Wk reverts — Postgres
+`md_trigger_on_update` WHEN lock `old.erlstmkdnwk < old.plan_current` undoes
+the edit at save; QA hand-fixed, triggers not in git → env drift; stale
+"Staging" server trap; Done, Prod trigger check open), SUP-4210 (viewdefn `_r`/`_u` formula typo + AEO subsidiary
 replication), SUP-4230 (Belk on-order id-mapping dedup), SUP-4254
 (carriage-return in upload → split export → products vanish), SUP-4311
 (text-column enhancement, ordinal-load gotcha), SUP-4378 (Belk ST%/FP
 ST%/WOH/FP WOH — confirmed formula set, agnostic `tot_avail_inv_u`,
 weekcount `countIf(...strcntwk>0)` + grouped-rollup `max` not `sum`,
 Life-To-Date style pane architecture, pivotdefn filename-vs-`id=` routing),
-bd mfpapsync lock-race,
+bd mfpapsync lock-race, SUP-4738 (TB `V_MemberBasedValidValues` converted to
+a real constant table — `mappings/*.csv` + `vertica/0N_load_*.sql` pattern;
+follow-through on SUP-3061; open casing/CH-scope questions noted),
 PROD-EE-20260809 (EE/Evereve new-store onboarding missing backtest backfill
 → non-nullable NULL insert in `600_18_AllocAdjEve.sql`), PROD-TRD-20260813
 (Torrid duplicate MERGE key — new stylecolor sent without S5_ID, backfilled

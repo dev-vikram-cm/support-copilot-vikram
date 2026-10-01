@@ -1,16 +1,19 @@
--- ENV: internal-qa | DB: trd | dumped: 2026-07-09 | server 14.17
+-- ENV: QA | DB: trd | dumped: 2026-10-01 15:07 IST | server 14.22 (pg_dump 18.6, plain, schema-only)
 --
 -- PostgreSQL database dump
 --
 
-\restrict 1giFFTCBgsWr7eOJZkO4Gb6H3o2cHQOuq5eW9cwDaxJ2xFHJgxcU4RGdtfhug2m
+\restrict gEQl7uGwvF0FzMHwjDBzZ6Yh0uIp3jEbbkhbsid3tMX83sRidbFDGbzvxSxiX6o
 
--- Dumped from database version 14.17
--- Dumped by pg_dump version 14.23 (Ubuntu 14.23-1.pgdg22.04+1)
+-- Dumped from database version 14.22
+-- Dumped by pg_dump version 18.6
+
+-- Started on 2026-10-01 15:07:59 IST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -20,27 +23,47 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: mfp; Type: SCHEMA; Schema: -; Owner: -
+-- TOC entry 1284 (class 2615 OID 108994495)
+-- Name: mfp; Type: SCHEMA; Schema: -; Owner: psql
 --
 
 CREATE SCHEMA mfp;
 
 
+ALTER SCHEMA mfp OWNER TO psql;
+
 --
--- Name: mfp_td; Type: SCHEMA; Schema: -; Owner: -
+-- TOC entry 1285 (class 2615 OID 108994496)
+-- Name: mfp_td; Type: SCHEMA; Schema: -; Owner: psql
 --
 
 CREATE SCHEMA mfp_td;
 
 
+ALTER SCHEMA mfp_td OWNER TO psql;
+
 --
--- Name: target_setting; Type: SCHEMA; Schema: -; Owner: -
+-- TOC entry 1385 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: oci_superuser
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+ALTER SCHEMA public OWNER TO oci_superuser;
+
+--
+-- TOC entry 1286 (class 2615 OID 108994497)
+-- Name: target_setting; Type: SCHEMA; Schema: -; Owner: psql
 --
 
 CREATE SCHEMA target_setting;
 
 
+ALTER SCHEMA target_setting OWNER TO psql;
+
 --
+-- TOC entry 2 (class 3079 OID 4715927)
 -- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -48,14 +71,17 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
 
 --
--- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: -
+-- TOC entry 8536 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
 --
 
 COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
 
 
 --
--- Name: approval; Type: TYPE; Schema: mfp; Owner: -
+-- TOC entry 2790 (class 1247 OID 108994499)
+-- Name: approval; Type: TYPE; Schema: mfp; Owner: psql
 --
 
 CREATE TYPE mfp.approval AS ENUM (
@@ -64,8 +90,11 @@ CREATE TYPE mfp.approval AS ENUM (
 );
 
 
+ALTER TYPE mfp.approval OWNER TO psql;
+
 --
--- Name: permission; Type: TYPE; Schema: mfp; Owner: -
+-- TOC entry 2793 (class 1247 OID 108994504)
+-- Name: permission; Type: TYPE; Schema: mfp; Owner: psql
 --
 
 CREATE TYPE mfp.permission AS ENUM (
@@ -75,8 +104,11 @@ CREATE TYPE mfp.permission AS ENUM (
 );
 
 
+ALTER TYPE mfp.permission OWNER TO psql;
+
 --
--- Name: scopetype; Type: TYPE; Schema: mfp; Owner: -
+-- TOC entry 2796 (class 1247 OID 108994512)
+-- Name: scopetype; Type: TYPE; Schema: mfp; Owner: psql
 --
 
 CREATE TYPE mfp.scopetype AS ENUM (
@@ -90,8 +122,11 @@ CREATE TYPE mfp.scopetype AS ENUM (
 );
 
 
+ALTER TYPE mfp.scopetype OWNER TO psql;
+
 --
--- Name: approval; Type: TYPE; Schema: mfp_td; Owner: -
+-- TOC entry 2799 (class 1247 OID 108994528)
+-- Name: approval; Type: TYPE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TYPE mfp_td.approval AS ENUM (
@@ -100,8 +135,11 @@ CREATE TYPE mfp_td.approval AS ENUM (
 );
 
 
+ALTER TYPE mfp_td.approval OWNER TO psql;
+
 --
--- Name: permission; Type: TYPE; Schema: mfp_td; Owner: -
+-- TOC entry 2802 (class 1247 OID 108994534)
+-- Name: permission; Type: TYPE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TYPE mfp_td.permission AS ENUM (
@@ -111,8 +149,11 @@ CREATE TYPE mfp_td.permission AS ENUM (
 );
 
 
+ALTER TYPE mfp_td.permission OWNER TO psql;
+
 --
--- Name: scopetype; Type: TYPE; Schema: mfp_td; Owner: -
+-- TOC entry 2805 (class 1247 OID 108994542)
+-- Name: scopetype; Type: TYPE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TYPE mfp_td.scopetype AS ENUM (
@@ -126,8 +167,11 @@ CREATE TYPE mfp_td.scopetype AS ENUM (
 );
 
 
+ALTER TYPE mfp_td.scopetype OWNER TO psql;
+
 --
--- Name: agent_sender; Type: TYPE; Schema: public; Owner: -
+-- TOC entry 2808 (class 1247 OID 108994558)
+-- Name: agent_sender; Type: TYPE; Schema: public; Owner: psql
 --
 
 CREATE TYPE public.agent_sender AS ENUM (
@@ -137,8 +181,11 @@ CREATE TYPE public.agent_sender AS ENUM (
 );
 
 
+ALTER TYPE public.agent_sender OWNER TO psql;
+
 --
--- Name: queue_state; Type: TYPE; Schema: public; Owner: -
+-- TOC entry 2811 (class 1247 OID 108994566)
+-- Name: queue_state; Type: TYPE; Schema: public; Owner: psql
 --
 
 CREATE TYPE public.queue_state AS ENUM (
@@ -150,8 +197,11 @@ CREATE TYPE public.queue_state AS ENUM (
 );
 
 
+ALTER TYPE public.queue_state OWNER TO psql;
+
 --
--- Name: undo_status; Type: TYPE; Schema: public; Owner: -
+-- TOC entry 2814 (class 1247 OID 108994578)
+-- Name: undo_status; Type: TYPE; Schema: public; Owner: psql
 --
 
 CREATE TYPE public.undo_status AS ENUM (
@@ -160,8 +210,11 @@ CREATE TYPE public.undo_status AS ENUM (
 );
 
 
+ALTER TYPE public.undo_status OWNER TO psql;
+
 --
--- Name: approval; Type: TYPE; Schema: target_setting; Owner: -
+-- TOC entry 2817 (class 1247 OID 108994584)
+-- Name: approval; Type: TYPE; Schema: target_setting; Owner: psql
 --
 
 CREATE TYPE target_setting.approval AS ENUM (
@@ -170,8 +223,11 @@ CREATE TYPE target_setting.approval AS ENUM (
 );
 
 
+ALTER TYPE target_setting.approval OWNER TO psql;
+
 --
--- Name: permission; Type: TYPE; Schema: target_setting; Owner: -
+-- TOC entry 2820 (class 1247 OID 108994590)
+-- Name: permission; Type: TYPE; Schema: target_setting; Owner: psql
 --
 
 CREATE TYPE target_setting.permission AS ENUM (
@@ -181,8 +237,11 @@ CREATE TYPE target_setting.permission AS ENUM (
 );
 
 
+ALTER TYPE target_setting.permission OWNER TO psql;
+
 --
--- Name: scopetype; Type: TYPE; Schema: target_setting; Owner: -
+-- TOC entry 2823 (class 1247 OID 108994598)
+-- Name: scopetype; Type: TYPE; Schema: target_setting; Owner: psql
 --
 
 CREATE TYPE target_setting.scopetype AS ENUM (
@@ -196,8 +255,11 @@ CREATE TYPE target_setting.scopetype AS ENUM (
 );
 
 
+ALTER TYPE target_setting.scopetype OWNER TO psql;
+
 --
--- Name: sync_plan_data_wide(); Type: PROCEDURE; Schema: mfp; Owner: -
+-- TOC entry 2131 (class 1255 OID 108994613)
+-- Name: sync_plan_data_wide(); Type: PROCEDURE; Schema: mfp; Owner: psql
 --
 
 CREATE PROCEDURE mfp.sync_plan_data_wide()
@@ -224,8 +286,11 @@ END
 $$;
 
 
+ALTER PROCEDURE mfp.sync_plan_data_wide() OWNER TO psql;
+
 --
--- Name: add_to_assortment(text, text, text, text, text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2108 (class 1255 OID 108994614)
+-- Name: add_to_assortment(text, text, text, text, text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.add_to_assortment(input_jsessionid text, scope_product text, scope_location text, scope_start text, scope_floorset text) RETURNS refcursor
@@ -1060,6 +1125,7 @@ INSERT INTO trd_ma_stylecolorattributes
          ,cc_patterned_after
          ,stylecolor_name
          ,style_name
+         ,cc_orig_unit_retail_char
         )
 SELECT final_stylecolor_id as product
                , null as cc_item_diff_1
@@ -1130,6 +1196,7 @@ SELECT final_stylecolor_id as product
          , a.incoming_stylecolor_id
          , a.stylecolor_name
          , a.style_name
+         , ''$'' || TO_CHAR(b.cc_orig_unit_retail, ''FM999999990.00'') as cc_orig_unit_retail_char
 
 from (select distinct final_stylecolor_id, stylecolor_type, incoming_stylecolor_id, cccolor,cccolorfamily,cccolorid,color_description, stylecolor_name, style_name  from '||table_cart_master_temp||') a, trd_ma_stylecolorattributes b
 where a.incoming_stylecolor_id=b.product
@@ -2404,8 +2471,11 @@ END;
 $_$;
 
 
+ALTER FUNCTION public.add_to_assortment(input_jsessionid text, scope_product text, scope_location text, scope_start text, scope_floorset text) OWNER TO psql;
+
 --
--- Name: after_add_to_assortment(text, text, text, text, text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2132 (class 1255 OID 108994616)
+-- Name: after_add_to_assortment(text, text, text, text, text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.after_add_to_assortment(input_jsessionid text, scope_product text, scope_location text, scope_start text, scope_floorset text) RETURNS refcursor
@@ -2421,8 +2491,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.after_add_to_assortment(input_jsessionid text, scope_product text, scope_location text, scope_start text, scope_floorset text) OWNER TO psql;
+
 --
--- Name: ata_add_to_assortment(text, text); Type: PROCEDURE; Schema: public; Owner: -
+-- TOC entry 2133 (class 1255 OID 108994617)
+-- Name: ata_add_to_assortment(text, text); Type: PROCEDURE; Schema: public; Owner: psql
 --
 
 CREATE PROCEDURE public.ata_add_to_assortment(IN p_session_id text, IN p_pivot_user_id text)
@@ -4622,8 +4695,11 @@ END;
 $$;
 
 
+ALTER PROCEDURE public.ata_add_to_assortment(IN p_session_id text, IN p_pivot_user_id text) OWNER TO psql;
+
 --
--- Name: ata_get_default_params(text, text, text, text, text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2134 (class 1255 OID 108994619)
+-- Name: ata_get_default_params(text, text, text, text, text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.ata_get_default_params(input_jsessionid text, scope_department text, scope_location text, scope_start text, scope_floorset text) RETURNS void
@@ -4772,8 +4848,11 @@ END;
 $_$;
 
 
+ALTER FUNCTION public.ata_get_default_params(input_jsessionid text, scope_department text, scope_location text, scope_start text, scope_floorset text) OWNER TO psql;
+
 --
--- Name: ata_plan_these_style_stylecolors_proc(text); Type: PROCEDURE; Schema: public; Owner: -
+-- TOC entry 2135 (class 1255 OID 108994621)
+-- Name: ata_plan_these_style_stylecolors_proc(text); Type: PROCEDURE; Schema: public; Owner: psql
 --
 
 CREATE PROCEDURE public.ata_plan_these_style_stylecolors_proc(IN p_pivot_user_id text)
@@ -4873,8 +4952,11 @@ END;
 $$;
 
 
+ALTER PROCEDURE public.ata_plan_these_style_stylecolors_proc(IN p_pivot_user_id text) OWNER TO psql;
+
 --
--- Name: calc_store_count_ranging(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2136 (class 1255 OID 108994622)
+-- Name: calc_store_count_ranging(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.calc_store_count_ranging() RETURNS trigger
@@ -4904,8 +4986,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.calc_store_count_ranging() OWNER TO psql;
+
 --
--- Name: can_remove_from_assortment(text, text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2137 (class 1255 OID 108994623)
+-- Name: can_remove_from_assortment(text, text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.can_remove_from_assortment(stylecolorid text, channelid text) RETURNS boolean
@@ -4935,8 +5020,11 @@ CREATE FUNCTION public.can_remove_from_assortment(stylecolorid text, channelid t
 $$;
 
 
+ALTER FUNCTION public.can_remove_from_assortment(stylecolorid text, channelid text) OWNER TO psql;
+
 --
--- Name: check_isprepublishable(text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2139 (class 1255 OID 108994624)
+-- Name: check_isprepublishable(text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.check_isprepublishable(stylecolorid text) RETURNS text
@@ -4973,8 +5061,11 @@ CREATE FUNCTION public.check_isprepublishable(stylecolorid text) RETURNS text
 $$;
 
 
+ALTER FUNCTION public.check_isprepublishable(stylecolorid text) OWNER TO psql;
+
 --
--- Name: check_ispublishable(text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2140 (class 1255 OID 108994625)
+-- Name: check_ispublishable(text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.check_ispublishable(stylecolorid text) RETURNS text
@@ -5012,8 +5103,11 @@ CREATE FUNCTION public.check_ispublishable(stylecolorid text) RETURNS text
 $$;
 
 
+ALTER FUNCTION public.check_ispublishable(stylecolorid text) OWNER TO psql;
+
 --
--- Name: dbt_after_md_trigger_on_update_validity_check(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2141 (class 1255 OID 108994626)
+-- Name: dbt_after_md_trigger_on_update_validity_check(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.dbt_after_md_trigger_on_update_validity_check() RETURNS trigger
@@ -5028,8 +5122,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.dbt_after_md_trigger_on_update_validity_check() OWNER TO psql;
+
 --
--- Name: delete_duplicate_invalids(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2142 (class 1255 OID 108994627)
+-- Name: delete_duplicate_invalids(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.delete_duplicate_invalids() RETURNS trigger
@@ -5043,8 +5140,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.delete_duplicate_invalids() OWNER TO psql;
+
 --
--- Name: delete_records(text); Type: PROCEDURE; Schema: public; Owner: -
+-- TOC entry 2143 (class 1255 OID 108994628)
+-- Name: delete_records(text); Type: PROCEDURE; Schema: public; Owner: psql
 --
 
 CREATE PROCEDURE public.delete_records(IN v_uid text)
@@ -5079,8 +5179,11 @@ END;
 $$;
 
 
+ALTER PROCEDURE public.delete_records(IN v_uid text) OWNER TO psql;
+
 --
--- Name: eval(text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2144 (class 1255 OID 108994629)
+-- Name: eval(text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.eval(expression text) RETURNS integer
@@ -5095,8 +5198,11 @@ end;
 $$;
 
 
+ALTER FUNCTION public.eval(expression text) OWNER TO psql;
+
 --
--- Name: exit_trigger_on_update_validity_check(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2145 (class 1255 OID 108994630)
+-- Name: exit_trigger_on_update_validity_check(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.exit_trigger_on_update_validity_check() RETURNS trigger
@@ -5111,8 +5217,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.exit_trigger_on_update_validity_check() OWNER TO psql;
+
 --
--- Name: fetch_store_count(text, text, text[], text[]); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2146 (class 1255 OID 108994631)
+-- Name: fetch_store_count(text, text, text[], text[]); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.fetch_store_count(productid text, floorsetid text, str_grade text[], str_store_climate text[]) RETURNS integer
@@ -5173,8 +5282,11 @@ FROM
 $$;
 
 
+ALTER FUNCTION public.fetch_store_count(productid text, floorsetid text, str_grade text[], str_store_climate text[]) OWNER TO psql;
+
 --
--- Name: fetch_store_count(text, text, text[], text[], text[], text[], text[]); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2147 (class 1255 OID 108994632)
+-- Name: fetch_store_count(text, text, text[], text[], text[], text[], text[]); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.fetch_store_count(productid text, floorsetid text, str_grade text[], str_store_climate text[], str_capacity text[], str_store_banner text[], str_geo_region text[]) RETURNS integer
@@ -5299,8 +5411,11 @@ FROM
 $$;
 
 
+ALTER FUNCTION public.fetch_store_count(productid text, floorsetid text, str_grade text[], str_store_climate text[], str_capacity text[], str_store_banner text[], str_geo_region text[]) OWNER TO psql;
+
 --
--- Name: fetch_store_count(text, text, text[], text[], text[], text[], text[], text[]); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2148 (class 1255 OID 108994633)
+-- Name: fetch_store_count(text, text, text[], text[], text[], text[], text[], text[]); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.fetch_store_count(productid text, floorsetid text, str_grade text[], str_store_climate text[], str_capacity text[], str_store_banner text[], str_geo_region text[], str_hazmat text[]) RETURNS integer
@@ -5425,8 +5540,11 @@ FROM
 $$;
 
 
+ALTER FUNCTION public.fetch_store_count(productid text, floorsetid text, str_grade text[], str_store_climate text[], str_capacity text[], str_store_banner text[], str_geo_region text[], str_hazmat text[]) OWNER TO psql;
+
 --
--- Name: get_default_params(text, text, text, text, text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2109 (class 1255 OID 108994634)
+-- Name: get_default_params(text, text, text, text, text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.get_default_params(input_jsessionid text, scope_department text, scope_location text, scope_start text, scope_floorset text) RETURNS void
@@ -5575,8 +5693,11 @@ END;
 $_$;
 
 
+ALTER FUNCTION public.get_default_params(input_jsessionid text, scope_department text, scope_location text, scope_start text, scope_floorset text) OWNER TO psql;
+
 --
--- Name: get_store_count(text, text[], text[], text[], text[], text[], text[], text); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2138 (class 1255 OID 108994636)
+-- Name: get_store_count(text, text[], text[], text[], text[], text[], text[], text); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.get_store_count(week text, str_grade text[], str_store_climate text[], str_capacity text[], str_store_banner text[], str_geo_region text[], str_hazmat text[], productval text) RETURNS integer
@@ -5690,8 +5811,11 @@ FROM
 $$;
 
 
+ALTER FUNCTION public.get_store_count(week text, str_grade text[], str_store_climate text[], str_capacity text[], str_store_banner text[], str_geo_region text[], str_hazmat text[], productval text) OWNER TO psql;
+
 --
--- Name: itemprice_fetchdepartment(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2110 (class 1255 OID 108994637)
+-- Name: itemprice_fetchdepartment(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.itemprice_fetchdepartment() RETURNS trigger
@@ -5707,8 +5831,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.itemprice_fetchdepartment() OWNER TO psql;
+
 --
--- Name: lifecycle_plan_update(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2149 (class 1255 OID 108994638)
+-- Name: lifecycle_plan_update(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.lifecycle_plan_update() RETURNS trigger
@@ -5739,8 +5866,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.lifecycle_plan_update() OWNER TO psql;
+
 --
--- Name: md_trigger_on_update_validity_check(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2150 (class 1255 OID 108994639)
+-- Name: md_trigger_on_update_validity_check(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.md_trigger_on_update_validity_check() RETURNS trigger
@@ -5755,8 +5885,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.md_trigger_on_update_validity_check() OWNER TO psql;
+
 --
--- Name: notify_pivot_execution_change(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2151 (class 1255 OID 108994640)
+-- Name: notify_pivot_execution_change(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.notify_pivot_execution_change() RETURNS trigger
@@ -5765,8 +5898,11 @@ CREATE FUNCTION public.notify_pivot_execution_change() RETURNS trigger
             RETURN NEW; END; $$;
 
 
+ALTER FUNCTION public.notify_pivot_execution_change() OWNER TO psql;
+
 --
--- Name: notify_plan_queue_change(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2152 (class 1255 OID 108994641)
+-- Name: notify_plan_queue_change(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.notify_plan_queue_change() RETURNS trigger
@@ -5779,8 +5915,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.notify_plan_queue_change() OWNER TO psql;
+
 --
--- Name: on_publish_remove_from_worklist(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2153 (class 1255 OID 108994642)
+-- Name: on_publish_remove_from_worklist(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.on_publish_remove_from_worklist() RETURNS trigger
@@ -5795,8 +5934,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.on_publish_remove_from_worklist() OWNER TO psql;
+
 --
--- Name: on_unpublish_remove_from_worklist(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2154 (class 1255 OID 108994643)
+-- Name: on_unpublish_remove_from_worklist(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.on_unpublish_remove_from_worklist() RETURNS trigger
@@ -5813,8 +5955,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.on_unpublish_remove_from_worklist() OWNER TO psql;
+
 --
--- Name: plan_eligible(text[]); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2155 (class 1255 OID 108994644)
+-- Name: plan_eligible(text[]); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.plan_eligible(products text[]) RETURNS TABLE(product text, location text)
@@ -5830,8 +5975,11 @@ CREATE FUNCTION public.plan_eligible(products text[]) RETURNS TABLE(product text
         $$;
 
 
+ALTER FUNCTION public.plan_eligible(products text[]) OWNER TO psql;
+
 --
--- Name: propagate_assortment_to_floorsets(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2156 (class 1255 OID 108994645)
+-- Name: propagate_assortment_to_floorsets(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.propagate_assortment_to_floorsets() RETURNS trigger
@@ -5951,8 +6099,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.propagate_assortment_to_floorsets() OWNER TO psql;
+
 --
--- Name: remove_from_assortment(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2157 (class 1255 OID 108994646)
+-- Name: remove_from_assortment(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.remove_from_assortment() RETURNS trigger
@@ -6010,8 +6161,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.remove_from_assortment() OWNER TO psql;
+
 --
--- Name: reset_to_prev_if_approved(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2158 (class 1255 OID 108994647)
+-- Name: reset_to_prev_if_approved(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.reset_to_prev_if_approved() RETURNS trigger
@@ -6055,8 +6209,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.reset_to_prev_if_approved() OWNER TO psql;
+
 --
--- Name: revert_to_original(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2159 (class 1255 OID 108994648)
+-- Name: revert_to_original(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.revert_to_original() RETURNS trigger
@@ -6071,8 +6228,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.revert_to_original() OWNER TO psql;
+
 --
--- Name: set_floorset_fields_on_initrcptwk_change(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2160 (class 1255 OID 108994649)
+-- Name: set_floorset_fields_on_initrcptwk_change(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.set_floorset_fields_on_initrcptwk_change() RETURNS trigger
@@ -6144,8 +6304,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.set_floorset_fields_on_initrcptwk_change() OWNER TO psql;
+
 --
--- Name: set_sty_vpn_desc_on_update(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2161 (class 1255 OID 108994650)
+-- Name: set_sty_vpn_desc_on_update(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.set_sty_vpn_desc_on_update() RETURNS trigger
@@ -6176,8 +6339,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.set_sty_vpn_desc_on_update() OWNER TO psql;
+
 --
--- Name: set_vpn_color_desc_on_update(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2162 (class 1255 OID 108994651)
+-- Name: set_vpn_color_desc_on_update(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.set_vpn_color_desc_on_update() RETURNS trigger
@@ -6208,8 +6374,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.set_vpn_color_desc_on_update() OWNER TO psql;
+
 --
--- Name: sizerangecode_isvalid(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2163 (class 1255 OID 108994652)
+-- Name: sizerangecode_isvalid(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.sizerangecode_isvalid() RETURNS trigger
@@ -6257,8 +6426,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.sizerangecode_isvalid() OWNER TO psql;
+
 --
--- Name: sizerangecode_validsizes_members(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2164 (class 1255 OID 108994653)
+-- Name: sizerangecode_validsizes_members(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.sizerangecode_validsizes_members() RETURNS trigger
@@ -6359,8 +6531,11 @@ END;
 $_$;
 
 
+ALTER FUNCTION public.sizerangecode_validsizes_members() OWNER TO psql;
+
 --
--- Name: store_eligibility_trigger(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2165 (class 1255 OID 108994654)
+-- Name: store_eligibility_trigger(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.store_eligibility_trigger() RETURNS trigger
@@ -6440,25 +6615,28 @@ END;
 $$;
 
 
+ALTER FUNCTION public.store_eligibility_trigger() OWNER TO psql;
+
 --
--- Name: trd_no_style_clone_stylecolor_size_proc(text, text); Type: PROCEDURE; Schema: public; Owner: -
+-- TOC entry 2166 (class 1255 OID 108994655)
+-- Name: trd_no_style_clone_stylecolor_size_proc(text, text); Type: PROCEDURE; Schema: public; Owner: psql
 --
 
 CREATE PROCEDURE public.trd_no_style_clone_stylecolor_size_proc(IN p_session_id text, IN p_pivot_user_id text)
     LANGUAGE plpgsql
-    AS $$
+    AS $_$
 DECLARE
     v_session_id    TEXT := p_session_id;
     v_pivot_user_id TEXT := p_pivot_user_id;
 BEGIN
 
-    
+
 
     --------------------------------------------------------------------
     -- Build temp flat_map for this session
     --------------------------------------------------------------------
     CREATE TEMPORARY TABLE trd_style_clone_flat_map_temp AS
-    SELECT * 
+    SELECT *
     FROM (
         /*
         SELECT DISTINCT
@@ -6475,7 +6653,7 @@ BEGIN
           AND session_id = v_session_id
 
         UNION ALL
-        */        
+        */
         SELECT DISTINCT
             from_stylecolor   AS from_id,
             to_new_stylecolor AS to_id,
@@ -6495,7 +6673,7 @@ BEGIN
             to_new_stylecolorsize AS to_id,
             'stylecolorsize'      AS levelid,
             updated_by, session_id, clone_ordinal::text as clone_ordinal
-            , '' as to_name 
+            , '' as to_name
             , '' as to_desc
             , '' as cccolor
             , '' as cccolorfamily
@@ -6511,14 +6689,14 @@ BEGIN
         INSERT INTO trd_d_product (
             id,client_id,name,description,levelid,indx,eventdate,version_id,created_at,created_by,updated_at,updated_by,record_state
         )
-        SELECT DISTINCT 
+        SELECT DISTINCT
               to_id
             , null as client_id
             , CASE WHEN a.levelid='stylecolorsize' THEN name ELSE to_name END
-            , CASE WHEN a.levelid='stylecolorsize' THEN description ELSE to_desc END 
+            , CASE WHEN a.levelid='stylecolorsize' THEN description ELSE to_desc END
             , a.levelid
             , indx
-            
+
             , now()::date
             , version_id
             , now()
@@ -6535,7 +6713,7 @@ BEGIN
     --------------------------------------------------------------------
     -- STYLE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_h_prodstd (
             id,
             ancestor0,
@@ -6580,7 +6758,7 @@ BEGIN
     --------------------------------------------------------------------
     -- STYLECOLOR insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_h_prodstd (
             id,
             ancestor0,
@@ -6626,7 +6804,7 @@ BEGIN
     --------------------------------------------------------------------
     -- STYLECOLORSIZE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_h_prodstd (
             id,
             ancestor0,
@@ -6673,7 +6851,7 @@ BEGIN
     --------------------------------------------------------------------
     -- STYLEATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_styleattributes (
             product,
             sty_knit_or_woven,
@@ -6771,12 +6949,12 @@ BEGIN
           AND a.levelid = 'style'
             ON CONFLICT (product) DO NOTHING
     ;
-    
-*/   
+
+*/
     --------------------------------------------------------------------
     -- STYLECOLORATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_stylecolorattributes (
             product,
             cc_item_diff_1,
@@ -6882,7 +7060,8 @@ BEGIN
             buyer_email,
             cc_buyer,
             cc_patterned_after_name,
-            vpn_color_desc
+            vpn_color_desc,
+            cc_orig_unit_retail_char
         )
         SELECT
             to_id,
@@ -6990,19 +7169,20 @@ BEGIN
             buyer_email,
             cc_buyer,
                 cc_patterned_after_name,
-                null as vpn_color_desc
+                null as vpn_color_desc,
+                '$' || TO_CHAR(cc_orig_unit_retail, 'FM999999990.00') as cc_orig_unit_retail_char
         FROM trd_style_clone_flat_map_temp a,
              trd_ma_stylecolorattributes b
         WHERE a.from_id = b.product
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- SIZEATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_sizeattributes (
             product,
             parent_id,
@@ -7041,12 +7221,12 @@ BEGIN
           AND a.session_id = v_session_id
             ON CONFLICT (product) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- STYLECOLORCHANNELATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_stylecolorchannelattributes (
             product,
             location,
@@ -7264,11 +7444,11 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, location) DO NOTHING
     ;
-    
+
     --------------------------------------------------------------------
     -- IMGATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_imgattributes (
             indx,
             product,
@@ -7298,12 +7478,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- ITEMPRICE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_p_itemprice (
             product,
             location,
@@ -7349,12 +7529,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, location, time) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- CHANNELOVERRIDE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_p_channeloverride (
             product,
             location,
@@ -7398,12 +7578,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, location, time) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- ASSORTMENT insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_a_assortment (
             product,
             location,
@@ -7471,12 +7651,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, "time", location, plan_type) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- DC_ADJ insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_p_dc_adj (
             product,
             location,
@@ -7606,12 +7786,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, location, "time") DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- DC_ADJ_SIZE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_p_dc_adj_size (
             product,
             location,
@@ -7701,8 +7881,8 @@ BEGIN
           AND a.session_id = v_session_id
             ON CONFLICT (product, location, "time") DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- AN_PRICE_STORECOUNT_INFO insert
     --------------------------------------------------------------------
@@ -7805,11 +7985,14 @@ BEGIN
 DROP TABLE IF EXISTS trd_style_clone_flat_map_temp;
 
 END;
-$$;
+$_$;
 
+
+ALTER PROCEDURE public.trd_no_style_clone_stylecolor_size_proc(IN p_session_id text, IN p_pivot_user_id text) OWNER TO psql;
 
 --
--- Name: trd_plan_these_cloned_style_stylecolors_proc(text); Type: PROCEDURE; Schema: public; Owner: -
+-- TOC entry 2167 (class 1255 OID 108994657)
+-- Name: trd_plan_these_cloned_style_stylecolors_proc(text); Type: PROCEDURE; Schema: public; Owner: psql
 --
 
 CREATE PROCEDURE public.trd_plan_these_cloned_style_stylecolors_proc(IN p_pivot_user_id text)
@@ -7990,141 +8173,28 @@ END;
 $$;
 
 
---
--- Name: trd_prefill_split_attrs_proc(text, text); Type: PROCEDURE; Schema: public; Owner: -
---
-
-CREATE PROCEDURE public.trd_prefill_split_attrs_proc(IN p_session_id text, IN p_user_id text)
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    -- No-op if nothing staged.
-    IF NOT EXISTS (
-        SELECT 1 FROM trd_split_attrs_prefill
-        WHERE session_id = p_session_id
-    ) THEN
-        RETURN;
-    END IF;
-
-    -- (0) INSERT seed rows for any source stylecolor that doesn't yet
-    --     have an attribute row in trd_ma_stylecolorattributes. Without
-    --     this, UPDATE below matches nothing for never-touched stylecolors
-    --     and the breadcrumb cells stay blank for them.
-    --
-    --     Minimal column set: product (the FK), the two scratchpads,
-    --     plus version_id + record_state with safe defaults. If the
-    --     PG schema has additional NOT NULL columns we'll hit them and
-    --     extend this list.
-    INSERT INTO trd_ma_stylecolorattributes (
-        product,
-        split_new_style_name,
-        new_stylecolor_name,
-        version_id,
-        record_state,
-        updated_at,
-        updated_by
-    )
-    SELECT
-        s.stylecolor,
-        nullif(s.current_style_name, ''),
-        nullif(s.current_stylecolor_name, ''),
-        1,                  -- version_id
-        0,                  -- record_state (active)
-        now(),
-        p_user_id
-      FROM trd_split_attrs_prefill s
-     WHERE s.session_id = p_session_id
-       AND NOT EXISTS (
-           SELECT 1 FROM trd_ma_stylecolorattributes
-           WHERE product = s.stylecolor
-       );
-
-    -- (1) Fill new_stylecolor_name on existing rows where currently
-    --     NULL/empty. Preserves any user edits.
-    UPDATE trd_ma_stylecolorattributes a
-       SET new_stylecolor_name = s.current_stylecolor_name,
-           updated_at          = now(),
-           updated_by          = p_user_id
-      FROM trd_split_attrs_prefill s
-     WHERE s.session_id = p_session_id
-       AND a.product    = s.stylecolor
-       AND s.current_stylecolor_name IS NOT NULL
-       AND s.current_stylecolor_name <> ''
-       AND (a.new_stylecolor_name IS NULL OR a.new_stylecolor_name = '');
-
-    -- (2) Fill split_new_style_name on existing rows where currently
-    --     NULL/empty.
-    UPDATE trd_ma_stylecolorattributes a
-       SET split_new_style_name = s.current_style_name,
-           updated_at            = now(),
-           updated_by            = p_user_id
-      FROM trd_split_attrs_prefill s
-     WHERE s.session_id = p_session_id
-       AND a.product    = s.stylecolor
-       AND s.current_style_name IS NOT NULL
-       AND s.current_style_name <> ''
-       AND (a.split_new_style_name IS NULL OR a.split_new_style_name = '');
-
-    -- (3) Cleanup the staging rows for this session.
-    DELETE FROM trd_split_attrs_prefill
-     WHERE session_id = p_session_id;
-END;
-$$;
-
+ALTER PROCEDURE public.trd_plan_these_cloned_style_stylecolors_proc(IN p_pivot_user_id text) OWNER TO psql;
 
 --
--- Name: trd_prefill_stylecolor_names_proc(text, text); Type: PROCEDURE; Schema: public; Owner: -
---
-
-CREATE PROCEDURE public.trd_prefill_stylecolor_names_proc(IN p_session_id text, IN p_user_id text)
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    -- Quietly no-op if nothing staged.
-    IF NOT EXISTS (
-        SELECT 1 FROM trd_stylecolor_name_prefill
-        WHERE session_id = p_session_id
-    ) THEN
-        RETURN;
-    END IF;
-
-    -- Fill NULL/empty new_stylecolor_name with the current display name.
-    -- Existing non-NULL values are preserved (user already typed something).
-    UPDATE trd_ma_stylecolorattributes a
-       SET new_stylecolor_name = s.current_name,
-           updated_at          = now(),
-           updated_by          = p_user_id
-      FROM trd_stylecolor_name_prefill s
-     WHERE s.session_id = p_session_id
-       AND a.product    = s.stylecolor
-       AND (a.new_stylecolor_name IS NULL OR a.new_stylecolor_name = '');
-
-    -- Cleanup the staging rows for this session.
-    DELETE FROM trd_stylecolor_name_prefill
-     WHERE session_id = p_session_id;
-END;
-$$;
-
-
---
--- Name: trd_style_clone_stylecolor_size_proc(text, text); Type: PROCEDURE; Schema: public; Owner: -
+-- TOC entry 2178 (class 1255 OID 108994658)
+-- Name: trd_style_clone_stylecolor_size_proc(text, text); Type: PROCEDURE; Schema: public; Owner: psql
 --
 
 CREATE PROCEDURE public.trd_style_clone_stylecolor_size_proc(IN p_session_id text, IN p_pivot_user_id text)
     LANGUAGE plpgsql
-    AS $$
+    AS $_$
 DECLARE
     v_session_id    TEXT := p_session_id;
     v_pivot_user_id TEXT := p_pivot_user_id;
 BEGIN
 
-    
+
 
     --------------------------------------------------------------------
     -- Build temp flat_map for this session
     --------------------------------------------------------------------
     CREATE TEMPORARY TABLE trd_style_clone_flat_map_temp AS
-    SELECT * 
+    SELECT *
     FROM (
         SELECT DISTINCT
             from_style        AS from_id,
@@ -8159,7 +8229,7 @@ BEGIN
             to_new_stylecolorsize AS to_id,
             'stylecolorsize'      AS levelid,
             updated_by, session_id, clone_ordinal::text as clone_ordinal
-            , '' as to_name 
+            , '' as to_name
             , '' as to_desc
             , '' as cccolor
             , '' as cccolorfamily
@@ -8175,14 +8245,14 @@ BEGIN
         INSERT INTO trd_d_product (
             id,client_id,name,description,levelid,indx,eventdate,version_id,created_at,created_by,updated_at,updated_by,record_state
         )
-        SELECT DISTINCT 
+        SELECT DISTINCT
               to_id
             , null as client_id
             , CASE WHEN a.levelid='stylecolorsize' THEN name ELSE to_name END
-            , CASE WHEN a.levelid='stylecolorsize' THEN description ELSE to_desc END 
+            , CASE WHEN a.levelid='stylecolorsize' THEN description ELSE to_desc END
             , a.levelid
             , indx
-            
+
             , now()::date
             , version_id
             , now()
@@ -8199,7 +8269,7 @@ BEGIN
     --------------------------------------------------------------------
     -- STYLE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_h_prodstd (
             id,
             ancestor0,
@@ -8244,7 +8314,7 @@ BEGIN
     --------------------------------------------------------------------
     -- STYLECOLOR insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_h_prodstd (
             id,
             ancestor0,
@@ -8290,7 +8360,7 @@ BEGIN
     --------------------------------------------------------------------
     -- STYLECOLORSIZE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_h_prodstd (
             id,
             ancestor0,
@@ -8337,7 +8407,7 @@ BEGIN
     --------------------------------------------------------------------
     -- STYLEATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_styleattributes (
             product,
             sty_knit_or_woven,
@@ -8435,12 +8505,12 @@ BEGIN
           AND a.levelid = 'style'
             ON CONFLICT (product) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- STYLECOLORATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_stylecolorattributes (
             product,
             cc_item_diff_1,
@@ -8546,7 +8616,8 @@ BEGIN
             buyer_email,
             cc_buyer,
             cc_patterned_after_name,
-            vpn_color_desc
+            vpn_color_desc,
+            cc_orig_unit_retail_char
         )
         SELECT
             to_id,
@@ -8654,19 +8725,20 @@ BEGIN
             buyer_email,
             cc_buyer,
                 cc_patterned_after_name,
-                null as vpn_color_desc
+                null as vpn_color_desc,
+                '$' || TO_CHAR(cc_orig_unit_retail, 'FM999999990.00') as cc_orig_unit_retail_char
         FROM trd_style_clone_flat_map_temp a,
              trd_ma_stylecolorattributes b
         WHERE a.from_id = b.product
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- SIZEATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_sizeattributes (
             product,
             parent_id,
@@ -8705,12 +8777,12 @@ BEGIN
           AND a.session_id = v_session_id
             ON CONFLICT (product) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- STYLECOLORCHANNELATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_stylecolorchannelattributes (
             product,
             location,
@@ -8928,12 +9000,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, location) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- IMGATTRIBUTES insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_ma_imgattributes (
             indx,
             product,
@@ -8963,12 +9035,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- ITEMPRICE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_p_itemprice (
             product,
             location,
@@ -9014,12 +9086,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, location, time) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- CHANNELOVERRIDE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_p_channeloverride (
             product,
             location,
@@ -9063,12 +9135,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, location, time) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- ASSORTMENT insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_a_assortment (
             product,
             location,
@@ -9136,12 +9208,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, "time", location, plan_type) DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- DC_ADJ insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_p_dc_adj (
             product,
             location,
@@ -9271,12 +9343,12 @@ BEGIN
           AND a.levelid = 'stylecolor'
             ON CONFLICT (product, location, "time") DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- DC_ADJ_SIZE insert
     --------------------------------------------------------------------
-    
+
         INSERT INTO trd_p_dc_adj_size (
             product,
             location,
@@ -9366,8 +9438,8 @@ BEGIN
           AND a.session_id = v_session_id
             ON CONFLICT (product, location, "time") DO NOTHING
     ;
-    
-    
+
+
     --------------------------------------------------------------------
     -- AN_PRICE_STORECOUNT_INFO insert
     --------------------------------------------------------------------
@@ -9470,11 +9542,14 @@ BEGIN
 DROP TABLE IF EXISTS trd_style_clone_flat_map_temp;
 
 END;
-$$;
+$_$;
 
+
+ALTER PROCEDURE public.trd_style_clone_stylecolor_size_proc(IN p_session_id text, IN p_pivot_user_id text) OWNER TO psql;
 
 --
--- Name: trd_style_clone_stylecolor_size_proc_dummy(text, text); Type: PROCEDURE; Schema: public; Owner: -
+-- TOC entry 2168 (class 1255 OID 108994660)
+-- Name: trd_style_clone_stylecolor_size_proc_dummy(text, text); Type: PROCEDURE; Schema: public; Owner: psql
 --
 
 CREATE PROCEDURE public.trd_style_clone_stylecolor_size_proc_dummy(IN p_session_id text, IN p_pivot_user_id text)
@@ -9493,440 +9568,11 @@ END;
 $$;
 
 
---
--- Name: trd_style_merge_reparent_proc(text, text); Type: PROCEDURE; Schema: public; Owner: -
---
-
-CREATE PROCEDURE public.trd_style_merge_reparent_proc(IN p_session_id text, IN p_user_id text)
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    v_target_style_id text;
-    v_t_id  text;
-    v_t_a0  text;
-    v_t_a1  text;
-    v_t_a2  text;
-    v_t_a3  text;
-    v_t_a4  text;
-    v_t_a5  text;
-    v_t_a6  text;
-    v_t_a7  text;
-BEGIN
-    -- Nothing staged for this session? Quietly return.
-    IF NOT EXISTS (
-        SELECT 1 FROM trd_style_merge_reparent
-        WHERE session_id = p_session_id
-    ) THEN
-        RAISE NOTICE 'trd_style_merge_reparent_proc: no staged rows for session %', p_session_id;
-        RETURN;
-    END IF;
-
-    -- The pivot stages target_style_id='' because there's no CH mirror of
-    -- trd_ma_stylecolorattributes. The header dropdown's mass-edit wrote
-    -- merge_target_style to PG for every source row (same value on each).
-    -- Read it here. All staged rows share the same target.
-    SELECT a.merge_target_style
-      INTO v_target_style_id
-      FROM trd_style_merge_reparent r
-      JOIN trd_ma_stylecolorattributes a ON a.product = r.source_stylecolor_id
-     WHERE r.session_id          = p_session_id
-       AND a.merge_target_style IS NOT NULL
-       AND a.merge_target_style <> ''
-     LIMIT 1;
-
-    IF v_target_style_id IS NULL OR v_target_style_id = '' THEN
-        RAISE NOTICE 'trd_style_merge_reparent_proc: no merge_target_style set for any source in session %', p_session_id;
-        DELETE FROM trd_style_merge_reparent WHERE session_id = p_session_id;
-        RETURN;
-    END IF;
-
-    -- Populate target_style_id and action on the staging rows.
-    --   NOOP     -> source_style_id = target (already there)
-    --   RETIRE   -> source's cccolor already exists under the target style
-    --   REPARENT -> otherwise (the common case)
-    UPDATE trd_style_merge_reparent r
-       SET target_style_id = v_target_style_id,
-           action = CASE
-             WHEN r.source_style_id = v_target_style_id THEN 'NOOP'
-             WHEN EXISTS (
-                 SELECT 1
-                   FROM trd_h_prodstd ch
-                   JOIN trd_ma_stylecolorattributes ca ON ca.product = ch.id
-                  WHERE ch.ancestor0          = v_target_style_id
-                    AND coalesce(ch.record_state, 0) = 0
-                    AND ca.cccolor            = r.cccolor
-             ) THEN 'RETIRE'
-             ELSE 'REPARENT'
-           END
-     WHERE r.session_id = p_session_id;
-
-    -- Discard NOOP rows.
-    DELETE FROM trd_style_merge_reparent
-     WHERE session_id = p_session_id
-       AND action     = 'NOOP';
-
-    -- Pull the target style's hierarchy row. We need its id and
-    -- ancestor0..7 to copy onto the re-parented source rows.
-    SELECT id, ancestor0, ancestor1, ancestor2, ancestor3,
-                ancestor4, ancestor5, ancestor6, ancestor7
-      INTO v_t_id, v_t_a0, v_t_a1, v_t_a2, v_t_a3,
-                   v_t_a4, v_t_a5, v_t_a6, v_t_a7
-      FROM trd_h_prodstd
-     WHERE id = v_target_style_id;
-
-    IF v_t_id IS NULL THEN
-        RAISE EXCEPTION 'trd_style_merge_reparent_proc: target style % not found in trd_h_prodstd (session %)',
-            v_target_style_id, p_session_id;
-    END IF;
-
-    -- (1) REPARENT: update source stylecolor rows' ancestry to point
-    --     at the target style. A stylecolor row's ancestor0 IS its
-    --     style, so ancestor0 becomes the target style id; ancestor1..7
-    --     get the target style's own ancestor0..6 shifted up.
-    UPDATE trd_h_prodstd sc
-       SET ancestor0  = v_t_id,
-           ancestor1  = v_t_a0,
-           ancestor2  = v_t_a1,
-           ancestor3  = v_t_a2,
-           ancestor4  = v_t_a3,
-           ancestor5  = v_t_a4,
-           ancestor6  = v_t_a5,
-           ancestor7  = v_t_a6,
-           updated_at = now(),
-           updated_by = p_user_id
-     WHERE sc.id IN (
-        SELECT source_stylecolor_id
-          FROM trd_style_merge_reparent
-         WHERE session_id = p_session_id
-           AND action     = 'REPARENT'
-     );
-
-    -- (2) REPARENT cascade: stylecolorsize children of the re-parented
-    --     stylecolors. For a stylecolorsize, ancestor0 = stylecolor
-    --     (unchanged), ancestor1 = style. Shift up by one slot relative
-    --     to the stylecolor update above.
-    UPDATE trd_h_prodstd scs
-       SET ancestor1  = v_t_id,
-           ancestor2  = v_t_a0,
-           ancestor3  = v_t_a1,
-           ancestor4  = v_t_a2,
-           ancestor5  = v_t_a3,
-           ancestor6  = v_t_a4,
-           ancestor7  = v_t_a5,
-           updated_at = now(),
-           updated_by = p_user_id
-     WHERE scs.ancestor0 IN (
-        SELECT source_stylecolor_id
-          FROM trd_style_merge_reparent
-         WHERE session_id = p_session_id
-           AND action     = 'REPARENT'
-     );
-
-    -- (3) RETIRE: target-wins color collisions. Flip record_state on the
-    --     source stylecolor so it goes inactive. Hierarchy not touched.
-    UPDATE trd_h_prodstd sc
-       SET record_state = 1,
-           updated_at   = now(),
-           updated_by   = p_user_id
-     WHERE sc.id IN (
-        SELECT source_stylecolor_id
-          FROM trd_style_merge_reparent
-         WHERE session_id = p_session_id
-           AND action     = 'RETIRE'
-     );
-
-    -- (4) Archive: one durable row per action row (REPARENT + RETIRE).
-    INSERT INTO trd_style_merge_archives_tbl (
-        source_style_id, target_style_id, source_stylecolor_id,
-        session_id, updated_by, updated_at
-    )
-    SELECT source_style_id, target_style_id, source_stylecolor_id,
-           session_id, updated_by, now()
-      FROM trd_style_merge_reparent
-     WHERE session_id = p_session_id;
-
-    -- (5) Conditionally retire source styles that now have zero active
-    --     stylecolor children. Never retire the target style itself.
-    --     A style row's children are stylecolor rows whose ancestor0 =
-    --     the style id.
-    UPDATE trd_h_prodstd s
-       SET record_state = 1,
-           updated_at   = now(),
-           updated_by   = p_user_id
-     WHERE s.id IN (
-        SELECT DISTINCT source_style_id
-          FROM trd_style_merge_reparent
-         WHERE session_id = p_session_id
-     )
-       AND s.id <> v_target_style_id
-       AND NOT EXISTS (
-        SELECT 1
-          FROM trd_h_prodstd ch
-         WHERE ch.ancestor0           = s.id
-           AND coalesce(ch.record_state, 0) = 0
-     );
-
-    -- (6) Apply per-stylecolor rename. The user typed new display labels
-    --     into the attribute scratchpad new_stylecolor_name (a free-text
-    --     attribute persisted to trd_ma_stylecolorattributes via mass-edit).
-    --     Apply those to BOTH trd_d_product.name AND .description for the
-    --     source stylecolor row. The main grid surfaces .name; .description
-    --     is what the prefill mini-proc and the breadcrumb display read.
-    --     Keeping them in sync avoids visual divergence between views.
-    --
-    --     Skip if both columns already match the typed value (no-op rename).
-    UPDATE trd_d_product p
-       SET name        = a.new_stylecolor_name,
-           description = a.new_stylecolor_name,
-           updated_at  = now(),
-           updated_by  = p_user_id
-      FROM trd_ma_stylecolorattributes a,
-           trd_style_merge_reparent r
-     WHERE r.session_id      = p_session_id
-       AND a.product         = r.source_stylecolor_id
-       AND p.id              = r.source_stylecolor_id
-       AND a.new_stylecolor_name IS NOT NULL
-       AND a.new_stylecolor_name <> ''
-       AND (coalesce(p.name, '')        <> a.new_stylecolor_name
-         OR coalesce(p.description, '') <> a.new_stylecolor_name);
-
-    -- (7) Clear the scratchpad so the next merge run starts clean.
-    UPDATE trd_ma_stylecolorattributes
-       SET new_stylecolor_name = NULL,
-           merge_target_style  = NULL,
-           updated_at          = now(),
-           updated_by          = p_user_id
-     WHERE product IN (
-         SELECT source_stylecolor_id
-           FROM trd_style_merge_reparent
-          WHERE session_id = p_session_id
-     )
-       AND (new_stylecolor_name IS NOT NULL OR merge_target_style IS NOT NULL);
-
-    -- (8) Cleanup: drop the session's staging rows.
-    DELETE FROM trd_style_merge_reparent
-     WHERE session_id = p_session_id;
-
-END;
-$$;
-
+ALTER PROCEDURE public.trd_style_clone_stylecolor_size_proc_dummy(IN p_session_id text, IN p_pivot_user_id text) OWNER TO psql;
 
 --
--- Name: trd_style_split_proc(text, text); Type: PROCEDURE; Schema: public; Owner: -
---
-
-CREATE PROCEDURE public.trd_style_split_proc(IN p_session_id text, IN p_user_id text)
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    -- Quietly return if no staged rows (validation failed in the pivot
-    -- or no commit fired).
-    IF NOT EXISTS (
-        SELECT 1 FROM trd_style_split_stage
-        WHERE session_id = p_session_id
-    ) THEN
-        RAISE NOTICE 'trd_style_split_proc: no staged rows for session %', p_session_id;
-        RETURN;
-    END IF;
-
-    -- (1) Create the new styles' dimension rows. name/description from
-    --     the pivot's staging (auto-generated). levelid + indx from
-    --     the source style's existing dimension row.
-    INSERT INTO trd_d_product (
-        id, name, description, levelid, indx,
-        version_id, record_state,
-        updated_at, updated_by
-    )
-    SELECT
-        stage.new_style_id,
-        stage.new_style_name,
-        stage.new_style_desc,
-        src_d.levelid,
-        src_d.indx,
-        1,                      -- version_id
-        0,                      -- record_state (active)
-        now(),
-        stage.updated_by
-      FROM trd_style_split_stage stage
-      JOIN trd_d_product           src_d  ON src_d.id = stage.source_style_id
-     WHERE stage.session_id = p_session_id
-       ON CONFLICT (id) DO NOTHING;
-
-    -- (2) Create the new styles' hierarchy rows. ancestor0..7 copied
-    --     from the source style so the new style sits in the same
-    --     subclass / class / department / etc.
-    INSERT INTO trd_h_prodstd (
-        id,
-        ancestor0, ancestor1, ancestor2, ancestor3,
-        ancestor4, ancestor5, ancestor6, ancestor7,
-        version_id, record_state,
-        updated_at, updated_by
-    )
-    SELECT
-        stage.new_style_id,
-        src_h.ancestor0, src_h.ancestor1, src_h.ancestor2, src_h.ancestor3,
-        src_h.ancestor4, src_h.ancestor5, src_h.ancestor6, src_h.ancestor7,
-        1,                      -- version_id
-        0,                      -- record_state (active)
-        now(),
-        stage.updated_by
-      FROM trd_style_split_stage stage
-      JOIN trd_h_prodstd           src_h  ON src_h.id = stage.source_style_id
-     WHERE stage.session_id = p_session_id
-       ON CONFLICT (id) DO NOTHING;
-
-    -- (2b) Create the new styles' attribute rows in trd_ma_styleattributes.
-    --      Copy from source style. Without this, the new style has no
-    --      attribute backing and the main grid filters it out.
-    INSERT INTO trd_ma_styleattributes (
-        product,
-        sty_knit_or_woven,
-        sty_fabrication,
-        sty_sleeve_length,
-        sty_leg_opening,
-        sty_brand,
-        sty_body_style_silhouette,
-        sty_occasion_usage,
-        sty_detail,
-        sty_finish_style,
-        sty_private_label,
-        sty_license,
-        sty_license_vs_non_licensed,
-        sty_material_content,
-        sty_item_type,
-        sty_dwrise,
-        sty_length,
-        sty_neckline,
-        sty_toeshape,
-        sty_heel_height,
-        sty_bottom_length,
-        sty_v_360_smoothing,
-        sty_franchise,
-        sty_key_item,
-        sty_single_vs_multi_pack,
-        sty_size_range,
-        eventdate,
-        version_id,
-        created_at, created_by,
-        updated_at, updated_by,
-        record_state,
-        sty_knit_fit,
-        sty_patterned_after
-    )
-    SELECT
-        stage.new_style_id,
-        src_a.sty_knit_or_woven,
-        src_a.sty_fabrication,
-        src_a.sty_sleeve_length,
-        src_a.sty_leg_opening,
-        src_a.sty_brand,
-        src_a.sty_body_style_silhouette,
-        src_a.sty_occasion_usage,
-        src_a.sty_detail,
-        src_a.sty_finish_style,
-        src_a.sty_private_label,
-        src_a.sty_license,
-        src_a.sty_license_vs_non_licensed,
-        src_a.sty_material_content,
-        src_a.sty_item_type,
-        src_a.sty_dwrise,
-        src_a.sty_length,
-        src_a.sty_neckline,
-        src_a.sty_toeshape,
-        src_a.sty_heel_height,
-        src_a.sty_bottom_length,
-        src_a.sty_v_360_smoothing,
-        src_a.sty_franchise,
-        src_a.sty_key_item,
-        src_a.sty_single_vs_multi_pack,
-        src_a.sty_size_range,
-        now()::date,
-        1,                      -- version_id
-        now(), p_user_id,
-        now(), p_user_id,
-        0,                      -- record_state (active)
-        src_a.sty_knit_fit,
-        src_a.sty_patterned_after
-      FROM trd_style_split_stage stage
-      JOIN trd_ma_styleattributes  src_a ON src_a.product = stage.source_style_id
-     WHERE stage.session_id = p_session_id
-       ON CONFLICT (product) DO NOTHING;
-
-    -- (3) Re-parent source stylecolors. ancestor0 flips to new style id.
-    UPDATE trd_h_prodstd sc
-       SET ancestor0  = stage.new_style_id,
-           updated_at = now(),
-           updated_by = p_user_id
-      FROM trd_style_split_stage stage
-     WHERE stage.session_id = p_session_id
-       AND sc.id             = stage.source_stylecolor_id;
-
-    -- (3b) Also flip assortment.style for reparented stylecolors. Main
-    --      grid groups stylecolors under their assortment.style.
-    UPDATE trd_a_assortment ax
-       SET style      = stage.new_style_id,
-           updated_at = now(),
-           updated_by = p_user_id
-      FROM trd_style_split_stage stage
-     WHERE stage.session_id = p_session_id
-       AND ax.product       = stage.source_stylecolor_id;
-
-    -- (4) Cascade stylecolorsize children's ancestor1 to new style id.
-    UPDATE trd_h_prodstd scs
-       SET ancestor1  = stage.new_style_id,
-           updated_at = now(),
-           updated_by = p_user_id
-      FROM trd_style_split_stage stage
-     WHERE stage.session_id = p_session_id
-       AND scs.ancestor0    = stage.source_stylecolor_id;
-
-    -- (4b) Auto-rename source stylecolors: replace the source style name
-    --      prefix in the stylecolor name/description with the new style
-    --      name. e.g., "44920723 MORA STRIPE BLUE" -> "44920723_SPLIT_
-    --      <ts>_1 MORA STRIPE BLUE". Preserves the human-readable color
-    --      descriptor while making the stylecolor's name reflect its new
-    --      parent.
-    --
-    --      If the source style name isn't found in the stylecolor name
-    --      (unusual), replace() returns the original string unchanged --
-    --      safe no-op. CASE guards against NULL description.
-    UPDATE trd_d_product p
-       SET name        = replace(p.name, src_st.name, stage.new_style_name),
-           description = CASE
-                            WHEN p.description IS NULL THEN NULL
-                            ELSE replace(p.description, src_st.name, stage.new_style_name)
-                         END,
-           updated_at  = now(),
-           updated_by  = p_user_id
-      FROM trd_style_split_stage stage
-      JOIN trd_d_product           src_st ON src_st.id = stage.source_style_id
-     WHERE stage.session_id    = p_session_id
-       AND p.id                = stage.source_stylecolor_id
-       AND src_st.name IS NOT NULL
-       AND src_st.name        <> '';
-
-    -- (5) Archive: one durable row per split action.
-    INSERT INTO trd_style_split_archives_tbl (
-        source_stylecolor_id, source_style_id,
-        new_style_id, new_style_name, new_style_desc,
-        cccolor, session_id, updated_by, updated_at
-    )
-    SELECT source_stylecolor_id, source_style_id,
-           new_style_id, new_style_name, new_style_desc,
-           cccolor, session_id, updated_by, now()
-      FROM trd_style_split_stage
-     WHERE session_id = p_session_id;
-
-    -- (6) Cleanup: drop the session's staging rows.
-    DELETE FROM trd_style_split_stage
-     WHERE session_id = p_session_id;
-
-END;
-$$;
-
-
---
--- Name: trg_allow_scaling_set_overflow_ok(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2169 (class 1255 OID 108994661)
+-- Name: trg_allow_scaling_set_overflow_ok(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trg_allow_scaling_set_overflow_ok() RETURNS trigger
@@ -9945,8 +9591,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trg_allow_scaling_set_overflow_ok() OWNER TO psql;
+
 --
--- Name: trg_ins_stylecolor_alloc_attrs(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2170 (class 1255 OID 108994662)
+-- Name: trg_ins_stylecolor_alloc_attrs(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trg_ins_stylecolor_alloc_attrs() RETURNS trigger
@@ -9961,8 +9610,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trg_ins_stylecolor_alloc_attrs() OWNER TO psql;
+
 --
--- Name: trg_sclr_allow_scaling_set_overflow_ok(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2171 (class 1255 OID 108994663)
+-- Name: trg_sclr_allow_scaling_set_overflow_ok(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trg_sclr_allow_scaling_set_overflow_ok() RETURNS trigger
@@ -9981,8 +9633,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trg_sclr_allow_scaling_set_overflow_ok() OWNER TO psql;
+
 --
--- Name: trg_set_apply_targets_to_plan(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2172 (class 1255 OID 108994664)
+-- Name: trg_set_apply_targets_to_plan(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trg_set_apply_targets_to_plan() RETURNS trigger
@@ -9998,8 +9653,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trg_set_apply_targets_to_plan() OWNER TO psql;
+
 --
--- Name: trg_sum_override_array(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2173 (class 1255 OID 108994665)
+-- Name: trg_sum_override_array(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trg_sum_override_array() RETURNS trigger
@@ -10019,8 +9677,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trg_sum_override_array() OWNER TO psql;
+
 --
--- Name: trg_sync_alloc_and_override(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2174 (class 1255 OID 108994666)
+-- Name: trg_sync_alloc_and_override(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trg_sync_alloc_and_override() RETURNS trigger
@@ -10050,8 +9711,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trg_sync_alloc_and_override() OWNER TO psql;
+
 --
--- Name: trigger_final_cost(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2175 (class 1255 OID 108994667)
+-- Name: trigger_final_cost(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trigger_final_cost() RETURNS trigger
@@ -10060,6 +9724,10 @@ CREATE FUNCTION public.trigger_final_cost() RETURNS trigger
 DECLARE
 v_final_cost real;
 BEGIN
+
+  IF NEW.ccticketpricechannel = 0 THEN
+    NEW.ccticketpricechannel := 0.01;
+  END IF;
 
   update trd_ma_stylecolorchannelattributes a
   set cc_final_cost =  case when coalesce(NEW.cc_systemcost, 0.0) > 0.0 then NEW.cc_systemcost
@@ -10081,8 +9749,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trigger_final_cost() OWNER TO psql;
+
 --
--- Name: trigger_set_cp_publish_timestamp(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2176 (class 1255 OID 108994668)
+-- Name: trigger_set_cp_publish_timestamp(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trigger_set_cp_publish_timestamp() RETURNS trigger
@@ -10115,8 +9786,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trigger_set_cp_publish_timestamp() OWNER TO psql;
+
 --
--- Name: trigger_set_dc_ttl_useradj(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2177 (class 1255 OID 108994669)
+-- Name: trigger_set_dc_ttl_useradj(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trigger_set_dc_ttl_useradj() RETURNS trigger
@@ -10129,8 +9803,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trigger_set_dc_ttl_useradj() OWNER TO psql;
+
 --
--- Name: trigger_set_indx_valid_values(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2124 (class 1255 OID 108994670)
+-- Name: trigger_set_indx_valid_values(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trigger_set_indx_valid_values() RETURNS trigger
@@ -10148,8 +9825,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trigger_set_indx_valid_values() OWNER TO psql;
+
 --
--- Name: trigger_set_pack_ind_flag(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2125 (class 1255 OID 108994671)
+-- Name: trigger_set_pack_ind_flag(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trigger_set_pack_ind_flag() RETURNS trigger
@@ -10168,8 +9848,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trigger_set_pack_ind_flag() OWNER TO psql;
+
 --
--- Name: trigger_set_publish_timestamp(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2122 (class 1255 OID 108994672)
+-- Name: trigger_set_publish_timestamp(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trigger_set_publish_timestamp() RETURNS trigger
@@ -10186,14 +9869,22 @@ BEGIN
    select NEW.product, NEW.time, 'RDY4PO' as publish_type
    ;
 
+   update trd_ma_stylecolorchannelattributes
+   set cc_first_publish_date = coalesce(cc_first_publish_date, NOW()::timestamp(0)),
+       cc_first_publish_snapshot_op = coalesce(cc_first_publish_snapshot_op, 1)
+   where product = NEW.product;
+
  END IF;
  RETURN NEW;
 END;
 $$;
 
 
+ALTER FUNCTION public.trigger_set_publish_timestamp() OWNER TO psql;
+
 --
--- Name: trigger_set_size_id(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2126 (class 1255 OID 108994673)
+-- Name: trigger_set_size_id(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trigger_set_size_id() RETURNS trigger
@@ -10211,8 +9902,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trigger_set_size_id() OWNER TO psql;
+
 --
--- Name: trigger_set_timestamp(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2127 (class 1255 OID 108994674)
+-- Name: trigger_set_timestamp(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.trigger_set_timestamp() RETURNS trigger
@@ -10225,8 +9919,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.trigger_set_timestamp() OWNER TO psql;
+
 --
--- Name: update_cc_use_sys_floorset(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2128 (class 1255 OID 108994675)
+-- Name: update_cc_use_sys_floorset(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_cc_use_sys_floorset() RETURNS trigger
@@ -10244,8 +9941,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_cc_use_sys_floorset() OWNER TO psql;
+
 --
--- Name: update_cc_validsizes_on_ccrangecode(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2129 (class 1255 OID 108994676)
+-- Name: update_cc_validsizes_on_ccrangecode(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_cc_validsizes_on_ccrangecode() RETURNS trigger
@@ -10332,8 +10032,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_cc_validsizes_on_ccrangecode() OWNER TO psql;
+
 --
--- Name: update_ccrangecode_on_class_change(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2130 (class 1255 OID 108994677)
+-- Name: update_ccrangecode_on_class_change(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_ccrangecode_on_class_change() RETURNS trigger
@@ -10372,8 +10075,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_ccrangecode_on_class_change() OWNER TO psql;
+
 --
--- Name: update_color_change(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2123 (class 1255 OID 108994678)
+-- Name: update_color_change(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_color_change() RETURNS trigger
@@ -10441,8 +10147,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_color_change() OWNER TO psql;
+
 --
--- Name: update_eff_aur(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2179 (class 1255 OID 108994679)
+-- Name: update_eff_aur(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_eff_aur() RETURNS trigger
@@ -10585,8 +10294,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_eff_aur() OWNER TO psql;
+
 --
--- Name: update_eligibility_from_null_to_zero(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2180 (class 1255 OID 108994680)
+-- Name: update_eligibility_from_null_to_zero(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_eligibility_from_null_to_zero() RETURNS trigger
@@ -10603,8 +10315,11 @@ CREATE FUNCTION public.update_eligibility_from_null_to_zero() RETURNS trigger
   $$;
 
 
+ALTER FUNCTION public.update_eligibility_from_null_to_zero() OWNER TO psql;
+
 --
--- Name: update_name_description(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2181 (class 1255 OID 108994681)
+-- Name: update_name_description(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_name_description() RETURNS trigger
@@ -10635,8 +10350,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_name_description() OWNER TO psql;
+
 --
--- Name: update_specstyle_id(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2182 (class 1255 OID 108994682)
+-- Name: update_specstyle_id(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_specstyle_id() RETURNS trigger
@@ -10699,8 +10417,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_specstyle_id() OWNER TO psql;
+
 --
--- Name: update_specstylecolor_id(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2183 (class 1255 OID 108994683)
+-- Name: update_specstylecolor_id(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_specstylecolor_id() RETURNS trigger
@@ -10807,8 +10528,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_specstylecolor_id() OWNER TO psql;
+
 --
--- Name: update_stylecolorchannelattributes_ccrangecode(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2184 (class 1255 OID 108994684)
+-- Name: update_stylecolorchannelattributes_ccrangecode(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_stylecolorchannelattributes_ccrangecode() RETURNS trigger
@@ -10853,19 +10577,26 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_stylecolorchannelattributes_ccrangecode() OWNER TO psql;
+
 --
--- Name: update_ticket_price(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2188 (class 1255 OID 108994685)
+-- Name: update_ticket_price(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_ticket_price() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$
+    AS $_$
 DECLARE
 
 BEGIN
   if coalesce(NEW.cc_orig_unit_retail,0) <> coalesce(OLD.cc_orig_unit_retail,0) then
+    -- SUP-4311: keep the text mirror in sync for Configure/GroupBy (Cap Recap),
+    -- which cannot render Float/Real columns.
+    NEW.cc_orig_unit_retail_char := '$' || TO_CHAR(NEW.cc_orig_unit_retail, 'FM999999990.00');
+
     update trd_ma_stylecolorchannelattributes
-    set ccticketpricechannel = NEW.cc_orig_unit_retail 
+    set ccticketpricechannel = NEW.cc_orig_unit_retail
     where product = NEW.product;
 
     select cad_ticket_price, price_band
@@ -10877,25 +10608,28 @@ BEGIN
     into NEW.cc_good_better_best
     from trd_l_pricebandlookup where product = (select ancestor1 from trd_h_prodstd where id = NEW.product)
     and NEW.cc_orig_unit_retail > ticket_price_min and NEW.cc_orig_unit_retail <= ticket_price_max;
-  
-    update trd_ma_stylecolorchannelattributes 
+
+    update trd_ma_stylecolorchannelattributes
     set cc_imupct = coalesce(round(((NEW.cc_orig_unit_retail-cc_final_cost)/NEW.cc_orig_unit_retail)::numeric, 2),0.0)
     where product = NEW.product;
 
 	--SUP-2549: update p_itemprice and set product as itself. This will fire trigger trigger_eff_aur which will update the eff_aur.
-	update trd_p_itemprice 
-	set product = product 
+	update trd_p_itemprice
+	set product = product
 	where product = NEW.product;
 
   end if;
 
   RETURN NEW;
 END;
-$$;
+$_$;
 
+
+ALTER FUNCTION public.update_ticket_price() OWNER TO psql;
 
 --
--- Name: update_trigger_cartparams_irw_debut_offset(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2185 (class 1255 OID 108994686)
+-- Name: update_trigger_cartparams_irw_debut_offset(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_trigger_cartparams_irw_debut_offset() RETURNS trigger
@@ -10921,8 +10655,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_trigger_cartparams_irw_debut_offset() OWNER TO psql;
+
 --
--- Name: update_trigger_cartparams_ranging(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2186 (class 1255 OID 108994687)
+-- Name: update_trigger_cartparams_ranging(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_trigger_cartparams_ranging() RETURNS trigger
@@ -10999,8 +10736,11 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_trigger_cartparams_ranging() OWNER TO psql;
+
 --
--- Name: update_week_indxes(); Type: FUNCTION; Schema: public; Owner: -
+-- TOC entry 2187 (class 1255 OID 108994688)
+-- Name: update_week_indxes(); Type: FUNCTION; Schema: public; Owner: psql
 --
 
 CREATE FUNCTION public.update_week_indxes() RETURNS trigger
@@ -11110,12 +10850,15 @@ END;
 $$;
 
 
+ALTER FUNCTION public.update_week_indxes() OWNER TO psql;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: actuals_stage_wide; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1633 (class 1259 OID 108994689)
+-- Name: actuals_stage_wide; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.actuals_stage_wide (
@@ -11170,8 +10913,11 @@ CREATE TABLE mfp.actuals_stage_wide (
 );
 
 
+ALTER TABLE mfp.actuals_stage_wide OWNER TO psql;
+
 --
--- Name: actuals_wide; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1634 (class 1259 OID 108994694)
+-- Name: actuals_wide; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.actuals_wide (
@@ -11225,8 +10971,127 @@ CREATE TABLE mfp.actuals_wide (
 );
 
 
+ALTER TABLE mfp.actuals_wide OWNER TO psql;
+
 --
--- Name: dimensions; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1635 (class 1259 OID 108994699)
+-- Name: actuals_wide_bkp_20260712; Type: TABLE; Schema: mfp; Owner: psql
+--
+
+CREATE TABLE mfp.actuals_wide_bkp_20260712 (
+    "time" text,
+    product text,
+    location text,
+    prodlife text,
+    storecount double precision,
+    net_sls_u double precision,
+    net_sls_r double precision,
+    net_sls_r_adj double precision,
+    net_sls_c double precision,
+    net_sls_c_adj double precision,
+    pos_md_r double precision,
+    boh_r double precision,
+    boh_u double precision,
+    boh_c double precision,
+    eoh_u double precision,
+    eoh_r double precision,
+    eoh_c double precision,
+    rec_u double precision,
+    rec_c double precision,
+    rec_r double precision,
+    committed_u double precision,
+    committed_c double precision,
+    committed_r double precision,
+    on_order_u double precision,
+    on_order_c double precision,
+    on_order_r double precision,
+    inv_adjustment_u double precision,
+    inv_adjustment_r double precision,
+    inv_adjustment_c double precision,
+    mos_u double precision,
+    mos_r double precision,
+    mos_c double precision,
+    shrink_u double precision,
+    shrink_r double precision,
+    shrink_r_adj double precision,
+    shrink_c double precision,
+    shrink_c_adj double precision,
+    net_dc_xfer_u double precision,
+    net_dc_xfer_r double precision,
+    net_dc_xfer_c double precision,
+    perm_md_r double precision,
+    perm_md_c double precision,
+    perm_md_move_inv_u double precision,
+    perm_md_inv_r_csp double precision,
+    perm_md_inv_u_edit double precision,
+    perm_md_inv_r_at_new_aur_edit double precision,
+    perm_md_inv_c_edit double precision
+);
+
+
+ALTER TABLE mfp.actuals_wide_bkp_20260712 OWNER TO psql;
+
+--
+-- TOC entry 1636 (class 1259 OID 108994704)
+-- Name: actuals_wide_deduped; Type: TABLE; Schema: mfp; Owner: psql
+--
+
+CREATE TABLE mfp.actuals_wide_deduped (
+    "time" text,
+    product text,
+    location text,
+    prodlife text,
+    storecount double precision,
+    net_sls_u double precision,
+    net_sls_r double precision,
+    net_sls_r_adj double precision,
+    net_sls_c double precision,
+    net_sls_c_adj double precision,
+    pos_md_r double precision,
+    boh_r double precision,
+    boh_u double precision,
+    boh_c double precision,
+    eoh_u double precision,
+    eoh_r double precision,
+    eoh_c double precision,
+    rec_u double precision,
+    rec_c double precision,
+    rec_r double precision,
+    committed_u double precision,
+    committed_c double precision,
+    committed_r double precision,
+    on_order_u double precision,
+    on_order_c double precision,
+    on_order_r double precision,
+    inv_adjustment_u double precision,
+    inv_adjustment_r double precision,
+    inv_adjustment_c double precision,
+    mos_u double precision,
+    mos_r double precision,
+    mos_c double precision,
+    shrink_u double precision,
+    shrink_r double precision,
+    shrink_r_adj double precision,
+    shrink_c double precision,
+    shrink_c_adj double precision,
+    net_dc_xfer_u double precision,
+    net_dc_xfer_r double precision,
+    net_dc_xfer_c double precision,
+    perm_md_r double precision,
+    perm_md_c double precision,
+    perm_md_move_inv_u double precision,
+    perm_md_inv_r_csp double precision,
+    perm_md_inv_u_edit double precision,
+    perm_md_inv_r_at_new_aur_edit double precision,
+    perm_md_inv_c_edit double precision
+);
+
+
+ALTER TABLE mfp.actuals_wide_deduped OWNER TO psql;
+
+--
+-- TOC entry 1637 (class 1259 OID 108994709)
+-- Name: dimensions; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.dimensions (
@@ -11239,8 +11104,11 @@ CREATE TABLE mfp.dimensions (
 );
 
 
+ALTER TABLE mfp.dimensions OWNER TO psql;
+
 --
--- Name: hierarchies; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1638 (class 1259 OID 108994714)
+-- Name: hierarchies; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.hierarchies (
@@ -11251,8 +11119,11 @@ CREATE TABLE mfp.hierarchies (
 );
 
 
+ALTER TABLE mfp.hierarchies OWNER TO psql;
+
 --
--- Name: location_denorm; Type: VIEW; Schema: mfp; Owner: -
+-- TOC entry 1639 (class 1259 OID 108994719)
+-- Name: location_denorm; Type: VIEW; Schema: mfp; Owner: psql
 --
 
 CREATE VIEW mfp.location_denorm AS
@@ -11266,8 +11137,11 @@ CREATE VIEW mfp.location_denorm AS
           WHERE ((hierarchies.id = selling_channel.id) AND (hierarchies.hierarchy = 'locstd'::text))) channel ON (true));
 
 
+ALTER VIEW mfp.location_denorm OWNER TO psql;
+
 --
--- Name: prodlife_denorm; Type: VIEW; Schema: mfp; Owner: -
+-- TOC entry 1640 (class 1259 OID 108994723)
+-- Name: prodlife_denorm; Type: VIEW; Schema: mfp; Owner: psql
 --
 
 CREATE VIEW mfp.prodlife_denorm AS
@@ -11281,8 +11155,11 @@ CREATE VIEW mfp.prodlife_denorm AS
           WHERE ((hierarchies.id = merchcat.id) AND (hierarchies.hierarchy = 'prodlifestd'::text))) prodliferootlevel ON (true));
 
 
+ALTER VIEW mfp.prodlife_denorm OWNER TO psql;
+
 --
--- Name: product_denorm; Type: VIEW; Schema: mfp; Owner: -
+-- TOC entry 1641 (class 1259 OID 108994727)
+-- Name: product_denorm; Type: VIEW; Schema: mfp; Owner: psql
 --
 
 CREATE VIEW mfp.product_denorm AS
@@ -11308,8 +11185,11 @@ CREATE VIEW mfp.product_denorm AS
           WHERE ((hierarchies.id = division.id) AND (hierarchies.hierarchy = 'prodstd'::text))) total_brand ON (true));
 
 
+ALTER VIEW mfp.product_denorm OWNER TO psql;
+
 --
--- Name: time_denorm; Type: VIEW; Schema: mfp; Owner: -
+-- TOC entry 1642 (class 1259 OID 108994732)
+-- Name: time_denorm; Type: VIEW; Schema: mfp; Owner: psql
 --
 
 CREATE VIEW mfp.time_denorm AS
@@ -11335,8 +11215,11 @@ CREATE VIEW mfp.time_denorm AS
           WHERE ((hierarchies.id = season.id) AND (hierarchies.hierarchy = 'timestd'::text))) year ON (true));
 
 
+ALTER VIEW mfp.time_denorm OWNER TO psql;
+
 --
--- Name: actuals_wide_denorm; Type: MATERIALIZED VIEW; Schema: mfp; Owner: -
+-- TOC entry 1643 (class 1259 OID 108994737)
+-- Name: actuals_wide_denorm; Type: MATERIALIZED VIEW; Schema: mfp; Owner: psql
 --
 
 CREATE MATERIALIZED VIEW mfp.actuals_wide_denorm AS
@@ -11413,8 +11296,11 @@ CREATE MATERIALIZED VIEW mfp.actuals_wide_denorm AS
   WITH NO DATA;
 
 
+ALTER MATERIALIZED VIEW mfp.actuals_wide_denorm OWNER TO psql;
+
 --
--- Name: comments; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1644 (class 1259 OID 108994744)
+-- Name: comments; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.comments (
@@ -11428,8 +11314,11 @@ CREATE TABLE mfp.comments (
 );
 
 
+ALTER TABLE mfp.comments OWNER TO psql;
+
 --
--- Name: currency_exchange_rates; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1645 (class 1259 OID 108994750)
+-- Name: currency_exchange_rates; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.currency_exchange_rates (
@@ -11440,8 +11329,11 @@ CREATE TABLE mfp.currency_exchange_rates (
 );
 
 
+ALTER TABLE mfp.currency_exchange_rates OWNER TO psql;
+
 --
--- Name: dimensions_backup_2025_09_28; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1646 (class 1259 OID 108994756)
+-- Name: dimensions_backup_2025_09_28; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.dimensions_backup_2025_09_28 (
@@ -11454,8 +11346,11 @@ CREATE TABLE mfp.dimensions_backup_2025_09_28 (
 );
 
 
+ALTER TABLE mfp.dimensions_backup_2025_09_28 OWNER TO psql;
+
 --
--- Name: dimensions_backup_refresh; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1647 (class 1259 OID 108994761)
+-- Name: dimensions_backup_refresh; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.dimensions_backup_refresh (
@@ -11468,8 +11363,11 @@ CREATE TABLE mfp.dimensions_backup_refresh (
 );
 
 
+ALTER TABLE mfp.dimensions_backup_refresh OWNER TO psql;
+
 --
--- Name: dimensions_temp_update; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1648 (class 1259 OID 108994766)
+-- Name: dimensions_temp_update; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.dimensions_temp_update (
@@ -11482,8 +11380,11 @@ CREATE TABLE mfp.dimensions_temp_update (
 );
 
 
+ALTER TABLE mfp.dimensions_temp_update OWNER TO psql;
+
 --
--- Name: dimensions_to_be_loaded; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1649 (class 1259 OID 108994771)
+-- Name: dimensions_to_be_loaded; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.dimensions_to_be_loaded (
@@ -11496,8 +11397,11 @@ CREATE TABLE mfp.dimensions_to_be_loaded (
 );
 
 
+ALTER TABLE mfp.dimensions_to_be_loaded OWNER TO psql;
+
 --
--- Name: dimensions_to_be_loaded_2025_09_28; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1650 (class 1259 OID 108994776)
+-- Name: dimensions_to_be_loaded_2025_09_28; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.dimensions_to_be_loaded_2025_09_28 (
@@ -11510,8 +11414,11 @@ CREATE TABLE mfp.dimensions_to_be_loaded_2025_09_28 (
 );
 
 
+ALTER TABLE mfp.dimensions_to_be_loaded_2025_09_28 OWNER TO psql;
+
 --
--- Name: hierarchies_backup_2025_09_28; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1651 (class 1259 OID 108994781)
+-- Name: hierarchies_backup_2025_09_28; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.hierarchies_backup_2025_09_28 (
@@ -11522,8 +11429,11 @@ CREATE TABLE mfp.hierarchies_backup_2025_09_28 (
 );
 
 
+ALTER TABLE mfp.hierarchies_backup_2025_09_28 OWNER TO psql;
+
 --
--- Name: hierarchies_backup_refresh; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1652 (class 1259 OID 108994786)
+-- Name: hierarchies_backup_refresh; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.hierarchies_backup_refresh (
@@ -11534,8 +11444,11 @@ CREATE TABLE mfp.hierarchies_backup_refresh (
 );
 
 
+ALTER TABLE mfp.hierarchies_backup_refresh OWNER TO psql;
+
 --
--- Name: hierarchies_to_be_loaded; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1653 (class 1259 OID 108994791)
+-- Name: hierarchies_to_be_loaded; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.hierarchies_to_be_loaded (
@@ -11546,8 +11459,11 @@ CREATE TABLE mfp.hierarchies_to_be_loaded (
 );
 
 
+ALTER TABLE mfp.hierarchies_to_be_loaded OWNER TO psql;
+
 --
--- Name: hierarchies_to_be_loaded_2025_09_28; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1654 (class 1259 OID 108994796)
+-- Name: hierarchies_to_be_loaded_2025_09_28; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.hierarchies_to_be_loaded_2025_09_28 (
@@ -11558,8 +11474,11 @@ CREATE TABLE mfp.hierarchies_to_be_loaded_2025_09_28 (
 );
 
 
+ALTER TABLE mfp.hierarchies_to_be_loaded_2025_09_28 OWNER TO psql;
+
 --
--- Name: metadata; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1655 (class 1259 OID 108994801)
+-- Name: metadata; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.metadata (
@@ -11572,8 +11491,11 @@ CREATE TABLE mfp.metadata (
 );
 
 
+ALTER TABLE mfp.metadata OWNER TO psql;
+
 --
--- Name: paired_dimension_links; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1656 (class 1259 OID 108994806)
+-- Name: paired_dimension_links; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.paired_dimension_links (
@@ -11584,8 +11506,11 @@ CREATE TABLE mfp.paired_dimension_links (
 );
 
 
+ALTER TABLE mfp.paired_dimension_links OWNER TO psql;
+
 --
--- Name: plan_archives; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1657 (class 1259 OID 108994811)
+-- Name: plan_archives; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.plan_archives (
@@ -11605,8 +11530,11 @@ CREATE TABLE mfp.plan_archives (
 );
 
 
+ALTER TABLE mfp.plan_archives OWNER TO psql;
+
 --
--- Name: plan_audit_log; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1658 (class 1259 OID 108994820)
+-- Name: plan_audit_log; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.plan_audit_log (
@@ -11617,132 +11545,11 @@ CREATE TABLE mfp.plan_audit_log (
 );
 
 
---
--- Name: plan_data_export; Type: TABLE; Schema: mfp; Owner: -
---
-
-CREATE TABLE mfp.plan_data_export (
-    id integer,
-    product text,
-    location text,
-    prodlife text,
-    "time" text,
-    version text,
-    avg_str_inv_c double precision,
-    avg_str_sls_c double precision,
-    avg_str_inv_r double precision,
-    avg_str_sls_r double precision,
-    avg_str_inv_u double precision,
-    avg_str_sls_u double precision,
-    avg_str_rec_c double precision,
-    avg_str_rec_r double precision,
-    avg_str_rec_u double precision,
-    avg_wk_sls_c double precision,
-    avg_wk_inv_c double precision,
-    avg_wk_inv_r double precision,
-    avg_wk_inv_u double precision,
-    avg_wk_sls_r double precision,
-    avg_wk_sls_u double precision,
-    perm_md_c double precision,
-    perm_md_inv_r_csp double precision,
-    perm_md_move_inv_u double precision,
-    boh_auc double precision,
-    boh_aur double precision,
-    boh_c double precision,
-    eoh_c double precision,
-    eoh_c_computed double precision,
-    eoh_c_adj double precision,
-    inv_adjustment_c double precision,
-    mos_c double precision,
-    net_dc_xfer_c double precision,
-    on_order_c double precision,
-    rec_c double precision,
-    shrink_c double precision,
-    net_sls_c double precision,
-    turn_c double precision,
-    stk_sls_c double precision,
-    eoh_auc double precision,
-    eoh_aur double precision,
-    net_sls_margin_pct double precision,
-    net_sls_margin_r double precision,
-    gafs_auc double precision,
-    gafs_aur double precision,
-    gafs_c double precision,
-    gafs_mmu double precision,
-    gafs_r double precision,
-    gafs_u double precision,
-    gmroi double precision,
-    inv_adjustment_auc double precision,
-    inv_adjustment_aur double precision,
-    inv_adjustment_mmu double precision,
-    mos_auc double precision,
-    mos_aur double precision,
-    mos_mmu double precision,
-    net_dc_xfer_auc double precision,
-    net_dc_xfer_aur double precision,
-    net_dc_xfer_mmu double precision,
-    pos_disc_pct double precision,
-    pos_md_r double precision,
-    owned_markup_pct double precision,
-    on_order_auc double precision,
-    on_order_aur double precision,
-    on_order_imu double precision,
-    perm_md_pct_off double precision,
-    perm_md_r double precision,
-    perm_md_inv_auc_edit double precision,
-    perm_md_inv_c_edit double precision,
-    perm_md_inv_r_at_new_aur_edit double precision,
-    perm_md_post_mmu double precision,
-    perm_md_previous_mmu double precision,
-    perm_md_previous_aur double precision,
-    perm_md_inv_u_edit double precision,
-    perm_md_new_aur_edit double precision,
-    boh_r double precision,
-    eoh_r double precision,
-    eoh_r_computed double precision,
-    eoh_r_adj double precision,
-    inv_adjustment_r double precision,
-    mos_r double precision,
-    net_dc_xfer_r double precision,
-    on_order_r double precision,
-    rec_r double precision,
-    net_sls_r double precision,
-    shrink_r double precision,
-    rec_auc double precision,
-    rec_aur double precision,
-    rec_imu double precision,
-    net_sls_aut double precision,
-    net_sls_auc double precision,
-    net_sls_aur double precision,
-    shrink_c_pct double precision,
-    shrink_auc double precision,
-    shrink_aur double precision,
-    storecount double precision,
-    committed_auc double precision,
-    committed_aur double precision,
-    committed_imu double precision,
-    committed_c double precision,
-    committed_r double precision,
-    committed_u double precision,
-    boh_u double precision,
-    eoh_u double precision,
-    eoh_u_computed double precision,
-    eoh_u_adj double precision,
-    inv_adjustment_u double precision,
-    mos_u double precision,
-    net_dc_xfer_u double precision,
-    on_order_u double precision,
-    rec_u double precision,
-    net_sls_u double precision,
-    shrink_u double precision,
-    sell_thru_pct double precision,
-    turn_u double precision,
-    stk_sls_u double precision
-);
-
+ALTER TABLE mfp.plan_audit_log OWNER TO psql;
 
 --
--- Name: plan_data_wide; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1659 (class 1259 OID 108994826)
+-- Name: plan_data_wide; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.plan_data_wide (
@@ -11797,8 +11604,11 @@ CREATE TABLE mfp.plan_data_wide (
 );
 
 
+ALTER TABLE mfp.plan_data_wide OWNER TO psql;
+
 --
--- Name: plan_data_wide_archives; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1660 (class 1259 OID 108994831)
+-- Name: plan_data_wide_archives; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.plan_data_wide_archives (
@@ -11853,8 +11663,11 @@ CREATE TABLE mfp.plan_data_wide_archives (
 );
 
 
+ALTER TABLE mfp.plan_data_wide_archives OWNER TO psql;
+
 --
--- Name: plan_data_wide_backup_2025_09_28; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1661 (class 1259 OID 108994836)
+-- Name: plan_data_wide_backup_2025_09_28; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.plan_data_wide_backup_2025_09_28 (
@@ -11909,8 +11722,11 @@ CREATE TABLE mfp.plan_data_wide_backup_2025_09_28 (
 );
 
 
+ALTER TABLE mfp.plan_data_wide_backup_2025_09_28 OWNER TO psql;
+
 --
--- Name: plan_data_wide_backup_refresh; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1662 (class 1259 OID 108994841)
+-- Name: plan_data_wide_backup_refresh; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.plan_data_wide_backup_refresh (
@@ -11965,8 +11781,11 @@ CREATE TABLE mfp.plan_data_wide_backup_refresh (
 );
 
 
+ALTER TABLE mfp.plan_data_wide_backup_refresh OWNER TO psql;
+
 --
--- Name: plan_id_ticker; Type: SEQUENCE; Schema: mfp; Owner: -
+-- TOC entry 1663 (class 1259 OID 108994846)
+-- Name: plan_id_ticker; Type: SEQUENCE; Schema: mfp; Owner: psql
 --
 
 CREATE SEQUENCE mfp.plan_id_ticker
@@ -11977,8 +11796,11 @@ CREATE SEQUENCE mfp.plan_id_ticker
     CACHE 1;
 
 
+ALTER SEQUENCE mfp.plan_id_ticker OWNER TO psql;
+
 --
--- Name: plan_init_status; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1664 (class 1259 OID 108994847)
+-- Name: plan_init_status; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.plan_init_status (
@@ -11988,8 +11810,11 @@ CREATE TABLE mfp.plan_init_status (
 );
 
 
+ALTER TABLE mfp.plan_init_status OWNER TO psql;
+
 --
--- Name: plans; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1665 (class 1259 OID 108994850)
+-- Name: plans; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.plans (
@@ -12009,8 +11834,11 @@ CREATE TABLE mfp.plans (
 );
 
 
+ALTER TABLE mfp.plans OWNER TO psql;
+
 --
--- Name: sys_gen_wide; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1666 (class 1259 OID 108994859)
+-- Name: sys_gen_wide; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.sys_gen_wide (
@@ -12065,8 +11893,11 @@ CREATE TABLE mfp.sys_gen_wide (
 );
 
 
+ALTER TABLE mfp.sys_gen_wide OWNER TO psql;
+
 --
--- Name: sys_gen_wide_denorm; Type: MATERIALIZED VIEW; Schema: mfp; Owner: -
+-- TOC entry 1667 (class 1259 OID 108994864)
+-- Name: sys_gen_wide_denorm; Type: MATERIALIZED VIEW; Schema: mfp; Owner: psql
 --
 
 CREATE MATERIALIZED VIEW mfp.sys_gen_wide_denorm AS
@@ -12144,8 +11975,11 @@ CREATE MATERIALIZED VIEW mfp.sys_gen_wide_denorm AS
   WITH NO DATA;
 
 
+ALTER MATERIALIZED VIEW mfp.sys_gen_wide_denorm OWNER TO psql;
+
 --
--- Name: tyly; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1668 (class 1259 OID 108994871)
+-- Name: tyly; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.tyly (
@@ -12154,8 +11988,11 @@ CREATE TABLE mfp.tyly (
 );
 
 
+ALTER TABLE mfp.tyly OWNER TO psql;
+
 --
--- Name: tyly_backup_2025_09_28; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1669 (class 1259 OID 108994876)
+-- Name: tyly_backup_2025_09_28; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.tyly_backup_2025_09_28 (
@@ -12164,8 +12001,11 @@ CREATE TABLE mfp.tyly_backup_2025_09_28 (
 );
 
 
+ALTER TABLE mfp.tyly_backup_2025_09_28 OWNER TO psql;
+
 --
--- Name: tyly_backup_refresh; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1670 (class 1259 OID 108994881)
+-- Name: tyly_backup_refresh; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.tyly_backup_refresh (
@@ -12174,8 +12014,11 @@ CREATE TABLE mfp.tyly_backup_refresh (
 );
 
 
+ALTER TABLE mfp.tyly_backup_refresh OWNER TO psql;
+
 --
--- Name: user_kv_store; Type: TABLE; Schema: mfp; Owner: -
+-- TOC entry 1671 (class 1259 OID 108994886)
+-- Name: user_kv_store; Type: TABLE; Schema: mfp; Owner: psql
 --
 
 CREATE TABLE mfp.user_kv_store (
@@ -12185,8 +12028,11 @@ CREATE TABLE mfp.user_kv_store (
 );
 
 
+ALTER TABLE mfp.user_kv_store OWNER TO psql;
+
 --
--- Name: actuals_stage_wide; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1672 (class 1259 OID 108994891)
+-- Name: actuals_stage_wide; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.actuals_stage_wide (
@@ -12244,8 +12090,11 @@ CREATE TABLE mfp_td.actuals_stage_wide (
 );
 
 
+ALTER TABLE mfp_td.actuals_stage_wide OWNER TO psql;
+
 --
--- Name: actuals_wide; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1673 (class 1259 OID 108994896)
+-- Name: actuals_wide; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.actuals_wide (
@@ -12302,8 +12151,133 @@ CREATE TABLE mfp_td.actuals_wide (
 );
 
 
+ALTER TABLE mfp_td.actuals_wide OWNER TO psql;
+
 --
--- Name: dimensions; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1674 (class 1259 OID 108994901)
+-- Name: actuals_wide_bkp_20260712; Type: TABLE; Schema: mfp_td; Owner: psql
+--
+
+CREATE TABLE mfp_td.actuals_wide_bkp_20260712 (
+    "time" text,
+    product text,
+    location text,
+    prodlife text,
+    storecount double precision,
+    net_sls_u double precision,
+    net_sls_r double precision,
+    net_sls_r_adj double precision,
+    net_sls_c double precision,
+    net_sls_c_adj double precision,
+    pos_md_r double precision,
+    boh_r double precision,
+    boh_u double precision,
+    boh_c double precision,
+    eoh_u double precision,
+    eoh_r double precision,
+    eoh_c double precision,
+    rec_u double precision,
+    rec_c double precision,
+    rec_r double precision,
+    committed_u double precision,
+    committed_c double precision,
+    committed_r double precision,
+    on_order_u double precision,
+    on_order_c double precision,
+    on_order_r double precision,
+    inv_adjustment_u double precision,
+    inv_adjustment_r double precision,
+    inv_adjustment_c double precision,
+    mos_u double precision,
+    mos_r double precision,
+    mos_c double precision,
+    shrink_u double precision,
+    shrink_r double precision,
+    shrink_r_adj double precision,
+    shrink_c double precision,
+    shrink_c_adj double precision,
+    net_dc_xfer_u double precision,
+    net_dc_xfer_r double precision,
+    net_dc_xfer_c double precision,
+    perm_md_r double precision,
+    perm_md_c double precision,
+    perm_md_move_inv_u double precision,
+    perm_md_inv_r_csp double precision,
+    perm_md_inv_u_edit double precision,
+    perm_md_inv_r_at_new_aur_edit double precision,
+    perm_md_inv_c_edit double precision,
+    mm_r double precision,
+    margin_r double precision,
+    avg_inv_c double precision
+);
+
+
+ALTER TABLE mfp_td.actuals_wide_bkp_20260712 OWNER TO psql;
+
+--
+-- TOC entry 1675 (class 1259 OID 108994906)
+-- Name: actuals_wide_deduped; Type: TABLE; Schema: mfp_td; Owner: psql
+--
+
+CREATE TABLE mfp_td.actuals_wide_deduped (
+    "time" text,
+    product text,
+    location text,
+    prodlife text,
+    storecount double precision,
+    net_sls_u double precision,
+    net_sls_r double precision,
+    net_sls_r_adj double precision,
+    net_sls_c double precision,
+    net_sls_c_adj double precision,
+    pos_md_r double precision,
+    boh_r double precision,
+    boh_u double precision,
+    boh_c double precision,
+    eoh_u double precision,
+    eoh_r double precision,
+    eoh_c double precision,
+    rec_u double precision,
+    rec_c double precision,
+    rec_r double precision,
+    committed_u double precision,
+    committed_c double precision,
+    committed_r double precision,
+    on_order_u double precision,
+    on_order_c double precision,
+    on_order_r double precision,
+    inv_adjustment_u double precision,
+    inv_adjustment_r double precision,
+    inv_adjustment_c double precision,
+    mos_u double precision,
+    mos_r double precision,
+    mos_c double precision,
+    shrink_u double precision,
+    shrink_r double precision,
+    shrink_r_adj double precision,
+    shrink_c double precision,
+    shrink_c_adj double precision,
+    net_dc_xfer_u double precision,
+    net_dc_xfer_r double precision,
+    net_dc_xfer_c double precision,
+    perm_md_r double precision,
+    perm_md_c double precision,
+    perm_md_move_inv_u double precision,
+    perm_md_inv_r_csp double precision,
+    perm_md_inv_u_edit double precision,
+    perm_md_inv_r_at_new_aur_edit double precision,
+    perm_md_inv_c_edit double precision,
+    mm_r double precision,
+    margin_r double precision,
+    avg_inv_c double precision
+);
+
+
+ALTER TABLE mfp_td.actuals_wide_deduped OWNER TO psql;
+
+--
+-- TOC entry 1676 (class 1259 OID 108994911)
+-- Name: dimensions; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.dimensions (
@@ -12316,8 +12290,11 @@ CREATE TABLE mfp_td.dimensions (
 );
 
 
+ALTER TABLE mfp_td.dimensions OWNER TO psql;
+
 --
--- Name: hierarchies; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1677 (class 1259 OID 108994916)
+-- Name: hierarchies; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.hierarchies (
@@ -12328,8 +12305,11 @@ CREATE TABLE mfp_td.hierarchies (
 );
 
 
+ALTER TABLE mfp_td.hierarchies OWNER TO psql;
+
 --
--- Name: location_denorm; Type: VIEW; Schema: mfp_td; Owner: -
+-- TOC entry 1678 (class 1259 OID 108994921)
+-- Name: location_denorm; Type: VIEW; Schema: mfp_td; Owner: psql
 --
 
 CREATE VIEW mfp_td.location_denorm AS
@@ -12343,8 +12323,11 @@ CREATE VIEW mfp_td.location_denorm AS
           WHERE ((hierarchies.id = selling_channel.id) AND (hierarchies.hierarchy = 'locstd'::text))) channel ON (true));
 
 
+ALTER VIEW mfp_td.location_denorm OWNER TO psql;
+
 --
--- Name: prodlife_denorm; Type: VIEW; Schema: mfp_td; Owner: -
+-- TOC entry 1679 (class 1259 OID 108994925)
+-- Name: prodlife_denorm; Type: VIEW; Schema: mfp_td; Owner: psql
 --
 
 CREATE VIEW mfp_td.prodlife_denorm AS
@@ -12358,8 +12341,11 @@ CREATE VIEW mfp_td.prodlife_denorm AS
           WHERE ((hierarchies.id = merchcat.id) AND (hierarchies.hierarchy = 'prodlifestd'::text))) prodliferootlevel ON (true));
 
 
+ALTER VIEW mfp_td.prodlife_denorm OWNER TO psql;
+
 --
--- Name: product_denorm; Type: VIEW; Schema: mfp_td; Owner: -
+-- TOC entry 1680 (class 1259 OID 108994929)
+-- Name: product_denorm; Type: VIEW; Schema: mfp_td; Owner: psql
 --
 
 CREATE VIEW mfp_td.product_denorm AS
@@ -12385,8 +12371,11 @@ CREATE VIEW mfp_td.product_denorm AS
           WHERE ((hierarchies.id = division.id) AND (hierarchies.hierarchy = 'prodstd'::text))) total_brand ON (true));
 
 
+ALTER VIEW mfp_td.product_denorm OWNER TO psql;
+
 --
--- Name: time_denorm; Type: VIEW; Schema: mfp_td; Owner: -
+-- TOC entry 1681 (class 1259 OID 108994934)
+-- Name: time_denorm; Type: VIEW; Schema: mfp_td; Owner: psql
 --
 
 CREATE VIEW mfp_td.time_denorm AS
@@ -12412,8 +12401,11 @@ CREATE VIEW mfp_td.time_denorm AS
           WHERE ((hierarchies.id = season.id) AND (hierarchies.hierarchy = 'timestd'::text))) year ON (true));
 
 
+ALTER VIEW mfp_td.time_denorm OWNER TO psql;
+
 --
--- Name: actuals_wide_denorm; Type: MATERIALIZED VIEW; Schema: mfp_td; Owner: -
+-- TOC entry 1682 (class 1259 OID 108994939)
+-- Name: actuals_wide_denorm; Type: MATERIALIZED VIEW; Schema: mfp_td; Owner: psql
 --
 
 CREATE MATERIALIZED VIEW mfp_td.actuals_wide_denorm AS
@@ -12491,8 +12483,11 @@ CREATE MATERIALIZED VIEW mfp_td.actuals_wide_denorm AS
   WITH NO DATA;
 
 
+ALTER MATERIALIZED VIEW mfp_td.actuals_wide_denorm OWNER TO psql;
+
 --
--- Name: comments; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1683 (class 1259 OID 108994946)
+-- Name: comments; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.comments (
@@ -12506,8 +12501,11 @@ CREATE TABLE mfp_td.comments (
 );
 
 
+ALTER TABLE mfp_td.comments OWNER TO psql;
+
 --
--- Name: currency_exchange_rates; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1684 (class 1259 OID 108994952)
+-- Name: currency_exchange_rates; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.currency_exchange_rates (
@@ -12518,8 +12516,11 @@ CREATE TABLE mfp_td.currency_exchange_rates (
 );
 
 
+ALTER TABLE mfp_td.currency_exchange_rates OWNER TO psql;
+
 --
--- Name: dimensions_backup_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1685 (class 1259 OID 108994958)
+-- Name: dimensions_backup_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.dimensions_backup_2025_09_28 (
@@ -12532,8 +12533,11 @@ CREATE TABLE mfp_td.dimensions_backup_2025_09_28 (
 );
 
 
+ALTER TABLE mfp_td.dimensions_backup_2025_09_28 OWNER TO psql;
+
 --
--- Name: dimensions_backup_refresh; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1686 (class 1259 OID 108994963)
+-- Name: dimensions_backup_refresh; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.dimensions_backup_refresh (
@@ -12546,8 +12550,11 @@ CREATE TABLE mfp_td.dimensions_backup_refresh (
 );
 
 
+ALTER TABLE mfp_td.dimensions_backup_refresh OWNER TO psql;
+
 --
--- Name: dimensions_temp_update; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1687 (class 1259 OID 108994968)
+-- Name: dimensions_temp_update; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.dimensions_temp_update (
@@ -12560,8 +12567,11 @@ CREATE TABLE mfp_td.dimensions_temp_update (
 );
 
 
+ALTER TABLE mfp_td.dimensions_temp_update OWNER TO psql;
+
 --
--- Name: dimensions_to_be_loaded; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1688 (class 1259 OID 108994973)
+-- Name: dimensions_to_be_loaded; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.dimensions_to_be_loaded (
@@ -12574,8 +12584,11 @@ CREATE TABLE mfp_td.dimensions_to_be_loaded (
 );
 
 
+ALTER TABLE mfp_td.dimensions_to_be_loaded OWNER TO psql;
+
 --
--- Name: dimensions_to_be_loaded_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1689 (class 1259 OID 108994978)
+-- Name: dimensions_to_be_loaded_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.dimensions_to_be_loaded_2025_09_28 (
@@ -12588,8 +12601,11 @@ CREATE TABLE mfp_td.dimensions_to_be_loaded_2025_09_28 (
 );
 
 
+ALTER TABLE mfp_td.dimensions_to_be_loaded_2025_09_28 OWNER TO psql;
+
 --
--- Name: hierarchies_backup_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1690 (class 1259 OID 108994983)
+-- Name: hierarchies_backup_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.hierarchies_backup_2025_09_28 (
@@ -12600,8 +12616,11 @@ CREATE TABLE mfp_td.hierarchies_backup_2025_09_28 (
 );
 
 
+ALTER TABLE mfp_td.hierarchies_backup_2025_09_28 OWNER TO psql;
+
 --
--- Name: hierarchies_backup_refresh; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1691 (class 1259 OID 108994988)
+-- Name: hierarchies_backup_refresh; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.hierarchies_backup_refresh (
@@ -12612,8 +12631,11 @@ CREATE TABLE mfp_td.hierarchies_backup_refresh (
 );
 
 
+ALTER TABLE mfp_td.hierarchies_backup_refresh OWNER TO psql;
+
 --
--- Name: hierarchies_to_be_loaded; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1692 (class 1259 OID 108994993)
+-- Name: hierarchies_to_be_loaded; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.hierarchies_to_be_loaded (
@@ -12624,8 +12646,11 @@ CREATE TABLE mfp_td.hierarchies_to_be_loaded (
 );
 
 
+ALTER TABLE mfp_td.hierarchies_to_be_loaded OWNER TO psql;
+
 --
--- Name: hierarchies_to_be_loaded_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1693 (class 1259 OID 108994998)
+-- Name: hierarchies_to_be_loaded_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.hierarchies_to_be_loaded_2025_09_28 (
@@ -12636,8 +12661,11 @@ CREATE TABLE mfp_td.hierarchies_to_be_loaded_2025_09_28 (
 );
 
 
+ALTER TABLE mfp_td.hierarchies_to_be_loaded_2025_09_28 OWNER TO psql;
+
 --
--- Name: metadata; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1694 (class 1259 OID 108995003)
+-- Name: metadata; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.metadata (
@@ -12650,8 +12678,11 @@ CREATE TABLE mfp_td.metadata (
 );
 
 
+ALTER TABLE mfp_td.metadata OWNER TO psql;
+
 --
--- Name: paired_dimension_links; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1695 (class 1259 OID 108995008)
+-- Name: paired_dimension_links; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.paired_dimension_links (
@@ -12662,8 +12693,11 @@ CREATE TABLE mfp_td.paired_dimension_links (
 );
 
 
+ALTER TABLE mfp_td.paired_dimension_links OWNER TO psql;
+
 --
--- Name: plan_archives; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1696 (class 1259 OID 108995013)
+-- Name: plan_archives; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.plan_archives (
@@ -12683,8 +12717,11 @@ CREATE TABLE mfp_td.plan_archives (
 );
 
 
+ALTER TABLE mfp_td.plan_archives OWNER TO psql;
+
 --
--- Name: plan_audit_log; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1697 (class 1259 OID 108995022)
+-- Name: plan_audit_log; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.plan_audit_log (
@@ -12695,8 +12732,11 @@ CREATE TABLE mfp_td.plan_audit_log (
 );
 
 
+ALTER TABLE mfp_td.plan_audit_log OWNER TO psql;
+
 --
--- Name: plan_data_wide; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1698 (class 1259 OID 108995028)
+-- Name: plan_data_wide; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.plan_data_wide (
@@ -12754,8 +12794,11 @@ CREATE TABLE mfp_td.plan_data_wide (
 );
 
 
+ALTER TABLE mfp_td.plan_data_wide OWNER TO psql;
+
 --
--- Name: plan_data_wide_archives; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1699 (class 1259 OID 108995033)
+-- Name: plan_data_wide_archives; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.plan_data_wide_archives (
@@ -12813,8 +12856,11 @@ CREATE TABLE mfp_td.plan_data_wide_archives (
 );
 
 
+ALTER TABLE mfp_td.plan_data_wide_archives OWNER TO psql;
+
 --
--- Name: plan_data_wide_backup_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1700 (class 1259 OID 108995038)
+-- Name: plan_data_wide_backup_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.plan_data_wide_backup_2025_09_28 (
@@ -12872,8 +12918,11 @@ CREATE TABLE mfp_td.plan_data_wide_backup_2025_09_28 (
 );
 
 
+ALTER TABLE mfp_td.plan_data_wide_backup_2025_09_28 OWNER TO psql;
+
 --
--- Name: plan_data_wide_backup_refresh; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1701 (class 1259 OID 108995043)
+-- Name: plan_data_wide_backup_refresh; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.plan_data_wide_backup_refresh (
@@ -12931,8 +12980,11 @@ CREATE TABLE mfp_td.plan_data_wide_backup_refresh (
 );
 
 
+ALTER TABLE mfp_td.plan_data_wide_backup_refresh OWNER TO psql;
+
 --
--- Name: plan_id_ticker; Type: SEQUENCE; Schema: mfp_td; Owner: -
+-- TOC entry 1702 (class 1259 OID 108995048)
+-- Name: plan_id_ticker; Type: SEQUENCE; Schema: mfp_td; Owner: psql
 --
 
 CREATE SEQUENCE mfp_td.plan_id_ticker
@@ -12943,8 +12995,11 @@ CREATE SEQUENCE mfp_td.plan_id_ticker
     CACHE 1;
 
 
+ALTER SEQUENCE mfp_td.plan_id_ticker OWNER TO psql;
+
 --
--- Name: plan_init_status; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1703 (class 1259 OID 108995049)
+-- Name: plan_init_status; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.plan_init_status (
@@ -12954,8 +13009,11 @@ CREATE TABLE mfp_td.plan_init_status (
 );
 
 
+ALTER TABLE mfp_td.plan_init_status OWNER TO psql;
+
 --
--- Name: plans; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1704 (class 1259 OID 108995052)
+-- Name: plans; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.plans (
@@ -12975,8 +13033,11 @@ CREATE TABLE mfp_td.plans (
 );
 
 
+ALTER TABLE mfp_td.plans OWNER TO psql;
+
 --
--- Name: sys_gen_wide; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1705 (class 1259 OID 108995061)
+-- Name: sys_gen_wide; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.sys_gen_wide (
@@ -13034,8 +13095,11 @@ CREATE TABLE mfp_td.sys_gen_wide (
 );
 
 
+ALTER TABLE mfp_td.sys_gen_wide OWNER TO psql;
+
 --
--- Name: sys_gen_wide_denorm; Type: MATERIALIZED VIEW; Schema: mfp_td; Owner: -
+-- TOC entry 1706 (class 1259 OID 108995066)
+-- Name: sys_gen_wide_denorm; Type: MATERIALIZED VIEW; Schema: mfp_td; Owner: psql
 --
 
 CREATE MATERIALIZED VIEW mfp_td.sys_gen_wide_denorm AS
@@ -13114,8 +13178,11 @@ CREATE MATERIALIZED VIEW mfp_td.sys_gen_wide_denorm AS
   WITH NO DATA;
 
 
+ALTER MATERIALIZED VIEW mfp_td.sys_gen_wide_denorm OWNER TO psql;
+
 --
--- Name: tyly; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1707 (class 1259 OID 108995073)
+-- Name: tyly; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.tyly (
@@ -13124,8 +13191,11 @@ CREATE TABLE mfp_td.tyly (
 );
 
 
+ALTER TABLE mfp_td.tyly OWNER TO psql;
+
 --
--- Name: tyly_backup_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1708 (class 1259 OID 108995078)
+-- Name: tyly_backup_2025_09_28; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.tyly_backup_2025_09_28 (
@@ -13134,8 +13204,11 @@ CREATE TABLE mfp_td.tyly_backup_2025_09_28 (
 );
 
 
+ALTER TABLE mfp_td.tyly_backup_2025_09_28 OWNER TO psql;
+
 --
--- Name: tyly_backup_refresh; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1709 (class 1259 OID 108995083)
+-- Name: tyly_backup_refresh; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.tyly_backup_refresh (
@@ -13144,8 +13217,11 @@ CREATE TABLE mfp_td.tyly_backup_refresh (
 );
 
 
+ALTER TABLE mfp_td.tyly_backup_refresh OWNER TO psql;
+
 --
--- Name: user_kv_store; Type: TABLE; Schema: mfp_td; Owner: -
+-- TOC entry 1710 (class 1259 OID 108995088)
+-- Name: user_kv_store; Type: TABLE; Schema: mfp_td; Owner: psql
 --
 
 CREATE TABLE mfp_td.user_kv_store (
@@ -13155,8 +13231,11 @@ CREATE TABLE mfp_td.user_kv_store (
 );
 
 
+ALTER TABLE mfp_td.user_kv_store OWNER TO psql;
+
 --
--- Name: agent_conversations; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1711 (class 1259 OID 108995093)
+-- Name: agent_conversations; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.agent_conversations (
@@ -13167,8 +13246,11 @@ CREATE TABLE public.agent_conversations (
 );
 
 
+ALTER TABLE public.agent_conversations OWNER TO psql;
+
 --
--- Name: agent_conversations_log; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1712 (class 1259 OID 108995101)
+-- Name: agent_conversations_log; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.agent_conversations_log (
@@ -13180,8 +13262,11 @@ CREATE TABLE public.agent_conversations_log (
 );
 
 
+ALTER TABLE public.agent_conversations_log OWNER TO psql;
+
 --
--- Name: allocation_plan_queue; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1713 (class 1259 OID 108995108)
+-- Name: allocation_plan_queue; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.allocation_plan_queue (
@@ -13192,13 +13277,15 @@ CREATE TABLE public.allocation_plan_queue (
     state public.queue_state,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    error text,
-    instance_id text
+    error text
 );
 
 
+ALTER TABLE public.allocation_plan_queue OWNER TO psql;
+
 --
--- Name: allocation_plan_queue_items; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1714 (class 1259 OID 108995115)
+-- Name: allocation_plan_queue_items; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.allocation_plan_queue_items (
@@ -13212,8 +13299,11 @@ CREATE TABLE public.allocation_plan_queue_items (
 );
 
 
+ALTER TABLE public.allocation_plan_queue_items OWNER TO psql;
+
 --
--- Name: trd_d_product; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1715 (class 1259 OID 108995123)
+-- Name: trd_d_product; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_product (
@@ -13233,8 +13323,11 @@ CREATE TABLE public.trd_d_product (
 );
 
 
+ALTER TABLE public.trd_d_product OWNER TO psql;
+
 --
--- Name: trd_h_prodstd; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1716 (class 1259 OID 108995135)
+-- Name: trd_h_prodstd; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodstd (
@@ -13256,8 +13349,11 @@ CREATE TABLE public.trd_h_prodstd (
 );
 
 
+ALTER TABLE public.trd_h_prodstd OWNER TO psql;
+
 --
--- Name: trd_ma_styleattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1717 (class 1259 OID 108995146)
+-- Name: trd_ma_styleattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_styleattributes (
@@ -13310,8 +13406,11 @@ CREATE TABLE public.trd_ma_styleattributes (
 );
 
 
+ALTER TABLE public.trd_ma_styleattributes OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolorattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1718 (class 1259 OID 108995158)
+-- Name: trd_ma_stylecolorattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolorattributes (
@@ -13432,14 +13531,15 @@ CREATE TABLE public.trd_ma_stylecolorattributes (
     cc_design_notes text,
     cc_pd_notes text,
     cc_compliance_notes text,
-    merge_target_style text,
-    new_stylecolor_name text,
-    split_new_style_name text
+    cc_orig_unit_retail_char text
 );
 
 
+ALTER TABLE public.trd_ma_stylecolorattributes OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolorchannelattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1719 (class 1259 OID 108995171)
+-- Name: trd_ma_stylecolorchannelattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolorchannelattributes (
@@ -13550,8 +13650,11 @@ CREATE TABLE public.trd_ma_stylecolorchannelattributes (
 );
 
 
+ALTER TABLE public.trd_ma_stylecolorchannelattributes OWNER TO psql;
+
 --
--- Name: alt_trd_stylecolor_hier_attr; Type: VIEW; Schema: public; Owner: -
+-- TOC entry 1720 (class 1259 OID 108995206)
+-- Name: alt_trd_stylecolor_hier_attr; Type: VIEW; Schema: public; Owner: psql
 --
 
 CREATE VIEW public.alt_trd_stylecolor_hier_attr AS
@@ -13769,8 +13872,11 @@ CREATE VIEW public.alt_trd_stylecolor_hier_attr AS
   ORDER BY b.id;
 
 
+ALTER VIEW public.alt_trd_stylecolor_hier_attr OWNER TO psql;
+
 --
--- Name: arf; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1721 (class 1259 OID 108995211)
+-- Name: arf; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.arf (
@@ -13782,8 +13888,11 @@ CREATE TABLE public.arf (
 );
 
 
+ALTER TABLE public.arf OWNER TO psql;
+
 --
--- Name: assort_period_from_dpt; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1722 (class 1259 OID 108995216)
+-- Name: assort_period_from_dpt; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.assort_period_from_dpt (
@@ -13793,8 +13902,11 @@ CREATE TABLE public.assort_period_from_dpt (
 );
 
 
+ALTER TABLE public.assort_period_from_dpt OWNER TO psql;
+
 --
--- Name: ata_cart_master; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1723 (class 1259 OID 108995221)
+-- Name: ata_cart_master; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.ata_cart_master (
@@ -13819,8 +13931,11 @@ CREATE TABLE public.ata_cart_master (
 );
 
 
+ALTER TABLE public.ata_cart_master OWNER TO psql;
+
 --
--- Name: ata_cart_master_archive; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1724 (class 1259 OID 108995226)
+-- Name: ata_cart_master_archive; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.ata_cart_master_archive (
@@ -13846,8 +13961,11 @@ CREATE TABLE public.ata_cart_master_archive (
 );
 
 
+ALTER TABLE public.ata_cart_master_archive OWNER TO psql;
+
 --
--- Name: ata_cart_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1725 (class 1259 OID 108995231)
+-- Name: ata_cart_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.ata_cart_params (
@@ -13892,8 +14010,11 @@ CREATE TABLE public.ata_cart_params (
 );
 
 
+ALTER TABLE public.ata_cart_params OWNER TO psql;
+
 --
--- Name: ata_cart_params_archive; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1726 (class 1259 OID 108995239)
+-- Name: ata_cart_params_archive; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.ata_cart_params_archive (
@@ -13939,8 +14060,11 @@ CREATE TABLE public.ata_cart_params_archive (
 );
 
 
+ALTER TABLE public.ata_cart_params_archive OWNER TO psql;
+
 --
--- Name: ata_cart_ranging; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1727 (class 1259 OID 108995247)
+-- Name: ata_cart_ranging; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.ata_cart_ranging (
@@ -13969,8 +14093,11 @@ CREATE TABLE public.ata_cart_ranging (
 );
 
 
+ALTER TABLE public.ata_cart_ranging OWNER TO psql;
+
 --
--- Name: ata_cart_ranging_archive; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1728 (class 1259 OID 108995252)
+-- Name: ata_cart_ranging_archive; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.ata_cart_ranging_archive (
@@ -14000,8 +14127,11 @@ CREATE TABLE public.ata_cart_ranging_archive (
 );
 
 
+ALTER TABLE public.ata_cart_ranging_archive OWNER TO psql;
+
 --
--- Name: ata_plan_these_style_stylecolors; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1729 (class 1259 OID 108995257)
+-- Name: ata_plan_these_style_stylecolors; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.ata_plan_these_style_stylecolors (
@@ -14013,8 +14143,11 @@ CREATE TABLE public.ata_plan_these_style_stylecolors (
 );
 
 
+ALTER TABLE public.ata_plan_these_style_stylecolors OWNER TO psql;
+
 --
--- Name: bi_assortmentbyfloorset_staging; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1730 (class 1259 OID 108995262)
+-- Name: bi_assortmentbyfloorset_staging; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.bi_assortmentbyfloorset_staging (
@@ -14067,8 +14200,11 @@ CREATE TABLE public.bi_assortmentbyfloorset_staging (
 );
 
 
+ALTER TABLE public.bi_assortmentbyfloorset_staging OWNER TO psql;
+
 --
--- Name: bi_assortmentbyfloorset_summary; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1731 (class 1259 OID 108995267)
+-- Name: bi_assortmentbyfloorset_summary; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.bi_assortmentbyfloorset_summary (
@@ -14123,8 +14259,11 @@ CREATE TABLE public.bi_assortmentbyfloorset_summary (
 );
 
 
+ALTER TABLE public.bi_assortmentbyfloorset_summary OWNER TO psql;
+
 --
--- Name: bulk_import_audit; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1732 (class 1259 OID 108995272)
+-- Name: bulk_import_audit; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.bulk_import_audit (
@@ -14135,8 +14274,11 @@ CREATE TABLE public.bulk_import_audit (
 );
 
 
+ALTER TABLE public.bulk_import_audit OWNER TO psql;
+
 --
--- Name: bulk_import_refs; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1733 (class 1259 OID 108995277)
+-- Name: bulk_import_refs; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.bulk_import_refs (
@@ -14147,8 +14289,11 @@ CREATE TABLE public.bulk_import_refs (
 );
 
 
+ALTER TABLE public.bulk_import_refs OWNER TO psql;
+
 --
--- Name: bulk_import_run_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1734 (class 1259 OID 108995282)
+-- Name: bulk_import_run_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.bulk_import_run_params (
@@ -14158,8 +14303,11 @@ CREATE TABLE public.bulk_import_run_params (
 );
 
 
+ALTER TABLE public.bulk_import_run_params OWNER TO psql;
+
 --
--- Name: bulk_run_id_sequence; Type: SEQUENCE; Schema: public; Owner: -
+-- TOC entry 1735 (class 1259 OID 108995287)
+-- Name: bulk_run_id_sequence; Type: SEQUENCE; Schema: public; Owner: psql
 --
 
 CREATE SEQUENCE public.bulk_run_id_sequence
@@ -14170,8 +14318,11 @@ CREATE SEQUENCE public.bulk_run_id_sequence
     CACHE 1;
 
 
+ALTER SEQUENCE public.bulk_run_id_sequence OWNER TO psql;
+
 --
--- Name: cart_master; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1736 (class 1259 OID 108995288)
+-- Name: cart_master; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.cart_master (
@@ -14193,8 +14344,11 @@ CREATE TABLE public.cart_master (
 );
 
 
+ALTER TABLE public.cart_master OWNER TO psql;
+
 --
--- Name: cart_master_archive; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1737 (class 1259 OID 108995295)
+-- Name: cart_master_archive; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.cart_master_archive (
@@ -14216,8 +14370,11 @@ CREATE TABLE public.cart_master_archive (
 );
 
 
+ALTER TABLE public.cart_master_archive OWNER TO psql;
+
 --
--- Name: cart_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1738 (class 1259 OID 108995302)
+-- Name: cart_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.cart_params (
@@ -14262,8 +14419,11 @@ CREATE TABLE public.cart_params (
 );
 
 
+ALTER TABLE public.cart_params OWNER TO psql;
+
 --
--- Name: cart_params_archive; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1739 (class 1259 OID 108995310)
+-- Name: cart_params_archive; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.cart_params_archive (
@@ -14308,8 +14468,11 @@ CREATE TABLE public.cart_params_archive (
 );
 
 
+ALTER TABLE public.cart_params_archive OWNER TO psql;
+
 --
--- Name: cart_params_bkp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1740 (class 1259 OID 108995318)
+-- Name: cart_params_bkp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.cart_params_bkp (
@@ -14348,8 +14511,11 @@ CREATE TABLE public.cart_params_bkp (
 );
 
 
+ALTER TABLE public.cart_params_bkp OWNER TO psql;
+
 --
--- Name: cart_queue; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1741 (class 1259 OID 108995323)
+-- Name: cart_queue; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.cart_queue (
@@ -14359,13 +14525,15 @@ CREATE TABLE public.cart_queue (
     state public.queue_state NOT NULL,
     error_code text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    instance_id text
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
 );
 
 
+ALTER TABLE public.cart_queue OWNER TO psql;
+
 --
--- Name: cart_ranging; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1742 (class 1259 OID 108995330)
+-- Name: cart_ranging; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.cart_ranging (
@@ -14394,8 +14562,11 @@ CREATE TABLE public.cart_ranging (
 );
 
 
+ALTER TABLE public.cart_ranging OWNER TO psql;
+
 --
--- Name: cart_ranging_archive; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1743 (class 1259 OID 108995335)
+-- Name: cart_ranging_archive; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.cart_ranging_archive (
@@ -14424,8 +14595,11 @@ CREATE TABLE public.cart_ranging_archive (
 );
 
 
+ALTER TABLE public.cart_ranging_archive OWNER TO psql;
+
 --
--- Name: culprits_0223; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1744 (class 1259 OID 108995340)
+-- Name: culprits_0223; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.culprits_0223 (
@@ -14433,8 +14607,11 @@ CREATE TABLE public.culprits_0223 (
 );
 
 
+ALTER TABLE public.culprits_0223 OWNER TO psql;
+
 --
--- Name: culprits_0302; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1745 (class 1259 OID 108995345)
+-- Name: culprits_0302; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.culprits_0302 (
@@ -14452,8 +14629,11 @@ CREATE TABLE public.culprits_0302 (
 );
 
 
+ALTER TABLE public.culprits_0302 OWNER TO psql;
+
 --
--- Name: culprits_0323; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1746 (class 1259 OID 108995350)
+-- Name: culprits_0323; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.culprits_0323 (
@@ -14461,8 +14641,11 @@ CREATE TABLE public.culprits_0323 (
 );
 
 
+ALTER TABLE public.culprits_0323 OWNER TO psql;
+
 --
--- Name: curr_prod; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1747 (class 1259 OID 108995358)
+-- Name: curr_prod; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.curr_prod (
@@ -14470,8 +14653,11 @@ CREATE TABLE public.curr_prod (
 );
 
 
+ALTER TABLE public.curr_prod OWNER TO psql;
+
 --
--- Name: databasechangelog; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1748 (class 1259 OID 108995366)
+-- Name: databasechangelog; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.databasechangelog (
@@ -14492,8 +14678,11 @@ CREATE TABLE public.databasechangelog (
 );
 
 
+ALTER TABLE public.databasechangelog OWNER TO psql;
+
 --
--- Name: databasechangeloglock; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1749 (class 1259 OID 108995371)
+-- Name: databasechangeloglock; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.databasechangeloglock (
@@ -14504,8 +14693,11 @@ CREATE TABLE public.databasechangeloglock (
 );
 
 
+ALTER TABLE public.databasechangeloglock OWNER TO psql;
+
 --
--- Name: debug_stats_ts; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1750 (class 1259 OID 108995374)
+-- Name: debug_stats_ts; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.debug_stats_ts (
@@ -14515,8 +14707,11 @@ CREATE TABLE public.debug_stats_ts (
 );
 
 
+ALTER TABLE public.debug_stats_ts OWNER TO psql;
+
 --
--- Name: default_disc_md; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1751 (class 1259 OID 108995379)
+-- Name: default_disc_md; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.default_disc_md (
@@ -14525,8 +14720,11 @@ CREATE TABLE public.default_disc_md (
 );
 
 
+ALTER TABLE public.default_disc_md OWNER TO psql;
+
 --
--- Name: delete_me_user_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1752 (class 1259 OID 108995384)
+-- Name: delete_me_user_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.delete_me_user_worklist (
@@ -14538,8 +14736,11 @@ CREATE TABLE public.delete_me_user_worklist (
 );
 
 
+ALTER TABLE public.delete_me_user_worklist OWNER TO psql;
+
 --
--- Name: deleteme_20250928_planning_failures; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1753 (class 1259 OID 108995389)
+-- Name: deleteme_20250928_planning_failures; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_20250928_planning_failures (
@@ -14556,8 +14757,11 @@ CREATE TABLE public.deleteme_20250928_planning_failures (
 );
 
 
+ALTER TABLE public.deleteme_20250928_planning_failures OWNER TO psql;
+
 --
--- Name: deleteme_44231008_richblack_d_product; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1754 (class 1259 OID 108995394)
+-- Name: deleteme_44231008_richblack_d_product; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_44231008_richblack_d_product (
@@ -14577,8 +14781,11 @@ CREATE TABLE public.deleteme_44231008_richblack_d_product (
 );
 
 
+ALTER TABLE public.deleteme_44231008_richblack_d_product OWNER TO psql;
+
 --
--- Name: deleteme_44231008_richblack_h_prodstd; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1755 (class 1259 OID 108995399)
+-- Name: deleteme_44231008_richblack_h_prodstd; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_44231008_richblack_h_prodstd (
@@ -14600,8 +14807,11 @@ CREATE TABLE public.deleteme_44231008_richblack_h_prodstd (
 );
 
 
+ALTER TABLE public.deleteme_44231008_richblack_h_prodstd OWNER TO psql;
+
 --
--- Name: deleteme_44231008_richblack_sizeattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1756 (class 1259 OID 108995404)
+-- Name: deleteme_44231008_richblack_sizeattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_44231008_richblack_sizeattributes (
@@ -14622,8 +14832,11 @@ CREATE TABLE public.deleteme_44231008_richblack_sizeattributes (
 );
 
 
+ALTER TABLE public.deleteme_44231008_richblack_sizeattributes OWNER TO psql;
+
 --
--- Name: deleteme_failed_items_20250327; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1757 (class 1259 OID 108995409)
+-- Name: deleteme_failed_items_20250327; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_failed_items_20250327 (
@@ -14641,8 +14854,11 @@ CREATE TABLE public.deleteme_failed_items_20250327 (
 );
 
 
+ALTER TABLE public.deleteme_failed_items_20250327 OWNER TO psql;
+
 --
--- Name: deleteme_failed_items_20250328; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1758 (class 1259 OID 108995414)
+-- Name: deleteme_failed_items_20250328; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_failed_items_20250328 (
@@ -14651,8 +14867,11 @@ CREATE TABLE public.deleteme_failed_items_20250328 (
 );
 
 
+ALTER TABLE public.deleteme_failed_items_20250328 OWNER TO psql;
+
 --
--- Name: deleteme_fix_floorsets_after_reclass; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1759 (class 1259 OID 108995419)
+-- Name: deleteme_fix_floorsets_after_reclass; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_fix_floorsets_after_reclass (
@@ -14691,8 +14910,11 @@ CREATE TABLE public.deleteme_fix_floorsets_after_reclass (
 );
 
 
+ALTER TABLE public.deleteme_fix_floorsets_after_reclass OWNER TO psql;
+
 --
--- Name: deleteme_fix_floorsets_after_reclass_assortment; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1760 (class 1259 OID 108995424)
+-- Name: deleteme_fix_floorsets_after_reclass_assortment; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_fix_floorsets_after_reclass_assortment (
@@ -14709,8 +14931,11 @@ CREATE TABLE public.deleteme_fix_floorsets_after_reclass_assortment (
 );
 
 
+ALTER TABLE public.deleteme_fix_floorsets_after_reclass_assortment OWNER TO psql;
+
 --
--- Name: deleteme_fix_floorsets_after_reclass_assortmentssg; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1761 (class 1259 OID 108995429)
+-- Name: deleteme_fix_floorsets_after_reclass_assortmentssg; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_fix_floorsets_after_reclass_assortmentssg (
@@ -14722,8 +14947,11 @@ CREATE TABLE public.deleteme_fix_floorsets_after_reclass_assortmentssg (
 );
 
 
+ALTER TABLE public.deleteme_fix_floorsets_after_reclass_assortmentssg OWNER TO psql;
+
 --
--- Name: deleteme_fix_str_grade; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1762 (class 1259 OID 108995434)
+-- Name: deleteme_fix_str_grade; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_fix_str_grade (
@@ -14734,8 +14962,11 @@ CREATE TABLE public.deleteme_fix_str_grade (
 );
 
 
+ALTER TABLE public.deleteme_fix_str_grade OWNER TO psql;
+
 --
--- Name: deleteme_itmes_44231008_richblack; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1763 (class 1259 OID 108995439)
+-- Name: deleteme_itmes_44231008_richblack; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_itmes_44231008_richblack (
@@ -14748,8 +14979,11 @@ CREATE TABLE public.deleteme_itmes_44231008_richblack (
 );
 
 
+ALTER TABLE public.deleteme_itmes_44231008_richblack OWNER TO psql;
+
 --
--- Name: deleteme_itmes_deplicates; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1764 (class 1259 OID 108995444)
+-- Name: deleteme_itmes_deplicates; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_itmes_deplicates (
@@ -14762,8 +14996,11 @@ CREATE TABLE public.deleteme_itmes_deplicates (
 );
 
 
+ALTER TABLE public.deleteme_itmes_deplicates OWNER TO psql;
+
 --
--- Name: deleteme_itmes_deplicates_d_product; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1765 (class 1259 OID 108995449)
+-- Name: deleteme_itmes_deplicates_d_product; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_itmes_deplicates_d_product (
@@ -14783,8 +15020,11 @@ CREATE TABLE public.deleteme_itmes_deplicates_d_product (
 );
 
 
+ALTER TABLE public.deleteme_itmes_deplicates_d_product OWNER TO psql;
+
 --
--- Name: deleteme_itmes_deplicates_h_prodstd; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1766 (class 1259 OID 108995454)
+-- Name: deleteme_itmes_deplicates_h_prodstd; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_itmes_deplicates_h_prodstd (
@@ -14806,8 +15046,11 @@ CREATE TABLE public.deleteme_itmes_deplicates_h_prodstd (
 );
 
 
+ALTER TABLE public.deleteme_itmes_deplicates_h_prodstd OWNER TO psql;
+
 --
--- Name: deleteme_itmes_deplicates_sizeattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1767 (class 1259 OID 108995459)
+-- Name: deleteme_itmes_deplicates_sizeattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_itmes_deplicates_sizeattributes (
@@ -14828,8 +15071,11 @@ CREATE TABLE public.deleteme_itmes_deplicates_sizeattributes (
 );
 
 
+ALTER TABLE public.deleteme_itmes_deplicates_sizeattributes OWNER TO psql;
+
 --
--- Name: deleteme_new_mdstrategy; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1768 (class 1259 OID 108995464)
+-- Name: deleteme_new_mdstrategy; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_new_mdstrategy (
@@ -14840,8 +15086,11 @@ CREATE TABLE public.deleteme_new_mdstrategy (
 );
 
 
+ALTER TABLE public.deleteme_new_mdstrategy OWNER TO psql;
+
 --
--- Name: deleteme_plan_queue_20250201; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1769 (class 1259 OID 108995469)
+-- Name: deleteme_plan_queue_20250201; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_plan_queue_20250201 (
@@ -14859,8 +15108,11 @@ CREATE TABLE public.deleteme_plan_queue_20250201 (
 );
 
 
+ALTER TABLE public.deleteme_plan_queue_20250201 OWNER TO psql;
+
 --
--- Name: deleteme_plan_queue_20250201_01; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1770 (class 1259 OID 108995474)
+-- Name: deleteme_plan_queue_20250201_01; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_plan_queue_20250201_01 (
@@ -14878,8 +15130,11 @@ CREATE TABLE public.deleteme_plan_queue_20250201_01 (
 );
 
 
+ALTER TABLE public.deleteme_plan_queue_20250201_01 OWNER TO psql;
+
 --
--- Name: deleteme_plan_queue_20250202_02; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1771 (class 1259 OID 108995479)
+-- Name: deleteme_plan_queue_20250202_02; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_plan_queue_20250202_02 (
@@ -14897,8 +15152,11 @@ CREATE TABLE public.deleteme_plan_queue_20250202_02 (
 );
 
 
+ALTER TABLE public.deleteme_plan_queue_20250202_02 OWNER TO psql;
+
 --
--- Name: deleteme_trd_a_assortment_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1772 (class 1259 OID 108995484)
+-- Name: deleteme_trd_a_assortment_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_a_assortment_20251028 (
@@ -14934,8 +15192,11 @@ CREATE TABLE public.deleteme_trd_a_assortment_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_a_assortment_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_all_sizes_possible; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1773 (class 1259 OID 108995489)
+-- Name: deleteme_trd_all_sizes_possible; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_all_sizes_possible (
@@ -14948,8 +15209,11 @@ CREATE TABLE public.deleteme_trd_all_sizes_possible (
 );
 
 
+ALTER TABLE public.deleteme_trd_all_sizes_possible OWNER TO psql;
+
 --
--- Name: deleteme_trd_d_product_20250422; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1774 (class 1259 OID 108995494)
+-- Name: deleteme_trd_d_product_20250422; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_d_product_20250422 (
@@ -14969,8 +15233,11 @@ CREATE TABLE public.deleteme_trd_d_product_20250422 (
 );
 
 
+ALTER TABLE public.deleteme_trd_d_product_20250422 OWNER TO psql;
+
 --
--- Name: deleteme_trd_d_product_20250425; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1775 (class 1259 OID 108995499)
+-- Name: deleteme_trd_d_product_20250425; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_d_product_20250425 (
@@ -14978,8 +15245,11 @@ CREATE TABLE public.deleteme_trd_d_product_20250425 (
 );
 
 
+ALTER TABLE public.deleteme_trd_d_product_20250425 OWNER TO psql;
+
 --
--- Name: deleteme_trd_d_product_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1776 (class 1259 OID 108995504)
+-- Name: deleteme_trd_d_product_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_d_product_20251028 (
@@ -14999,8 +15269,11 @@ CREATE TABLE public.deleteme_trd_d_product_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_d_product_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_fix_ccticketpricechannel; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1777 (class 1259 OID 108995509)
+-- Name: deleteme_trd_fix_ccticketpricechannel; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_fix_ccticketpricechannel (
@@ -15010,8 +15283,11 @@ CREATE TABLE public.deleteme_trd_fix_ccticketpricechannel (
 );
 
 
+ALTER TABLE public.deleteme_trd_fix_ccticketpricechannel OWNER TO psql;
+
 --
--- Name: deleteme_trd_fix_unit_retail_cloning; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1778 (class 1259 OID 108995514)
+-- Name: deleteme_trd_fix_unit_retail_cloning; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_fix_unit_retail_cloning (
@@ -15024,8 +15300,11 @@ CREATE TABLE public.deleteme_trd_fix_unit_retail_cloning (
 );
 
 
+ALTER TABLE public.deleteme_trd_fix_unit_retail_cloning OWNER TO psql;
+
 --
--- Name: deleteme_trd_h_prodstd_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1779 (class 1259 OID 108995519)
+-- Name: deleteme_trd_h_prodstd_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_h_prodstd_20251028 (
@@ -15047,8 +15326,11 @@ CREATE TABLE public.deleteme_trd_h_prodstd_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_h_prodstd_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_in_prd_attrstyle; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1780 (class 1259 OID 108995524)
+-- Name: deleteme_trd_in_prd_attrstyle; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_in_prd_attrstyle (
@@ -15094,8 +15376,11 @@ CREATE TABLE public.deleteme_trd_in_prd_attrstyle (
 );
 
 
+ALTER TABLE public.deleteme_trd_in_prd_attrstyle OWNER TO psql;
+
 --
--- Name: deleteme_trd_l_dependencylookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1781 (class 1259 OID 108995529)
+-- Name: deleteme_trd_l_dependencylookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_l_dependencylookup (
@@ -15108,8 +15393,11 @@ CREATE TABLE public.deleteme_trd_l_dependencylookup (
 );
 
 
+ALTER TABLE public.deleteme_trd_l_dependencylookup OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_dptflrsetattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1782 (class 1259 OID 108995534)
+-- Name: deleteme_trd_ma_dptflrsetattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_dptflrsetattributes (
@@ -15166,8 +15454,11 @@ CREATE TABLE public.deleteme_trd_ma_dptflrsetattributes (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_dptflrsetattributes OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_dptflrsetattributes_ccmdstrategy; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1783 (class 1259 OID 108995539)
+-- Name: deleteme_trd_ma_dptflrsetattributes_ccmdstrategy; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_dptflrsetattributes_ccmdstrategy (
@@ -15176,8 +15467,11 @@ CREATE TABLE public.deleteme_trd_ma_dptflrsetattributes_ccmdstrategy (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_dptflrsetattributes_ccmdstrategy OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_imgattributes_fixed; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1784 (class 1259 OID 108995544)
+-- Name: deleteme_trd_ma_imgattributes_fixed; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_imgattributes_fixed (
@@ -15186,8 +15480,11 @@ CREATE TABLE public.deleteme_trd_ma_imgattributes_fixed (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_imgattributes_fixed OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_imgattributes_jr; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1785 (class 1259 OID 108995549)
+-- Name: deleteme_trd_ma_imgattributes_jr; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_imgattributes_jr (
@@ -15204,8 +15501,11 @@ CREATE TABLE public.deleteme_trd_ma_imgattributes_jr (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_imgattributes_jr OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_sizeattributes_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1786 (class 1259 OID 108995554)
+-- Name: deleteme_trd_ma_sizeattributes_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_sizeattributes_20251028 (
@@ -15226,31 +15526,11 @@ CREATE TABLE public.deleteme_trd_ma_sizeattributes_20251028 (
 );
 
 
---
--- Name: deleteme_trd_ma_sizeattributes_20260319; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.deleteme_trd_ma_sizeattributes_20260319 (
-    product text,
-    parent_id text,
-    item_diff_2 text,
-    item_diff_3 text,
-    sizeattribute text,
-    isvalid integer,
-    eventdate date,
-    version_id bigint,
-    created_at timestamp without time zone,
-    created_by text,
-    updated_at timestamp without time zone,
-    updated_by text,
-    record_state smallint,
-    ccctylecolorsizecreatedate text,
-    sort_order text
-);
-
+ALTER TABLE public.deleteme_trd_ma_sizeattributes_20251028 OWNER TO psql;
 
 --
--- Name: deleteme_trd_ma_sizeattributes_new_sizes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1787 (class 1259 OID 108995559)
+-- Name: deleteme_trd_ma_sizeattributes_new_sizes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_sizeattributes_new_sizes (
@@ -15263,8 +15543,11 @@ CREATE TABLE public.deleteme_trd_ma_sizeattributes_new_sizes (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_sizeattributes_new_sizes OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_styleattributes_20250331; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1788 (class 1259 OID 108995564)
+-- Name: deleteme_trd_ma_styleattributes_20250331; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_styleattributes_20250331 (
@@ -15314,8 +15597,11 @@ CREATE TABLE public.deleteme_trd_ma_styleattributes_20250331 (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_styleattributes_20250331 OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_stylecolorattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1789 (class 1259 OID 108995569)
+-- Name: deleteme_trd_ma_stylecolorattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_stylecolorattributes (
@@ -15397,8 +15683,11 @@ CREATE TABLE public.deleteme_trd_ma_stylecolorattributes (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_stylecolorattributes OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_stylecolorattributes_20250331; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1790 (class 1259 OID 108995574)
+-- Name: deleteme_trd_ma_stylecolorattributes_20250331; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_stylecolorattributes_20250331 (
@@ -15508,8 +15797,11 @@ CREATE TABLE public.deleteme_trd_ma_stylecolorattributes_20250331 (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_stylecolorattributes_20250331 OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_stylecolorattributes_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1791 (class 1259 OID 108995579)
+-- Name: deleteme_trd_ma_stylecolorattributes_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_stylecolorattributes_20251028 (
@@ -15623,8 +15915,11 @@ CREATE TABLE public.deleteme_trd_ma_stylecolorattributes_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_stylecolorattributes_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_ma_stylecolorchannelattributes_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1792 (class 1259 OID 108995584)
+-- Name: deleteme_trd_ma_stylecolorchannelattributes_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_ma_stylecolorchannelattributes_20251028 (
@@ -15735,8 +16030,11 @@ CREATE TABLE public.deleteme_trd_ma_stylecolorchannelattributes_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_ma_stylecolorchannelattributes_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_new_sizes_list; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1793 (class 1259 OID 108995589)
+-- Name: deleteme_trd_new_sizes_list; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_new_sizes_list (
@@ -15747,8 +16045,11 @@ CREATE TABLE public.deleteme_trd_new_sizes_list (
 );
 
 
+ALTER TABLE public.deleteme_trd_new_sizes_list OWNER TO psql;
+
 --
--- Name: deleteme_trd_p_channeloverride_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1794 (class 1259 OID 108995594)
+-- Name: deleteme_trd_p_channeloverride_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_p_channeloverride_20251028 (
@@ -15772,8 +16073,11 @@ CREATE TABLE public.deleteme_trd_p_channeloverride_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_p_channeloverride_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_p_dc_adj_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1795 (class 1259 OID 108995599)
+-- Name: deleteme_trd_p_dc_adj_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_p_dc_adj_20251028 (
@@ -15840,8 +16144,11 @@ CREATE TABLE public.deleteme_trd_p_dc_adj_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_p_dc_adj_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_p_dc_adj_size_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1796 (class 1259 OID 108995604)
+-- Name: deleteme_trd_p_dc_adj_size_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_p_dc_adj_size_20251028 (
@@ -15888,8 +16195,11 @@ CREATE TABLE public.deleteme_trd_p_dc_adj_size_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_p_dc_adj_size_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_p_itemprice_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1797 (class 1259 OID 108995609)
+-- Name: deleteme_trd_p_itemprice_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_p_itemprice_20251028 (
@@ -15914,8 +16224,11 @@ CREATE TABLE public.deleteme_trd_p_itemprice_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_trd_p_itemprice_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_trd_specimages; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1798 (class 1259 OID 108995614)
+-- Name: deleteme_trd_specimages; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_specimages (
@@ -15924,8 +16237,11 @@ CREATE TABLE public.deleteme_trd_specimages (
 );
 
 
+ALTER TABLE public.deleteme_trd_specimages OWNER TO psql;
+
 --
--- Name: deleteme_trd_specimages_fixed; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1799 (class 1259 OID 108995619)
+-- Name: deleteme_trd_specimages_fixed; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_specimages_fixed (
@@ -15934,8 +16250,11 @@ CREATE TABLE public.deleteme_trd_specimages_fixed (
 );
 
 
+ALTER TABLE public.deleteme_trd_specimages_fixed OWNER TO psql;
+
 --
--- Name: deleteme_trd_update_floorsets; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1800 (class 1259 OID 108995624)
+-- Name: deleteme_trd_update_floorsets; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_update_floorsets (
@@ -15945,8 +16264,11 @@ CREATE TABLE public.deleteme_trd_update_floorsets (
 );
 
 
+ALTER TABLE public.deleteme_trd_update_floorsets OWNER TO psql;
+
 --
--- Name: deleteme_trd_v_memberbasedvalidvalues_2025_03_29; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1801 (class 1259 OID 108995629)
+-- Name: deleteme_trd_v_memberbasedvalidvalues_2025_03_29; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_trd_v_memberbasedvalidvalues_2025_03_29 (
@@ -15965,8 +16287,11 @@ CREATE TABLE public.deleteme_trd_v_memberbasedvalidvalues_2025_03_29 (
 );
 
 
+ALTER TABLE public.deleteme_trd_v_memberbasedvalidvalues_2025_03_29 OWNER TO psql;
+
 --
--- Name: deleteme_ttrd_a_assortment_20251028; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1802 (class 1259 OID 108995634)
+-- Name: deleteme_ttrd_a_assortment_20251028; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_ttrd_a_assortment_20251028 (
@@ -16002,8 +16327,11 @@ CREATE TABLE public.deleteme_ttrd_a_assortment_20251028 (
 );
 
 
+ALTER TABLE public.deleteme_ttrd_a_assortment_20251028 OWNER TO psql;
+
 --
--- Name: deleteme_update_images_existing_202050828; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1803 (class 1259 OID 108995639)
+-- Name: deleteme_update_images_existing_202050828; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_update_images_existing_202050828 (
@@ -16020,8 +16348,11 @@ CREATE TABLE public.deleteme_update_images_existing_202050828 (
 );
 
 
+ALTER TABLE public.deleteme_update_images_existing_202050828 OWNER TO psql;
+
 --
--- Name: deleteme_update_images_step1_202050828; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1804 (class 1259 OID 108995644)
+-- Name: deleteme_update_images_step1_202050828; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_update_images_step1_202050828 (
@@ -16032,8 +16363,11 @@ CREATE TABLE public.deleteme_update_images_step1_202050828 (
 );
 
 
+ALTER TABLE public.deleteme_update_images_step1_202050828 OWNER TO psql;
+
 --
--- Name: deleteme_update_price_bands_20240331; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1805 (class 1259 OID 108995649)
+-- Name: deleteme_update_price_bands_20240331; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.deleteme_update_price_bands_20240331 (
@@ -16044,8 +16378,11 @@ CREATE TABLE public.deleteme_update_price_bands_20240331 (
 );
 
 
+ALTER TABLE public.deleteme_update_price_bands_20240331 OWNER TO psql;
+
 --
--- Name: dept_plan_item_conversion; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1806 (class 1259 OID 108995654)
+-- Name: dept_plan_item_conversion; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.dept_plan_item_conversion (
@@ -16055,8 +16392,11 @@ CREATE TABLE public.dept_plan_item_conversion (
 );
 
 
+ALTER TABLE public.dept_plan_item_conversion OWNER TO psql;
+
 --
--- Name: dept_plan_items; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1807 (class 1259 OID 108995659)
+-- Name: dept_plan_items; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.dept_plan_items (
@@ -16066,8 +16406,11 @@ CREATE TABLE public.dept_plan_items (
 );
 
 
+ALTER TABLE public.dept_plan_items OWNER TO psql;
+
 --
--- Name: dept_plan_items_active; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1808 (class 1259 OID 108995664)
+-- Name: dept_plan_items_active; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.dept_plan_items_active (
@@ -16077,8 +16420,11 @@ CREATE TABLE public.dept_plan_items_active (
 );
 
 
+ALTER TABLE public.dept_plan_items_active OWNER TO psql;
+
 --
--- Name: dept_plan_items_daily; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1809 (class 1259 OID 108995669)
+-- Name: dept_plan_items_daily; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.dept_plan_items_daily (
@@ -16088,8 +16434,11 @@ CREATE TABLE public.dept_plan_items_daily (
 );
 
 
+ALTER TABLE public.dept_plan_items_daily OWNER TO psql;
+
 --
--- Name: dept_plan_items_temp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1810 (class 1259 OID 108995674)
+-- Name: dept_plan_items_temp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.dept_plan_items_temp (
@@ -16099,8 +16448,11 @@ CREATE TABLE public.dept_plan_items_temp (
 );
 
 
+ALTER TABLE public.dept_plan_items_temp OWNER TO psql;
+
 --
--- Name: dev_session; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1811 (class 1259 OID 108995679)
+-- Name: dev_session; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.dev_session (
@@ -16112,8 +16464,11 @@ CREATE TABLE public.dev_session (
 );
 
 
+ALTER TABLE public.dev_session OWNER TO psql;
+
 --
--- Name: duplicate_sizes_sup3663; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1812 (class 1259 OID 108995686)
+-- Name: duplicate_sizes_sup3663; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.duplicate_sizes_sup3663 (
@@ -16135,8 +16490,11 @@ CREATE TABLE public.duplicate_sizes_sup3663 (
 );
 
 
+ALTER TABLE public.duplicate_sizes_sup3663 OWNER TO psql;
+
 --
--- Name: failed_items; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1813 (class 1259 OID 108995691)
+-- Name: failed_items; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.failed_items (
@@ -16154,8 +16512,11 @@ CREATE TABLE public.failed_items (
 );
 
 
+ALTER TABLE public.failed_items OWNER TO psql;
+
 --
--- Name: failed_items_20240925; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1814 (class 1259 OID 108995696)
+-- Name: failed_items_20240925; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.failed_items_20240925 (
@@ -16173,8 +16534,11 @@ CREATE TABLE public.failed_items_20240925 (
 );
 
 
+ALTER TABLE public.failed_items_20240925 OWNER TO psql;
+
 --
--- Name: failed_items_20250404; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1815 (class 1259 OID 108995701)
+-- Name: failed_items_20250404; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.failed_items_20250404 (
@@ -16192,8 +16556,11 @@ CREATE TABLE public.failed_items_20250404 (
 );
 
 
+ALTER TABLE public.failed_items_20250404 OWNER TO psql;
+
 --
--- Name: failed_items_20250511; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1816 (class 1259 OID 108995706)
+-- Name: failed_items_20250511; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.failed_items_20250511 (
@@ -16211,8 +16578,11 @@ CREATE TABLE public.failed_items_20250511 (
 );
 
 
+ALTER TABLE public.failed_items_20250511 OWNER TO psql;
+
 --
--- Name: failed_items_20250601; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1817 (class 1259 OID 108995711)
+-- Name: failed_items_20250601; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.failed_items_20250601 (
@@ -16230,8 +16600,11 @@ CREATE TABLE public.failed_items_20250601 (
 );
 
 
+ALTER TABLE public.failed_items_20250601 OWNER TO psql;
+
 --
--- Name: favorites; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1818 (class 1259 OID 108995716)
+-- Name: favorites; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.favorites (
@@ -16245,8 +16618,11 @@ CREATE TABLE public.favorites (
 );
 
 
+ALTER TABLE public.favorites OWNER TO psql;
+
 --
--- Name: fcstable_product; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1819 (class 1259 OID 108995721)
+-- Name: fcstable_product; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.fcstable_product (
@@ -16254,8 +16630,11 @@ CREATE TABLE public.fcstable_product (
 );
 
 
+ALTER TABLE public.fcstable_product OWNER TO psql;
+
 --
--- Name: flrset_hierarchy_prep; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1820 (class 1259 OID 108995726)
+-- Name: flrset_hierarchy_prep; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.flrset_hierarchy_prep (
@@ -16274,8 +16653,11 @@ CREATE TABLE public.flrset_hierarchy_prep (
 );
 
 
+ALTER TABLE public.flrset_hierarchy_prep OWNER TO psql;
+
 --
--- Name: from_torrid_department_default_for_flrset_merge; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1821 (class 1259 OID 108995731)
+-- Name: from_torrid_department_default_for_flrset_merge; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.from_torrid_department_default_for_flrset_merge (
@@ -16302,8 +16684,11 @@ CREATE TABLE public.from_torrid_department_default_for_flrset_merge (
 );
 
 
+ALTER TABLE public.from_torrid_department_default_for_flrset_merge OWNER TO psql;
+
 --
--- Name: from_torrid_department_flrset_and_default_merged; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1822 (class 1259 OID 108995736)
+-- Name: from_torrid_department_flrset_and_default_merged; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.from_torrid_department_flrset_and_default_merged (
@@ -16353,8 +16738,11 @@ CREATE TABLE public.from_torrid_department_flrset_and_default_merged (
 );
 
 
+ALTER TABLE public.from_torrid_department_flrset_and_default_merged OWNER TO psql;
+
 --
--- Name: from_torrid_department_flrset_default_for_flrset_merge; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1823 (class 1259 OID 108995741)
+-- Name: from_torrid_department_flrset_default_for_flrset_merge; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.from_torrid_department_flrset_default_for_flrset_merge (
@@ -16384,8 +16772,11 @@ CREATE TABLE public.from_torrid_department_flrset_default_for_flrset_merge (
 );
 
 
+ALTER TABLE public.from_torrid_department_flrset_default_for_flrset_merge OWNER TO psql;
+
 --
--- Name: mark_plan_queue_temp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1824 (class 1259 OID 108995746)
+-- Name: mark_plan_queue_temp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.mark_plan_queue_temp (
@@ -16403,8 +16794,11 @@ CREATE TABLE public.mark_plan_queue_temp (
 );
 
 
+ALTER TABLE public.mark_plan_queue_temp OWNER TO psql;
+
 --
--- Name: md_strategy; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1825 (class 1259 OID 108995751)
+-- Name: md_strategy; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.md_strategy (
@@ -16416,8 +16810,11 @@ CREATE TABLE public.md_strategy (
 );
 
 
+ALTER TABLE public.md_strategy OWNER TO psql;
+
 --
--- Name: missed_planning_delete_me; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1826 (class 1259 OID 108995756)
+-- Name: missed_planning_delete_me; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.missed_planning_delete_me (
@@ -16425,8 +16822,11 @@ CREATE TABLE public.missed_planning_delete_me (
 );
 
 
+ALTER TABLE public.missed_planning_delete_me OWNER TO psql;
+
 --
--- Name: missing_from_plan_1029_1016; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1827 (class 1259 OID 108995761)
+-- Name: missing_from_plan_1029_1016; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.missing_from_plan_1029_1016 (
@@ -16434,8 +16834,11 @@ CREATE TABLE public.missing_from_plan_1029_1016 (
 );
 
 
+ALTER TABLE public.missing_from_plan_1029_1016 OWNER TO psql;
+
 --
--- Name: missing_from_plan_1029_1016_with_dept; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1828 (class 1259 OID 108995766)
+-- Name: missing_from_plan_1029_1016_with_dept; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.missing_from_plan_1029_1016_with_dept (
@@ -16445,8 +16848,11 @@ CREATE TABLE public.missing_from_plan_1029_1016_with_dept (
 );
 
 
+ALTER TABLE public.missing_from_plan_1029_1016_with_dept OWNER TO psql;
+
 --
--- Name: missing_from_plan_1029_1016_with_dept_sca; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1829 (class 1259 OID 108995771)
+-- Name: missing_from_plan_1029_1016_with_dept_sca; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.missing_from_plan_1029_1016_with_dept_sca (
@@ -16458,8 +16864,11 @@ CREATE TABLE public.missing_from_plan_1029_1016_with_dept_sca (
 );
 
 
+ALTER TABLE public.missing_from_plan_1029_1016_with_dept_sca OWNER TO psql;
+
 --
--- Name: missing_from_plan_1029_1016_with_dept_sca_sizerange; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1830 (class 1259 OID 108995776)
+-- Name: missing_from_plan_1029_1016_with_dept_sca_sizerange; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.missing_from_plan_1029_1016_with_dept_sca_sizerange (
@@ -16473,8 +16882,11 @@ CREATE TABLE public.missing_from_plan_1029_1016_with_dept_sca_sizerange (
 );
 
 
+ALTER TABLE public.missing_from_plan_1029_1016_with_dept_sca_sizerange OWNER TO psql;
+
 --
--- Name: nov18_products; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1831 (class 1259 OID 108995781)
+-- Name: nov18_products; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.nov18_products (
@@ -16482,8 +16894,11 @@ CREATE TABLE public.nov18_products (
 );
 
 
+ALTER TABLE public.nov18_products OWNER TO psql;
+
 --
--- Name: trd_d_time; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1832 (class 1259 OID 108995786)
+-- Name: trd_d_time; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_time (
@@ -16504,8 +16919,11 @@ CREATE TABLE public.trd_d_time (
 );
 
 
+ALTER TABLE public.trd_d_time OWNER TO psql;
+
 --
--- Name: trd_ma_dptflrsetattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1833 (class 1259 OID 108995798)
+-- Name: trd_ma_dptflrsetattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_dptflrsetattributes (
@@ -16564,8 +16982,11 @@ CREATE TABLE public.trd_ma_dptflrsetattributes (
 );
 
 
+ALTER TABLE public.trd_ma_dptflrsetattributes OWNER TO psql;
+
 --
--- Name: perf_assortperiod_week; Type: VIEW; Schema: public; Owner: -
+-- TOC entry 1834 (class 1259 OID 108995810)
+-- Name: perf_assortperiod_week; Type: VIEW; Schema: public; Owner: psql
 --
 
 CREATE VIEW public.perf_assortperiod_week AS
@@ -16582,8 +17003,11 @@ CREATE VIEW public.perf_assortperiod_week AS
   WHERE ((b.levelid = ('week'::character varying(4))::text) AND (b.id >= a.rcptstart) AND (b.id <= a.rcptend));
 
 
+ALTER VIEW public.perf_assortperiod_week OWNER TO psql;
+
 --
--- Name: pivot_clean_session; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1835 (class 1259 OID 108995815)
+-- Name: pivot_clean_session; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.pivot_clean_session (
@@ -16594,8 +17018,11 @@ CREATE TABLE public.pivot_clean_session (
 );
 
 
+ALTER TABLE public.pivot_clean_session OWNER TO psql;
+
 --
--- Name: pivot_execution; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1836 (class 1259 OID 108995820)
+-- Name: pivot_execution; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.pivot_execution (
@@ -16619,8 +17046,11 @@ CREATE TABLE public.pivot_execution (
 );
 
 
+ALTER TABLE public.pivot_execution OWNER TO psql;
+
 --
--- Name: pivot_tables; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1837 (class 1259 OID 108995826)
+-- Name: pivot_tables; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.pivot_tables (
@@ -16631,8 +17061,11 @@ CREATE TABLE public.pivot_tables (
 );
 
 
+ALTER TABLE public.pivot_tables OWNER TO psql;
+
 --
--- Name: plan_data_export; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1838 (class 1259 OID 108995832)
+-- Name: plan_data_export; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.plan_data_export (
@@ -16755,8 +17188,11 @@ CREATE TABLE public.plan_data_export (
 );
 
 
+ALTER TABLE public.plan_data_export OWNER TO psql;
+
 --
--- Name: plan_queue; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1839 (class 1259 OID 108995837)
+-- Name: plan_queue; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.plan_queue (
@@ -16770,13 +17206,15 @@ CREATE TABLE public.plan_queue (
     completed timestamp with time zone,
     error text,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    priority integer DEFAULT 1 NOT NULL,
-    instance_id text
+    priority integer DEFAULT 1 NOT NULL
 );
 
 
+ALTER TABLE public.plan_queue OWNER TO psql;
+
 --
--- Name: plan_queue_bk_20240922; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1840 (class 1259 OID 108995846)
+-- Name: plan_queue_bk_20240922; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.plan_queue_bk_20240922 (
@@ -16794,8 +17232,11 @@ CREATE TABLE public.plan_queue_bk_20240922 (
 );
 
 
+ALTER TABLE public.plan_queue_bk_20240922 OWNER TO psql;
+
 --
--- Name: plan_queue_bk_20250103; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1841 (class 1259 OID 108995851)
+-- Name: plan_queue_bk_20250103; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.plan_queue_bk_20250103 (
@@ -16813,8 +17254,11 @@ CREATE TABLE public.plan_queue_bk_20250103 (
 );
 
 
+ALTER TABLE public.plan_queue_bk_20250103 OWNER TO psql;
+
 --
--- Name: plan_queue_bkp_11112024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1842 (class 1259 OID 108995856)
+-- Name: plan_queue_bkp_11112024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.plan_queue_bkp_11112024 (
@@ -16832,8 +17276,11 @@ CREATE TABLE public.plan_queue_bkp_11112024 (
 );
 
 
+ALTER TABLE public.plan_queue_bkp_11112024 OWNER TO psql;
+
 --
--- Name: plan_queue_bkp_1227; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1843 (class 1259 OID 108995861)
+-- Name: plan_queue_bkp_1227; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.plan_queue_bkp_1227 (
@@ -16851,8 +17298,11 @@ CREATE TABLE public.plan_queue_bkp_1227 (
 );
 
 
+ALTER TABLE public.plan_queue_bkp_1227 OWNER TO psql;
+
 --
--- Name: plan_queue_fails; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1844 (class 1259 OID 108995866)
+-- Name: plan_queue_fails; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.plan_queue_fails (
@@ -16870,8 +17320,11 @@ CREATE TABLE public.plan_queue_fails (
 );
 
 
+ALTER TABLE public.plan_queue_fails OWNER TO psql;
+
 --
--- Name: plan_queue_last_run; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1845 (class 1259 OID 108995871)
+-- Name: plan_queue_last_run; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.plan_queue_last_run (
@@ -16889,8 +17342,11 @@ CREATE TABLE public.plan_queue_last_run (
 );
 
 
+ALTER TABLE public.plan_queue_last_run OWNER TO psql;
+
 --
--- Name: plan_status; Type: VIEW; Schema: public; Owner: -
+-- TOC entry 1846 (class 1259 OID 108995876)
+-- Name: plan_status; Type: VIEW; Schema: public; Owner: psql
 --
 
 CREATE VIEW public.plan_status AS
@@ -16911,8 +17367,11 @@ CREATE VIEW public.plan_status AS
    FROM public.plan_queue;
 
 
+ALTER VIEW public.plan_status OWNER TO psql;
+
 --
--- Name: pre_12062026_p_stylecolor_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1847 (class 1259 OID 108995880)
+-- Name: pre_12062026_p_stylecolor_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.pre_12062026_p_stylecolor_worklist (
@@ -16938,8 +17397,11 @@ CREATE TABLE public.pre_12062026_p_stylecolor_worklist (
 );
 
 
+ALTER TABLE public.pre_12062026_p_stylecolor_worklist OWNER TO psql;
+
 --
--- Name: prev_next_flrset; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1848 (class 1259 OID 108995885)
+-- Name: prev_next_flrset; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_next_flrset (
@@ -16952,8 +17414,11 @@ CREATE TABLE public.prev_next_flrset (
 );
 
 
+ALTER TABLE public.prev_next_flrset OWNER TO psql;
+
 --
--- Name: prev_next_superset; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1849 (class 1259 OID 108995890)
+-- Name: prev_next_superset; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_next_superset (
@@ -16966,8 +17431,29 @@ CREATE TABLE public.prev_next_superset (
 );
 
 
+ALTER TABLE public.prev_next_superset OWNER TO psql;
+
 --
--- Name: prev_trd_ma_departmentquarter_attributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1850 (class 1259 OID 108995895)
+-- Name: prev_s5_analytics_inseason_sls_rnk_transposed; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.prev_s5_analytics_inseason_sls_rnk_transposed (
+    stylecolor text,
+    act_slsrnk_store real,
+    act_slsrnk_ecom real,
+    act_aps_store real,
+    act_aps_ecom real,
+    act_aps_mult_adj_store real,
+    act_aps_mult_adj_ecom real
+);
+
+
+ALTER TABLE public.prev_s5_analytics_inseason_sls_rnk_transposed OWNER TO psql;
+
+--
+-- TOC entry 1851 (class 1259 OID 108995900)
+-- Name: prev_trd_ma_departmentquarter_attributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_trd_ma_departmentquarter_attributes (
@@ -16993,8 +17479,11 @@ CREATE TABLE public.prev_trd_ma_departmentquarter_attributes (
 );
 
 
+ALTER TABLE public.prev_trd_ma_departmentquarter_attributes OWNER TO psql;
+
 --
--- Name: prev_trd_p_strategy_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1852 (class 1259 OID 108995905)
+-- Name: prev_trd_p_strategy_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_trd_p_strategy_params (
@@ -17029,8 +17518,11 @@ CREATE TABLE public.prev_trd_p_strategy_params (
 );
 
 
+ALTER TABLE public.prev_trd_p_strategy_params OWNER TO psql;
+
 --
--- Name: prev_trd_p_stylecolor_channel_alloc_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1853 (class 1259 OID 108995910)
+-- Name: prev_trd_p_stylecolor_channel_alloc_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_trd_p_stylecolor_channel_alloc_params (
@@ -17056,8 +17548,11 @@ CREATE TABLE public.prev_trd_p_stylecolor_channel_alloc_params (
 );
 
 
+ALTER TABLE public.prev_trd_p_stylecolor_channel_alloc_params OWNER TO psql;
+
 --
--- Name: prev_trd_p_stylecolor_store_alloc_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1854 (class 1259 OID 108995915)
+-- Name: prev_trd_p_stylecolor_store_alloc_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_trd_p_stylecolor_store_alloc_params (
@@ -17086,8 +17581,11 @@ CREATE TABLE public.prev_trd_p_stylecolor_store_alloc_params (
 );
 
 
+ALTER TABLE public.prev_trd_p_stylecolor_store_alloc_params OWNER TO psql;
+
 --
--- Name: prev_trd_p_stylecolor_store_eligibility; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1855 (class 1259 OID 108995920)
+-- Name: prev_trd_p_stylecolor_store_eligibility; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_trd_p_stylecolor_store_eligibility (
@@ -17104,8 +17602,11 @@ CREATE TABLE public.prev_trd_p_stylecolor_store_eligibility (
 );
 
 
+ALTER TABLE public.prev_trd_p_stylecolor_store_eligibility OWNER TO psql;
+
 --
--- Name: prev_trd_p_stylecolor_store_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1856 (class 1259 OID 108995925)
+-- Name: prev_trd_p_stylecolor_store_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_trd_p_stylecolor_store_worklist (
@@ -17137,8 +17638,11 @@ CREATE TABLE public.prev_trd_p_stylecolor_store_worklist (
 );
 
 
+ALTER TABLE public.prev_trd_p_stylecolor_store_worklist OWNER TO psql;
+
 --
--- Name: prev_trd_p_stylecolor_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1857 (class 1259 OID 108995930)
+-- Name: prev_trd_p_stylecolor_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_trd_p_stylecolor_worklist (
@@ -17164,8 +17668,11 @@ CREATE TABLE public.prev_trd_p_stylecolor_worklist (
 );
 
 
+ALTER TABLE public.prev_trd_p_stylecolor_worklist OWNER TO psql;
+
 --
--- Name: prev_trd_p_stylecolorsize_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1858 (class 1259 OID 108995935)
+-- Name: prev_trd_p_stylecolorsize_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_trd_p_stylecolorsize_worklist (
@@ -17188,8 +17695,11 @@ CREATE TABLE public.prev_trd_p_stylecolorsize_worklist (
 );
 
 
+ALTER TABLE public.prev_trd_p_stylecolorsize_worklist OWNER TO psql;
+
 --
--- Name: prev_user_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1859 (class 1259 OID 108995940)
+-- Name: prev_user_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.prev_user_worklist (
@@ -17201,8 +17711,11 @@ CREATE TABLE public.prev_user_worklist (
 );
 
 
+ALTER TABLE public.prev_user_worklist OWNER TO psql;
+
 --
--- Name: pricing_table; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1860 (class 1259 OID 108995945)
+-- Name: pricing_table; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.pricing_table (
@@ -17211,8 +17724,11 @@ CREATE TABLE public.pricing_table (
 );
 
 
+ALTER TABLE public.pricing_table OWNER TO psql;
+
 --
--- Name: products; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1861 (class 1259 OID 108995950)
+-- Name: products; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.products (
@@ -17220,8 +17736,11 @@ CREATE TABLE public.products (
 );
 
 
+ALTER TABLE public.products OWNER TO psql;
+
 --
--- Name: products_delete_me; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1862 (class 1259 OID 108995955)
+-- Name: products_delete_me; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.products_delete_me (
@@ -17229,8 +17748,11 @@ CREATE TABLE public.products_delete_me (
 );
 
 
+ALTER TABLE public.products_delete_me OWNER TO psql;
+
 --
--- Name: rerun_temp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1863 (class 1259 OID 108995960)
+-- Name: rerun_temp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.rerun_temp (
@@ -17239,8 +17761,11 @@ CREATE TABLE public.rerun_temp (
 );
 
 
+ALTER TABLE public.rerun_temp OWNER TO psql;
+
 --
--- Name: rerun_temp_valid; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1864 (class 1259 OID 108995965)
+-- Name: rerun_temp_valid; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.rerun_temp_valid (
@@ -17249,8 +17774,11 @@ CREATE TABLE public.rerun_temp_valid (
 );
 
 
+ALTER TABLE public.rerun_temp_valid OWNER TO psql;
+
 --
--- Name: s5_actual_initrcptwk_archives; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1865 (class 1259 OID 108995970)
+-- Name: s5_actual_initrcptwk_archives; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.s5_actual_initrcptwk_archives (
@@ -17261,8 +17789,11 @@ CREATE TABLE public.s5_actual_initrcptwk_archives (
 );
 
 
+ALTER TABLE public.s5_actual_initrcptwk_archives OWNER TO psql;
+
 --
--- Name: s5_actual_initrcptwk_update; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1866 (class 1259 OID 108995975)
+-- Name: s5_actual_initrcptwk_update; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.s5_actual_initrcptwk_update (
@@ -17271,23 +17802,31 @@ CREATE TABLE public.s5_actual_initrcptwk_update (
 );
 
 
+ALTER TABLE public.s5_actual_initrcptwk_update OWNER TO psql;
+
 --
--- Name: s5_analytics_inseason_sls_rnk_transposed; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1867 (class 1259 OID 108995980)
+-- Name: s5_analytics_inseason_sls_rnk_transposed; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.s5_analytics_inseason_sls_rnk_transposed (
     stylecolor text,
+    raw_aps_store real,
+    raw_aps_ecom real,
     act_slsrnk_store real,
     act_slsrnk_ecom real,
-    act_aps_store real,
-    act_aps_ecom real,
+    clean_aps_store real,
+    clean_aps_ecom real,
     act_aps_mult_adj_store real,
     act_aps_mult_adj_ecom real
 );
 
 
+ALTER TABLE public.s5_analytics_inseason_sls_rnk_transposed OWNER TO psql;
+
 --
--- Name: s5_profile_master; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1868 (class 1259 OID 108995985)
+-- Name: s5_profile_master; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.s5_profile_master (
@@ -17301,8 +17840,11 @@ CREATE TABLE public.s5_profile_master (
 );
 
 
+ALTER TABLE public.s5_profile_master OWNER TO psql;
+
 --
--- Name: s5_tunableparams; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1869 (class 1259 OID 108995990)
+-- Name: s5_tunableparams; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.s5_tunableparams (
@@ -17312,8 +17854,11 @@ CREATE TABLE public.s5_tunableparams (
 );
 
 
+ALTER TABLE public.s5_tunableparams OWNER TO psql;
+
 --
--- Name: scope; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1870 (class 1259 OID 108995995)
+-- Name: scope; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.scope (
@@ -17327,8 +17872,11 @@ CREATE TABLE public.scope (
 );
 
 
+ALTER TABLE public.scope OWNER TO psql;
+
 --
--- Name: seq_area; Type: SEQUENCE; Schema: public; Owner: -
+-- TOC entry 1871 (class 1259 OID 108996004)
+-- Name: seq_area; Type: SEQUENCE; Schema: public; Owner: psql
 --
 
 CREATE SEQUENCE public.seq_area
@@ -17339,8 +17887,11 @@ CREATE SEQUENCE public.seq_area
     CACHE 1;
 
 
+ALTER SEQUENCE public.seq_area OWNER TO psql;
+
 --
--- Name: seq_district; Type: SEQUENCE; Schema: public; Owner: -
+-- TOC entry 1872 (class 1259 OID 108996005)
+-- Name: seq_district; Type: SEQUENCE; Schema: public; Owner: psql
 --
 
 CREATE SEQUENCE public.seq_district
@@ -17351,8 +17902,11 @@ CREATE SEQUENCE public.seq_district
     CACHE 1;
 
 
+ALTER SEQUENCE public.seq_district OWNER TO psql;
+
 --
--- Name: seq_region; Type: SEQUENCE; Schema: public; Owner: -
+-- TOC entry 1873 (class 1259 OID 108996006)
+-- Name: seq_region; Type: SEQUENCE; Schema: public; Owner: psql
 --
 
 CREATE SEQUENCE public.seq_region
@@ -17363,8 +17917,11 @@ CREATE SEQUENCE public.seq_region
     CACHE 1;
 
 
+ALTER SEQUENCE public.seq_region OWNER TO psql;
+
 --
--- Name: seq_sellingchannel; Type: SEQUENCE; Schema: public; Owner: -
+-- TOC entry 1874 (class 1259 OID 108996007)
+-- Name: seq_sellingchannel; Type: SEQUENCE; Schema: public; Owner: psql
 --
 
 CREATE SEQUENCE public.seq_sellingchannel
@@ -17375,8 +17932,11 @@ CREATE SEQUENCE public.seq_sellingchannel
     CACHE 1;
 
 
+ALTER SEQUENCE public.seq_sellingchannel OWNER TO psql;
+
 --
--- Name: seq_store; Type: SEQUENCE; Schema: public; Owner: -
+-- TOC entry 1875 (class 1259 OID 108996008)
+-- Name: seq_store; Type: SEQUENCE; Schema: public; Owner: psql
 --
 
 CREATE SEQUENCE public.seq_store
@@ -17387,8 +17947,11 @@ CREATE SEQUENCE public.seq_store
     CACHE 1;
 
 
+ALTER SEQUENCE public.seq_store OWNER TO psql;
+
 --
--- Name: size_ids; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1876 (class 1259 OID 108996009)
+-- Name: size_ids; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.size_ids (
@@ -17397,8 +17960,11 @@ CREATE TABLE public.size_ids (
 );
 
 
+ALTER TABLE public.size_ids OWNER TO psql;
+
 --
--- Name: style_sequence; Type: SEQUENCE; Schema: public; Owner: -
+-- TOC entry 1877 (class 1259 OID 108996014)
+-- Name: style_sequence; Type: SEQUENCE; Schema: public; Owner: psql
 --
 
 CREATE SEQUENCE public.style_sequence
@@ -17409,8 +17975,11 @@ CREATE SEQUENCE public.style_sequence
     CACHE 1;
 
 
+ALTER SEQUENCE public.style_sequence OWNER TO psql;
+
 --
--- Name: stylecolor_sizerange_size_master_with_existing_products; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1878 (class 1259 OID 108996015)
+-- Name: stylecolor_sizerange_size_master_with_existing_products; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.stylecolor_sizerange_size_master_with_existing_products (
@@ -17424,8 +17993,182 @@ CREATE TABLE public.stylecolor_sizerange_size_master_with_existing_products (
 );
 
 
+ALTER TABLE public.stylecolor_sizerange_size_master_with_existing_products OWNER TO psql;
+
 --
--- Name: sync_outbound_dataqueue; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1879 (class 1259 OID 108996020)
+-- Name: sup4164_in_sca; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.sup4164_in_sca (
+    product text,
+    sty_size_range text,
+    ccrangecode text
+);
+
+
+ALTER TABLE public.sup4164_in_sca OWNER TO psql;
+
+--
+-- TOC entry 1880 (class 1259 OID 108996025)
+-- Name: sup4164_in_sca_fix; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.sup4164_in_sca_fix (
+    product text,
+    sty_size_range text,
+    ccrangecode text,
+    latest_sty_size_range text,
+    class text,
+    fix_ccrangecode text
+);
+
+
+ALTER TABLE public.sup4164_in_sca_fix OWNER TO psql;
+
+--
+-- TOC entry 1881 (class 1259 OID 108996030)
+-- Name: sup4164_ma_sizeattributes; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.sup4164_ma_sizeattributes (
+    product text,
+    parent_id text,
+    item_diff_2 text,
+    item_diff_3 text,
+    sizeattribute text,
+    isvalid integer,
+    eventdate date,
+    version_id bigint,
+    created_at timestamp without time zone,
+    created_by text,
+    updated_at timestamp without time zone,
+    updated_by text,
+    record_state smallint,
+    ccctylecolorsizecreatedate text
+);
+
+
+ALTER TABLE public.sup4164_ma_sizeattributes OWNER TO psql;
+
+--
+-- TOC entry 1882 (class 1259 OID 108996035)
+-- Name: sup4164_ma_stylecolorchannelattributes; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.sup4164_ma_stylecolorchannelattributes (
+    product text,
+    location text,
+    dbt_wk text,
+    relaunchweek text,
+    erlstmkdnwk text,
+    exitdate text,
+    initrcptwk text,
+    too smallint,
+    mkdnwks smallint,
+    last_inv_wk text,
+    lstfpwk text,
+    last_rcpt_wk text,
+    lastdcorder text,
+    act_initrcptwk text,
+    act_dbt_wk text,
+    irw_indx integer,
+    dbtwk_indx integer,
+    relaunchwk_indx integer,
+    mdstart_indx integer,
+    lastdcorder_indx integer,
+    exitdate_indx integer,
+    preview_wks smallint,
+    preview_qty smallint,
+    plannedselldnwk text,
+    ccmdstrategy text,
+    slsrnk_store real,
+    slsrnk_ecom real,
+    validsizes text[],
+    cc_validsizes_store text[],
+    cc_validsizes_ecom text[],
+    ccrangecode text,
+    cc_presmin integer,
+    cc_presmin_weeks integer,
+    cc_rcptint integer,
+    cc_return_u_pct_store real,
+    cc_return_u_pct_ecom real,
+    cc_return_u_pct_cross real,
+    cc_ordermultiple integer,
+    cc_ordermin integer,
+    cc_buy_aps_letter text,
+    ccticketpricechannel real,
+    ccticketpricechannel_override real,
+    cc_imupct real,
+    cc_discount_pct real,
+    cc_existingwac real,
+    cc_systemcost real,
+    cc_plan_cost real,
+    ssnprf text,
+    adjaps_store real,
+    adjaps_ecom real,
+    smoothing_strategy text,
+    in_season_flag text,
+    auto_rollforward boolean,
+    irr_mode text,
+    plan_current text,
+    lock_agg_edit text,
+    cc_lead_time integer,
+    cc_service_level real,
+    eventdate date,
+    version_id bigint,
+    created_at timestamp without time zone,
+    created_by text,
+    updated_at timestamp without time zone,
+    updated_by text,
+    record_state smallint,
+    cc_store_min_multiple integer,
+    planned_sell_down_week text,
+    cc_selected_clusters text[],
+    cc_cluster_group text,
+    keep_initial_range_plan integer,
+    cc_sizeelig_rangecode text,
+    cc_presmin_stylecolor integer,
+    cc_presmin_weeks_stylecolor integer,
+    cc_final_cost real,
+    cc_discount_pct_store real,
+    cc_discount_pct_ecom real,
+    irw_debut_offset integer,
+    cc_service_level_ecom real,
+    cc_first_publish_date timestamp without time zone,
+    cc_first_publish_snapshot_op integer,
+    sclr_alloc_max real,
+    sclr_presmin real,
+    sclr_alloc_min real,
+    sclr_presmin_weeks real,
+    sclr_tgt_fwoc real,
+    sclr_fringe_flag real,
+    act_slsrnk_store real,
+    act_aps_store real,
+    act_aps_mult_adj_store real,
+    act_slsrnk_ecom real,
+    act_aps_ecom real,
+    act_aps_mult_adj_ecom real,
+    use_act_aps_or_act_rank text,
+    use_valid_sizes_from text,
+    apply_size_mins_to text,
+    cc_addoff_store real,
+    cc_addoff_ecom real,
+    irw_floorset text,
+    irw_superset text,
+    irw_floorset_display text,
+    irw_superset_display text,
+    irw_floorset_id text,
+    cc_size_eligibility_profile text,
+    cloned_at timestamp(0) without time zone
+);
+
+
+ALTER TABLE public.sup4164_ma_stylecolorchannelattributes OWNER TO psql;
+
+--
+-- TOC entry 1883 (class 1259 OID 108996040)
+-- Name: sync_outbound_dataqueue; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.sync_outbound_dataqueue (
@@ -17437,8 +18180,11 @@ CREATE TABLE public.sync_outbound_dataqueue (
 );
 
 
+ALTER TABLE public.sync_outbound_dataqueue OWNER TO psql;
+
 --
--- Name: temp1_trd_c_week1; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1884 (class 1259 OID 108996047)
+-- Name: temp1_trd_c_week1; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.temp1_trd_c_week1 (
@@ -17447,8 +18193,11 @@ CREATE TABLE public.temp1_trd_c_week1 (
 );
 
 
+ALTER TABLE public.temp1_trd_c_week1 OWNER TO psql;
+
 --
--- Name: temp1_trd_c_week4; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1885 (class 1259 OID 108996052)
+-- Name: temp1_trd_c_week4; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.temp1_trd_c_week4 (
@@ -17457,8 +18206,11 @@ CREATE TABLE public.temp1_trd_c_week4 (
 );
 
 
+ALTER TABLE public.temp1_trd_c_week4 OWNER TO psql;
+
 --
--- Name: temp_corpdisc; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1886 (class 1259 OID 108996057)
+-- Name: temp_corpdisc; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.temp_corpdisc (
@@ -17472,8 +18224,11 @@ CREATE TABLE public.temp_corpdisc (
 );
 
 
+ALTER TABLE public.temp_corpdisc OWNER TO psql;
+
 --
--- Name: temp_failed_items; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1887 (class 1259 OID 108996064)
+-- Name: temp_failed_items; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.temp_failed_items (
@@ -17491,8 +18246,11 @@ CREATE TABLE public.temp_failed_items (
 );
 
 
+ALTER TABLE public.temp_failed_items OWNER TO psql;
+
 --
--- Name: tmp_trd_l_dependencylookup_20241002; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1888 (class 1259 OID 108996069)
+-- Name: tmp_trd_l_dependencylookup_20241002; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.tmp_trd_l_dependencylookup_20241002 (
@@ -17511,8 +18269,11 @@ CREATE TABLE public.tmp_trd_l_dependencylookup_20241002 (
 );
 
 
+ALTER TABLE public.tmp_trd_l_dependencylookup_20241002 OWNER TO psql;
+
 --
--- Name: tmp_trd_v_memberbasedvalidvalues; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1889 (class 1259 OID 108996074)
+-- Name: tmp_trd_v_memberbasedvalidvalues; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.tmp_trd_v_memberbasedvalidvalues (
@@ -17531,8 +18292,11 @@ CREATE TABLE public.tmp_trd_v_memberbasedvalidvalues (
 );
 
 
+ALTER TABLE public.tmp_trd_v_memberbasedvalidvalues OWNER TO psql;
+
 --
--- Name: trd_a_assortment; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1890 (class 1259 OID 108996079)
+-- Name: trd_a_assortment; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_a_assortment (
@@ -17569,8 +18333,11 @@ CREATE TABLE public.trd_a_assortment (
 );
 
 
+ALTER TABLE public.trd_a_assortment OWNER TO psql;
+
 --
--- Name: trd_a_assortment_43515774_black; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1891 (class 1259 OID 108996095)
+-- Name: trd_a_assortment_43515774_black; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_a_assortment_43515774_black (
@@ -17606,8 +18373,11 @@ CREATE TABLE public.trd_a_assortment_43515774_black (
 );
 
 
+ALTER TABLE public.trd_a_assortment_43515774_black OWNER TO psql;
+
 --
--- Name: trd_a_assortment_bk; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1892 (class 1259 OID 108996100)
+-- Name: trd_a_assortment_bk; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_a_assortment_bk (
@@ -17643,8 +18413,11 @@ CREATE TABLE public.trd_a_assortment_bk (
 );
 
 
+ALTER TABLE public.trd_a_assortment_bk OWNER TO psql;
+
 --
--- Name: trd_a_assortment_bk_20240922; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1893 (class 1259 OID 108996105)
+-- Name: trd_a_assortment_bk_20240922; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_a_assortment_bk_20240922 (
@@ -17680,8 +18453,11 @@ CREATE TABLE public.trd_a_assortment_bk_20240922 (
 );
 
 
+ALTER TABLE public.trd_a_assortment_bk_20240922 OWNER TO psql;
+
 --
--- Name: trd_a_assortment_storecount; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1894 (class 1259 OID 108996110)
+-- Name: trd_a_assortment_storecount; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_a_assortment_storecount (
@@ -17700,8 +18476,11 @@ CREATE TABLE public.trd_a_assortment_storecount (
 );
 
 
+ALTER TABLE public.trd_a_assortment_storecount OWNER TO psql;
+
 --
--- Name: trd_an_price_storecount_info; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1895 (class 1259 OID 108996115)
+-- Name: trd_an_price_storecount_info; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_an_price_storecount_info (
@@ -17733,8 +18512,11 @@ CREATE TABLE public.trd_an_price_storecount_info (
 );
 
 
+ALTER TABLE public.trd_an_price_storecount_info OWNER TO psql;
+
 --
--- Name: trd_authorization; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1896 (class 1259 OID 108996120)
+-- Name: trd_authorization; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_authorization (
@@ -17752,8 +18534,11 @@ CREATE TABLE public.trd_authorization (
 );
 
 
+ALTER TABLE public.trd_authorization OWNER TO psql;
+
 --
--- Name: trd_c_conversion_file; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1897 (class 1259 OID 108996132)
+-- Name: trd_c_conversion_file; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_c_conversion_file (
@@ -17798,8 +18583,11 @@ CREATE TABLE public.trd_c_conversion_file (
 );
 
 
+ALTER TABLE public.trd_c_conversion_file OWNER TO psql;
+
 --
--- Name: trd_c_conversion_file_bk_20240922; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1898 (class 1259 OID 108996137)
+-- Name: trd_c_conversion_file_bk_20240922; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_c_conversion_file_bk_20240922 (
@@ -17843,8 +18631,11 @@ CREATE TABLE public.trd_c_conversion_file_bk_20240922 (
 );
 
 
+ALTER TABLE public.trd_c_conversion_file_bk_20240922 OWNER TO psql;
+
 --
--- Name: trd_c_conversion_file_issues; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1899 (class 1259 OID 108996142)
+-- Name: trd_c_conversion_file_issues; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_c_conversion_file_issues (
@@ -17890,8 +18681,11 @@ CREATE TABLE public.trd_c_conversion_file_issues (
 );
 
 
+ALTER TABLE public.trd_c_conversion_file_issues OWNER TO psql;
+
 --
--- Name: trd_c_conversion_file_lifecycle; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1900 (class 1259 OID 108996147)
+-- Name: trd_c_conversion_file_lifecycle; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_c_conversion_file_lifecycle (
@@ -17946,8 +18740,11 @@ CREATE TABLE public.trd_c_conversion_file_lifecycle (
 );
 
 
+ALTER TABLE public.trd_c_conversion_file_lifecycle OWNER TO psql;
+
 --
--- Name: trd_c_conversion_history_lifecycle; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1901 (class 1259 OID 108996152)
+-- Name: trd_c_conversion_history_lifecycle; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_c_conversion_history_lifecycle (
@@ -17970,8 +18767,11 @@ CREATE TABLE public.trd_c_conversion_history_lifecycle (
 );
 
 
+ALTER TABLE public.trd_c_conversion_history_lifecycle OWNER TO psql;
+
 --
--- Name: trd_c_conversion_history_stylecolorchannelattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1902 (class 1259 OID 108996157)
+-- Name: trd_c_conversion_history_stylecolorchannelattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_c_conversion_history_stylecolorchannelattributes (
@@ -18019,8 +18819,11 @@ CREATE TABLE public.trd_c_conversion_history_stylecolorchannelattributes (
 );
 
 
+ALTER TABLE public.trd_c_conversion_history_stylecolorchannelattributes OWNER TO psql;
+
 --
--- Name: trd_c_conversion_history_validsizes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1903 (class 1259 OID 108996162)
+-- Name: trd_c_conversion_history_validsizes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_c_conversion_history_validsizes (
@@ -18029,8 +18832,11 @@ CREATE TABLE public.trd_c_conversion_history_validsizes (
 );
 
 
+ALTER TABLE public.trd_c_conversion_history_validsizes OWNER TO psql;
+
 --
--- Name: trd_c_cutover_prep_history; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1904 (class 1259 OID 108996167)
+-- Name: trd_c_cutover_prep_history; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_c_cutover_prep_history (
@@ -18044,8 +18850,11 @@ CREATE TABLE public.trd_c_cutover_prep_history (
 );
 
 
+ALTER TABLE public.trd_c_cutover_prep_history OWNER TO psql;
+
 --
--- Name: trd_p_approvedclusters; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1905 (class 1259 OID 108996172)
+-- Name: trd_p_approvedclusters; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_approvedclusters (
@@ -18063,8 +18872,11 @@ CREATE TABLE public.trd_p_approvedclusters (
 );
 
 
+ALTER TABLE public.trd_p_approvedclusters OWNER TO psql;
+
 --
--- Name: trd_serviceparams; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1906 (class 1259 OID 108996184)
+-- Name: trd_serviceparams; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_serviceparams (
@@ -18081,8 +18893,11 @@ CREATE TABLE public.trd_serviceparams (
 );
 
 
+ALTER TABLE public.trd_serviceparams OWNER TO psql;
+
 --
--- Name: trd_clustering_needs_attention; Type: VIEW; Schema: public; Owner: -
+-- TOC entry 1907 (class 1259 OID 108996196)
+-- Name: trd_clustering_needs_attention; Type: VIEW; Schema: public; Owner: psql
 --
 
 CREATE VIEW public.trd_clustering_needs_attention AS
@@ -18139,8 +18954,11 @@ CREATE VIEW public.trd_clustering_needs_attention AS
   ORDER BY aa.plannable_dept, aa.plannable_time;
 
 
+ALTER VIEW public.trd_clustering_needs_attention OWNER TO psql;
+
 --
--- Name: trd_corpdisc; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1908 (class 1259 OID 108996201)
+-- Name: trd_corpdisc; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_corpdisc (
@@ -18162,8 +18980,11 @@ CREATE TABLE public.trd_corpdisc (
 );
 
 
+ALTER TABLE public.trd_corpdisc OWNER TO psql;
+
 --
--- Name: trd_corpdisc_backup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1909 (class 1259 OID 108996215)
+-- Name: trd_corpdisc_backup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_corpdisc_backup (
@@ -18185,8 +19006,11 @@ CREATE TABLE public.trd_corpdisc_backup (
 );
 
 
+ALTER TABLE public.trd_corpdisc_backup OWNER TO psql;
+
 --
--- Name: trd_corpdisc_temp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1910 (class 1259 OID 108996220)
+-- Name: trd_corpdisc_temp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_corpdisc_temp (
@@ -18199,8 +19023,11 @@ CREATE TABLE public.trd_corpdisc_temp (
 );
 
 
+ALTER TABLE public.trd_corpdisc_temp OWNER TO psql;
+
 --
--- Name: trd_d_cluster; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1911 (class 1259 OID 108996225)
+-- Name: trd_d_cluster; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_cluster (
@@ -18219,8 +19046,11 @@ CREATE TABLE public.trd_d_cluster (
 );
 
 
+ALTER TABLE public.trd_d_cluster OWNER TO psql;
+
 --
--- Name: trd_d_cluster_delete_me; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1912 (class 1259 OID 108996237)
+-- Name: trd_d_cluster_delete_me; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_cluster_delete_me (
@@ -18239,8 +19069,11 @@ CREATE TABLE public.trd_d_cluster_delete_me (
 );
 
 
+ALTER TABLE public.trd_d_cluster_delete_me OWNER TO psql;
+
 --
--- Name: trd_d_location; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1913 (class 1259 OID 108996242)
+-- Name: trd_d_location; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_location (
@@ -18259,8 +19092,11 @@ CREATE TABLE public.trd_d_location (
 );
 
 
+ALTER TABLE public.trd_d_location OWNER TO psql;
+
 --
--- Name: trd_d_prodlife; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1914 (class 1259 OID 108996254)
+-- Name: trd_d_prodlife; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_prodlife (
@@ -18279,8 +19115,11 @@ CREATE TABLE public.trd_d_prodlife (
 );
 
 
+ALTER TABLE public.trd_d_prodlife OWNER TO psql;
+
 --
--- Name: trd_d_prodlife_delete_me; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1915 (class 1259 OID 108996266)
+-- Name: trd_d_prodlife_delete_me; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_prodlife_delete_me (
@@ -18299,8 +19138,11 @@ CREATE TABLE public.trd_d_prodlife_delete_me (
 );
 
 
+ALTER TABLE public.trd_d_prodlife_delete_me OWNER TO psql;
+
 --
--- Name: trd_d_product_backup_2025_04_24; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1916 (class 1259 OID 108996271)
+-- Name: trd_d_product_backup_2025_04_24; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_product_backup_2025_04_24 (
@@ -18320,8 +19162,11 @@ CREATE TABLE public.trd_d_product_backup_2025_04_24 (
 );
 
 
+ALTER TABLE public.trd_d_product_backup_2025_04_24 OWNER TO psql;
+
 --
--- Name: trd_d_product_bk20241107; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1917 (class 1259 OID 108996276)
+-- Name: trd_d_product_bk20241107; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_product_bk20241107 (
@@ -18341,8 +19186,11 @@ CREATE TABLE public.trd_d_product_bk20241107 (
 );
 
 
+ALTER TABLE public.trd_d_product_bk20241107 OWNER TO psql;
+
 --
--- Name: trd_d_product_bk_sup_3663; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1918 (class 1259 OID 108996281)
+-- Name: trd_d_product_bk_sup_3663; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_product_bk_sup_3663 (
@@ -18362,8 +19210,35 @@ CREATE TABLE public.trd_d_product_bk_sup_3663 (
 );
 
 
+ALTER TABLE public.trd_d_product_bk_sup_3663 OWNER TO psql;
+
 --
--- Name: trd_d_product_for_stylecolorsize_missing; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1919 (class 1259 OID 108996286)
+-- Name: trd_d_product_bkp29052026; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.trd_d_product_bkp29052026 (
+    id text,
+    client_id text,
+    name text,
+    description text,
+    levelid text,
+    indx integer,
+    eventdate date,
+    version_id bigint,
+    created_at timestamp without time zone,
+    created_by text,
+    updated_at timestamp without time zone,
+    updated_by text,
+    record_state smallint
+);
+
+
+ALTER TABLE public.trd_d_product_bkp29052026 OWNER TO psql;
+
+--
+-- TOC entry 1920 (class 1259 OID 108996291)
+-- Name: trd_d_product_for_stylecolorsize_missing; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_product_for_stylecolorsize_missing (
@@ -18376,8 +19251,11 @@ CREATE TABLE public.trd_d_product_for_stylecolorsize_missing (
 );
 
 
+ALTER TABLE public.trd_d_product_for_stylecolorsize_missing OWNER TO psql;
+
 --
--- Name: trd_d_product_mock_sup3663; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1921 (class 1259 OID 108996296)
+-- Name: trd_d_product_mock_sup3663; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_product_mock_sup3663 (
@@ -18388,8 +19266,11 @@ CREATE TABLE public.trd_d_product_mock_sup3663 (
 );
 
 
+ALTER TABLE public.trd_d_product_mock_sup3663 OWNER TO psql;
+
 --
--- Name: trd_d_time_bk_20250928; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1922 (class 1259 OID 108996301)
+-- Name: trd_d_time_bk_20250928; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_time_bk_20250928 (
@@ -18410,8 +19291,11 @@ CREATE TABLE public.trd_d_time_bk_20250928 (
 );
 
 
+ALTER TABLE public.trd_d_time_bk_20250928 OWNER TO psql;
+
 --
--- Name: trd_d_time_bkp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1923 (class 1259 OID 108996306)
+-- Name: trd_d_time_bkp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_time_bkp (
@@ -18432,8 +19316,11 @@ CREATE TABLE public.trd_d_time_bkp (
 );
 
 
+ALTER TABLE public.trd_d_time_bkp OWNER TO psql;
+
 --
--- Name: trd_d_time_bkp_08172024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1924 (class 1259 OID 108996311)
+-- Name: trd_d_time_bkp_08172024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_time_bkp_08172024 (
@@ -18454,8 +19341,11 @@ CREATE TABLE public.trd_d_time_bkp_08172024 (
 );
 
 
+ALTER TABLE public.trd_d_time_bkp_08172024 OWNER TO psql;
+
 --
--- Name: trd_d_time_new_11102024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1925 (class 1259 OID 108996316)
+-- Name: trd_d_time_new_11102024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_d_time_new_11102024 (
@@ -18476,8 +19366,11 @@ CREATE TABLE public.trd_d_time_new_11102024 (
 );
 
 
+ALTER TABLE public.trd_d_time_new_11102024 OWNER TO psql;
+
 --
--- Name: trd_designimages; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1926 (class 1259 OID 108996321)
+-- Name: trd_designimages; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_designimages (
@@ -18486,8 +19379,11 @@ CREATE TABLE public.trd_designimages (
 );
 
 
+ALTER TABLE public.trd_designimages OWNER TO psql;
+
 --
--- Name: trd_eohdata_stylecolor; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1927 (class 1259 OID 108996326)
+-- Name: trd_eohdata_stylecolor; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_eohdata_stylecolor (
@@ -18497,8 +19393,11 @@ CREATE TABLE public.trd_eohdata_stylecolor (
 );
 
 
+ALTER TABLE public.trd_eohdata_stylecolor OWNER TO psql;
+
 --
--- Name: trd_h_timeflrset; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1928 (class 1259 OID 108996331)
+-- Name: trd_h_timeflrset; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_timeflrset (
@@ -18515,8 +19414,11 @@ CREATE TABLE public.trd_h_timeflrset (
 );
 
 
+ALTER TABLE public.trd_h_timeflrset OWNER TO psql;
+
 --
--- Name: trd_for_tgt_flrset_hier; Type: VIEW; Schema: public; Owner: -
+-- TOC entry 1929 (class 1259 OID 108996343)
+-- Name: trd_for_tgt_flrset_hier; Type: VIEW; Schema: public; Owner: psql
 --
 
 CREATE VIEW public.trd_for_tgt_flrset_hier AS
@@ -18530,8 +19432,11 @@ CREATE VIEW public.trd_for_tgt_flrset_hier AS
   WHERE ((a.levelid = 'floorset'::text) AND (a.id = b.id));
 
 
+ALTER VIEW public.trd_for_tgt_flrset_hier OWNER TO psql;
+
 --
--- Name: trd_h_clusterstd; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1930 (class 1259 OID 108996347)
+-- Name: trd_h_clusterstd; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_clusterstd (
@@ -18546,8 +19451,11 @@ CREATE TABLE public.trd_h_clusterstd (
 );
 
 
+ALTER TABLE public.trd_h_clusterstd OWNER TO psql;
+
 --
--- Name: trd_h_locdc; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1931 (class 1259 OID 108996359)
+-- Name: trd_h_locdc; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_locdc (
@@ -18562,8 +19470,11 @@ CREATE TABLE public.trd_h_locdc (
 );
 
 
+ALTER TABLE public.trd_h_locdc OWNER TO psql;
+
 --
--- Name: trd_h_locdcstd; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1932 (class 1259 OID 108996371)
+-- Name: trd_h_locdcstd; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_locdcstd (
@@ -18579,8 +19490,11 @@ CREATE TABLE public.trd_h_locdcstd (
 );
 
 
+ALTER TABLE public.trd_h_locdcstd OWNER TO psql;
+
 --
--- Name: trd_h_locstd; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1933 (class 1259 OID 108996383)
+-- Name: trd_h_locstd; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_locstd (
@@ -18599,8 +19513,11 @@ CREATE TABLE public.trd_h_locstd (
 );
 
 
+ALTER TABLE public.trd_h_locstd OWNER TO psql;
+
 --
--- Name: trd_h_prodlifestd; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1934 (class 1259 OID 108996394)
+-- Name: trd_h_prodlifestd; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodlifestd (
@@ -18615,8 +19532,11 @@ CREATE TABLE public.trd_h_prodlifestd (
 );
 
 
+ALTER TABLE public.trd_h_prodlifestd OWNER TO psql;
+
 --
--- Name: trd_h_prodlifestd_delete_me; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1935 (class 1259 OID 108996406)
+-- Name: trd_h_prodlifestd_delete_me; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodlifestd_delete_me (
@@ -18631,8 +19551,11 @@ CREATE TABLE public.trd_h_prodlifestd_delete_me (
 );
 
 
+ALTER TABLE public.trd_h_prodlifestd_delete_me OWNER TO psql;
+
 --
--- Name: trd_h_prodstd_backup_2025_04_24; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1936 (class 1259 OID 108996411)
+-- Name: trd_h_prodstd_backup_2025_04_24; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodstd_backup_2025_04_24 (
@@ -18654,8 +19577,11 @@ CREATE TABLE public.trd_h_prodstd_backup_2025_04_24 (
 );
 
 
+ALTER TABLE public.trd_h_prodstd_backup_2025_04_24 OWNER TO psql;
+
 --
--- Name: trd_h_prodstd_bk2024010302; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1937 (class 1259 OID 108996416)
+-- Name: trd_h_prodstd_bk2024010302; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodstd_bk2024010302 (
@@ -18677,8 +19603,11 @@ CREATE TABLE public.trd_h_prodstd_bk2024010302 (
 );
 
 
+ALTER TABLE public.trd_h_prodstd_bk2024010302 OWNER TO psql;
+
 --
--- Name: trd_h_prodstd_bk20241107; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1938 (class 1259 OID 108996421)
+-- Name: trd_h_prodstd_bk20241107; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodstd_bk20241107 (
@@ -18700,8 +19629,11 @@ CREATE TABLE public.trd_h_prodstd_bk20241107 (
 );
 
 
+ALTER TABLE public.trd_h_prodstd_bk20241107 OWNER TO psql;
+
 --
--- Name: trd_h_prodstd_bk2025010302; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1939 (class 1259 OID 108996426)
+-- Name: trd_h_prodstd_bk2025010302; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodstd_bk2025010302 (
@@ -18723,8 +19655,11 @@ CREATE TABLE public.trd_h_prodstd_bk2025010302 (
 );
 
 
+ALTER TABLE public.trd_h_prodstd_bk2025010302 OWNER TO psql;
+
 --
--- Name: trd_h_prodstd_bk_sup_3663; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1940 (class 1259 OID 108996431)
+-- Name: trd_h_prodstd_bk_sup_3663; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodstd_bk_sup_3663 (
@@ -18746,8 +19681,37 @@ CREATE TABLE public.trd_h_prodstd_bk_sup_3663 (
 );
 
 
+ALTER TABLE public.trd_h_prodstd_bk_sup_3663 OWNER TO psql;
+
 --
--- Name: trd_h_prodstd_for_stylecolorsize_missing; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1941 (class 1259 OID 108996436)
+-- Name: trd_h_prodstd_bkp29052026; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.trd_h_prodstd_bkp29052026 (
+    id text,
+    ancestor0 text,
+    ancestor1 text,
+    ancestor2 text,
+    ancestor3 text,
+    ancestor4 text,
+    ancestor5 text,
+    ancestor6 text,
+    ancestor7 text,
+    version_id bigint,
+    created_at timestamp without time zone,
+    created_by text,
+    updated_at timestamp without time zone,
+    updated_by text,
+    record_state smallint
+);
+
+
+ALTER TABLE public.trd_h_prodstd_bkp29052026 OWNER TO psql;
+
+--
+-- TOC entry 1942 (class 1259 OID 108996441)
+-- Name: trd_h_prodstd_for_stylecolorsize_missing; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodstd_for_stylecolorsize_missing (
@@ -18763,8 +19727,11 @@ CREATE TABLE public.trd_h_prodstd_for_stylecolorsize_missing (
 );
 
 
+ALTER TABLE public.trd_h_prodstd_for_stylecolorsize_missing OWNER TO psql;
+
 --
--- Name: trd_h_prodstd_sup3311; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1943 (class 1259 OID 108996446)
+-- Name: trd_h_prodstd_sup3311; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_prodstd_sup3311 (
@@ -18786,8 +19753,11 @@ CREATE TABLE public.trd_h_prodstd_sup3311 (
 );
 
 
+ALTER TABLE public.trd_h_prodstd_sup3311 OWNER TO psql;
+
 --
--- Name: trd_h_timeflrset_bk_20250928; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1944 (class 1259 OID 108996451)
+-- Name: trd_h_timeflrset_bk_20250928; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_timeflrset_bk_20250928 (
@@ -18804,8 +19774,11 @@ CREATE TABLE public.trd_h_timeflrset_bk_20250928 (
 );
 
 
+ALTER TABLE public.trd_h_timeflrset_bk_20250928 OWNER TO psql;
+
 --
--- Name: trd_h_timeflrset_bkp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1945 (class 1259 OID 108996456)
+-- Name: trd_h_timeflrset_bkp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_timeflrset_bkp (
@@ -18822,8 +19795,11 @@ CREATE TABLE public.trd_h_timeflrset_bkp (
 );
 
 
+ALTER TABLE public.trd_h_timeflrset_bkp OWNER TO psql;
+
 --
--- Name: trd_h_timeflrset_bkp_08162024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1946 (class 1259 OID 108996461)
+-- Name: trd_h_timeflrset_bkp_08162024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_timeflrset_bkp_08162024 (
@@ -18840,8 +19816,11 @@ CREATE TABLE public.trd_h_timeflrset_bkp_08162024 (
 );
 
 
+ALTER TABLE public.trd_h_timeflrset_bkp_08162024 OWNER TO psql;
+
 --
--- Name: trd_h_timeflrset_new; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1947 (class 1259 OID 108996466)
+-- Name: trd_h_timeflrset_new; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_timeflrset_new (
@@ -18858,8 +19837,11 @@ CREATE TABLE public.trd_h_timeflrset_new (
 );
 
 
+ALTER TABLE public.trd_h_timeflrset_new OWNER TO psql;
+
 --
--- Name: trd_h_timeflrset_new_11102024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1948 (class 1259 OID 108996471)
+-- Name: trd_h_timeflrset_new_11102024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_timeflrset_new_11102024 (
@@ -18876,8 +19858,11 @@ CREATE TABLE public.trd_h_timeflrset_new_11102024 (
 );
 
 
+ALTER TABLE public.trd_h_timeflrset_new_11102024 OWNER TO psql;
+
 --
--- Name: trd_h_timestd; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1949 (class 1259 OID 108996476)
+-- Name: trd_h_timestd; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_h_timestd (
@@ -18896,8 +19881,11 @@ CREATE TABLE public.trd_h_timestd (
 );
 
 
+ALTER TABLE public.trd_h_timestd OWNER TO psql;
+
 --
--- Name: trd_in_bus_sizerange_mapping; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1950 (class 1259 OID 108996488)
+-- Name: trd_in_bus_sizerange_mapping; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_in_bus_sizerange_mapping (
@@ -18912,8 +19900,11 @@ CREATE TABLE public.trd_in_bus_sizerange_mapping (
 );
 
 
+ALTER TABLE public.trd_in_bus_sizerange_mapping OWNER TO psql;
+
 --
--- Name: trd_in_prd_attrsku; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1951 (class 1259 OID 108996494)
+-- Name: trd_in_prd_attrsku; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_in_prd_attrsku (
@@ -18925,8 +19916,11 @@ CREATE TABLE public.trd_in_prd_attrsku (
 );
 
 
+ALTER TABLE public.trd_in_prd_attrsku OWNER TO psql;
+
 --
--- Name: trd_in_prd_attrstyle; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1952 (class 1259 OID 108996499)
+-- Name: trd_in_prd_attrstyle; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_in_prd_attrstyle (
@@ -18972,8 +19966,11 @@ CREATE TABLE public.trd_in_prd_attrstyle (
 );
 
 
+ALTER TABLE public.trd_in_prd_attrstyle OWNER TO psql;
+
 --
--- Name: trd_l_dclookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1953 (class 1259 OID 108996504)
+-- Name: trd_l_dclookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_dclookup (
@@ -18989,8 +19986,11 @@ CREATE TABLE public.trd_l_dclookup (
 );
 
 
+ALTER TABLE public.trd_l_dclookup OWNER TO psql;
+
 --
--- Name: trd_l_dependencylookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1954 (class 1259 OID 108996516)
+-- Name: trd_l_dependencylookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_dependencylookup (
@@ -19009,8 +20009,11 @@ CREATE TABLE public.trd_l_dependencylookup (
 );
 
 
+ALTER TABLE public.trd_l_dependencylookup OWNER TO psql;
+
 --
--- Name: trd_l_dependencylookup_mdstrategy; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1955 (class 1259 OID 108996530)
+-- Name: trd_l_dependencylookup_mdstrategy; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_dependencylookup_mdstrategy (
@@ -19029,8 +20032,11 @@ CREATE TABLE public.trd_l_dependencylookup_mdstrategy (
 );
 
 
+ALTER TABLE public.trd_l_dependencylookup_mdstrategy OWNER TO psql;
+
 --
--- Name: trd_l_dependencylookup_refresh; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1956 (class 1259 OID 108996535)
+-- Name: trd_l_dependencylookup_refresh; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_dependencylookup_refresh (
@@ -19049,8 +20055,11 @@ CREATE TABLE public.trd_l_dependencylookup_refresh (
 );
 
 
+ALTER TABLE public.trd_l_dependencylookup_refresh OWNER TO psql;
+
 --
--- Name: trd_l_dependencylookup_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- TOC entry 1957 (class 1259 OID 108996540)
+-- Name: trd_l_dependencylookup_seq; Type: SEQUENCE; Schema: public; Owner: psql
 --
 
 CREATE SEQUENCE public.trd_l_dependencylookup_seq
@@ -19061,8 +20070,11 @@ CREATE SEQUENCE public.trd_l_dependencylookup_seq
     CACHE 1;
 
 
+ALTER SEQUENCE public.trd_l_dependencylookup_seq OWNER TO psql;
+
 --
--- Name: trd_l_pricebandlookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1958 (class 1259 OID 108996541)
+-- Name: trd_l_pricebandlookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_pricebandlookup (
@@ -19080,8 +20092,11 @@ CREATE TABLE public.trd_l_pricebandlookup (
 );
 
 
+ALTER TABLE public.trd_l_pricebandlookup OWNER TO psql;
+
 --
--- Name: trd_l_priceeventlookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1959 (class 1259 OID 108996553)
+-- Name: trd_l_priceeventlookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_priceeventlookup (
@@ -19099,8 +20114,11 @@ CREATE TABLE public.trd_l_priceeventlookup (
 );
 
 
+ALTER TABLE public.trd_l_priceeventlookup OWNER TO psql;
+
 --
--- Name: trd_l_sizeeligibility; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1960 (class 1259 OID 108996567)
+-- Name: trd_l_sizeeligibility; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_sizeeligibility (
@@ -19114,8 +20132,11 @@ CREATE TABLE public.trd_l_sizeeligibility (
 );
 
 
+ALTER TABLE public.trd_l_sizeeligibility OWNER TO psql;
+
 --
--- Name: trd_l_sizeeligibility_with_ccrangecode; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1961 (class 1259 OID 108996572)
+-- Name: trd_l_sizeeligibility_with_ccrangecode; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_sizeeligibility_with_ccrangecode (
@@ -19131,8 +20152,11 @@ CREATE TABLE public.trd_l_sizeeligibility_with_ccrangecode (
 );
 
 
+ALTER TABLE public.trd_l_sizeeligibility_with_ccrangecode OWNER TO psql;
+
 --
--- Name: trd_l_ssglookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1962 (class 1259 OID 108996577)
+-- Name: trd_l_ssglookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_ssglookup (
@@ -19151,8 +20175,11 @@ CREATE TABLE public.trd_l_ssglookup (
 );
 
 
+ALTER TABLE public.trd_l_ssglookup OWNER TO psql;
+
 --
--- Name: trd_l_storedclookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1963 (class 1259 OID 108996591)
+-- Name: trd_l_storedclookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_storedclookup (
@@ -19170,8 +20197,11 @@ CREATE TABLE public.trd_l_storedclookup (
 );
 
 
+ALTER TABLE public.trd_l_storedclookup OWNER TO psql;
+
 --
--- Name: trd_l_storelookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1964 (class 1259 OID 108996603)
+-- Name: trd_l_storelookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_storelookup (
@@ -19190,8 +20220,11 @@ CREATE TABLE public.trd_l_storelookup (
 );
 
 
+ALTER TABLE public.trd_l_storelookup OWNER TO psql;
+
 --
--- Name: trd_l_ticketprice; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1965 (class 1259 OID 108996617)
+-- Name: trd_l_ticketprice; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_l_ticketprice (
@@ -19202,8 +20235,11 @@ CREATE TABLE public.trd_l_ticketprice (
 );
 
 
+ALTER TABLE public.trd_l_ticketprice OWNER TO psql;
+
 --
--- Name: trd_location_attributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1966 (class 1259 OID 108996622)
+-- Name: trd_location_attributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_location_attributes (
@@ -19216,8 +20252,11 @@ CREATE TABLE public.trd_location_attributes (
 );
 
 
+ALTER TABLE public.trd_location_attributes OWNER TO psql;
+
 --
--- Name: trd_ma_areaattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1967 (class 1259 OID 108996627)
+-- Name: trd_ma_areaattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_areaattributes (
@@ -19235,8 +20274,11 @@ CREATE TABLE public.trd_ma_areaattributes (
 );
 
 
+ALTER TABLE public.trd_ma_areaattributes OWNER TO psql;
+
 --
--- Name: trd_ma_departmentalloc_attributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1968 (class 1259 OID 108996639)
+-- Name: trd_ma_departmentalloc_attributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_departmentalloc_attributes (
@@ -19273,8 +20315,11 @@ CREATE TABLE public.trd_ma_departmentalloc_attributes (
 );
 
 
+ALTER TABLE public.trd_ma_departmentalloc_attributes OWNER TO psql;
+
 --
--- Name: trd_ma_departmentquarter_attributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1969 (class 1259 OID 108996671)
+-- Name: trd_ma_departmentquarter_attributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_departmentquarter_attributes (
@@ -19300,8 +20345,11 @@ CREATE TABLE public.trd_ma_departmentquarter_attributes (
 );
 
 
+ALTER TABLE public.trd_ma_departmentquarter_attributes OWNER TO psql;
+
 --
--- Name: trd_ma_departmentquarter_attributes_bkp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1970 (class 1259 OID 108996691)
+-- Name: trd_ma_departmentquarter_attributes_bkp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_departmentquarter_attributes_bkp (
@@ -19327,8 +20375,11 @@ CREATE TABLE public.trd_ma_departmentquarter_attributes_bkp (
 );
 
 
+ALTER TABLE public.trd_ma_departmentquarter_attributes_bkp OWNER TO psql;
+
 --
--- Name: trd_ma_departmentquarter_attributes_temporary; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1971 (class 1259 OID 108996696)
+-- Name: trd_ma_departmentquarter_attributes_temporary; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_departmentquarter_attributes_temporary (
@@ -19354,8 +20405,11 @@ CREATE TABLE public.trd_ma_departmentquarter_attributes_temporary (
 );
 
 
+ALTER TABLE public.trd_ma_departmentquarter_attributes_temporary OWNER TO psql;
+
 --
--- Name: trd_ma_districtattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1972 (class 1259 OID 108996716)
+-- Name: trd_ma_districtattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_districtattributes (
@@ -19373,8 +20427,11 @@ CREATE TABLE public.trd_ma_districtattributes (
 );
 
 
+ALTER TABLE public.trd_ma_districtattributes OWNER TO psql;
+
 --
--- Name: trd_ma_dptflrsetattributes_bkp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1973 (class 1259 OID 108996728)
+-- Name: trd_ma_dptflrsetattributes_bkp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_dptflrsetattributes_bkp (
@@ -19431,8 +20488,11 @@ CREATE TABLE public.trd_ma_dptflrsetattributes_bkp (
 );
 
 
+ALTER TABLE public.trd_ma_dptflrsetattributes_bkp OWNER TO psql;
+
 --
--- Name: trd_ma_dptflrsetattributes_bkp_12212024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1974 (class 1259 OID 108996733)
+-- Name: trd_ma_dptflrsetattributes_bkp_12212024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_dptflrsetattributes_bkp_12212024 (
@@ -19489,8 +20549,11 @@ CREATE TABLE public.trd_ma_dptflrsetattributes_bkp_12212024 (
 );
 
 
+ALTER TABLE public.trd_ma_dptflrsetattributes_bkp_12212024 OWNER TO psql;
+
 --
--- Name: trd_ma_dptflrsetattributes_new_11102024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1975 (class 1259 OID 108996738)
+-- Name: trd_ma_dptflrsetattributes_new_11102024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_dptflrsetattributes_new_11102024 (
@@ -19547,8 +20610,11 @@ CREATE TABLE public.trd_ma_dptflrsetattributes_new_11102024 (
 );
 
 
+ALTER TABLE public.trd_ma_dptflrsetattributes_new_11102024 OWNER TO psql;
+
 --
--- Name: trd_ma_dptflrsetattributes_view_verification; Type: VIEW; Schema: public; Owner: -
+-- TOC entry 1976 (class 1259 OID 108996743)
+-- Name: trd_ma_dptflrsetattributes_view_verification; Type: VIEW; Schema: public; Owner: psql
 --
 
 CREATE VIEW public.trd_ma_dptflrsetattributes_view_verification AS
@@ -19562,8 +20628,11 @@ CREATE VIEW public.trd_ma_dptflrsetattributes_view_verification AS
           WHERE (trd_serviceparams.id = 'plan_current'::text))));
 
 
+ALTER VIEW public.trd_ma_dptflrsetattributes_view_verification OWNER TO psql;
+
 --
--- Name: trd_ma_imgattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1977 (class 1259 OID 108996748)
+-- Name: trd_ma_imgattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_imgattributes (
@@ -19580,8 +20649,11 @@ CREATE TABLE public.trd_ma_imgattributes (
 );
 
 
+ALTER TABLE public.trd_ma_imgattributes OWNER TO psql;
+
 --
--- Name: trd_ma_imgattributes_archive; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1978 (class 1259 OID 108996760)
+-- Name: trd_ma_imgattributes_archive; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_imgattributes_archive (
@@ -19599,8 +20671,11 @@ CREATE TABLE public.trd_ma_imgattributes_archive (
 );
 
 
+ALTER TABLE public.trd_ma_imgattributes_archive OWNER TO psql;
+
 --
--- Name: trd_ma_regionattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1979 (class 1259 OID 108996773)
+-- Name: trd_ma_regionattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_regionattributes (
@@ -19618,8 +20693,11 @@ CREATE TABLE public.trd_ma_regionattributes (
 );
 
 
+ALTER TABLE public.trd_ma_regionattributes OWNER TO psql;
+
 --
--- Name: trd_ma_scr_temp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1980 (class 1259 OID 108996785)
+-- Name: trd_ma_scr_temp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_scr_temp (
@@ -19630,8 +20708,11 @@ CREATE TABLE public.trd_ma_scr_temp (
 );
 
 
+ALTER TABLE public.trd_ma_scr_temp OWNER TO psql;
+
 --
--- Name: trd_ma_scr_temp_removed; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1981 (class 1259 OID 108996790)
+-- Name: trd_ma_scr_temp_removed; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_scr_temp_removed (
@@ -19642,8 +20723,11 @@ CREATE TABLE public.trd_ma_scr_temp_removed (
 );
 
 
+ALTER TABLE public.trd_ma_scr_temp_removed OWNER TO psql;
+
 --
--- Name: trd_ma_sellingchannelattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1982 (class 1259 OID 108996795)
+-- Name: trd_ma_sellingchannelattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_sellingchannelattributes (
@@ -19661,8 +20745,11 @@ CREATE TABLE public.trd_ma_sellingchannelattributes (
 );
 
 
+ALTER TABLE public.trd_ma_sellingchannelattributes OWNER TO psql;
+
 --
--- Name: trd_ma_sizeattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1983 (class 1259 OID 108996807)
+-- Name: trd_ma_sizeattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_sizeattributes (
@@ -19683,8 +20770,11 @@ CREATE TABLE public.trd_ma_sizeattributes (
 );
 
 
+ALTER TABLE public.trd_ma_sizeattributes OWNER TO psql;
+
 --
--- Name: trd_ma_sizeattributes_20250328; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1984 (class 1259 OID 108996820)
+-- Name: trd_ma_sizeattributes_20250328; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_sizeattributes_20250328 (
@@ -19705,8 +20795,11 @@ CREATE TABLE public.trd_ma_sizeattributes_20250328 (
 );
 
 
+ALTER TABLE public.trd_ma_sizeattributes_20250328 OWNER TO psql;
+
 --
--- Name: trd_ma_sizeattributes_bk20241107; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1985 (class 1259 OID 108996825)
+-- Name: trd_ma_sizeattributes_bk20241107; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_sizeattributes_bk20241107 (
@@ -19727,8 +20820,11 @@ CREATE TABLE public.trd_ma_sizeattributes_bk20241107 (
 );
 
 
+ALTER TABLE public.trd_ma_sizeattributes_bk20241107 OWNER TO psql;
+
 --
--- Name: trd_ma_sizeattributes_bk_20261015; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1986 (class 1259 OID 108996830)
+-- Name: trd_ma_sizeattributes_bk_20261015; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_sizeattributes_bk_20261015 (
@@ -19749,8 +20845,11 @@ CREATE TABLE public.trd_ma_sizeattributes_bk_20261015 (
 );
 
 
+ALTER TABLE public.trd_ma_sizeattributes_bk_20261015 OWNER TO psql;
+
 --
--- Name: trd_ma_sizeattributes_bk_sup_3663; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1987 (class 1259 OID 108996835)
+-- Name: trd_ma_sizeattributes_bk_sup_3663; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_sizeattributes_bk_sup_3663 (
@@ -19771,8 +20870,36 @@ CREATE TABLE public.trd_ma_sizeattributes_bk_sup_3663 (
 );
 
 
+ALTER TABLE public.trd_ma_sizeattributes_bk_sup_3663 OWNER TO psql;
+
 --
--- Name: trd_ma_sizeattributes_for_stylecolorsize_missing; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1988 (class 1259 OID 108996840)
+-- Name: trd_ma_sizeattributes_bkp29052026; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.trd_ma_sizeattributes_bkp29052026 (
+    product text,
+    parent_id text,
+    item_diff_2 text,
+    item_diff_3 text,
+    sizeattribute text,
+    isvalid integer,
+    eventdate date,
+    version_id bigint,
+    created_at timestamp without time zone,
+    created_by text,
+    updated_at timestamp without time zone,
+    updated_by text,
+    record_state smallint,
+    ccctylecolorsizecreatedate text
+);
+
+
+ALTER TABLE public.trd_ma_sizeattributes_bkp29052026 OWNER TO psql;
+
+--
+-- TOC entry 1989 (class 1259 OID 108996845)
+-- Name: trd_ma_sizeattributes_for_stylecolorsize_missing; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_sizeattributes_for_stylecolorsize_missing (
@@ -19783,8 +20910,11 @@ CREATE TABLE public.trd_ma_sizeattributes_for_stylecolorsize_missing (
 );
 
 
+ALTER TABLE public.trd_ma_sizeattributes_for_stylecolorsize_missing OWNER TO psql;
+
 --
--- Name: trd_ma_specstyleattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1990 (class 1259 OID 108996850)
+-- Name: trd_ma_specstyleattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_specstyleattributes (
@@ -19823,8 +20953,11 @@ CREATE TABLE public.trd_ma_specstyleattributes (
 );
 
 
+ALTER TABLE public.trd_ma_specstyleattributes OWNER TO psql;
+
 --
--- Name: trd_ma_specstyleattributes_backup_2024_12_23; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1991 (class 1259 OID 108996855)
+-- Name: trd_ma_specstyleattributes_backup_2024_12_23; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_specstyleattributes_backup_2024_12_23 (
@@ -19862,8 +20995,11 @@ CREATE TABLE public.trd_ma_specstyleattributes_backup_2024_12_23 (
 );
 
 
+ALTER TABLE public.trd_ma_specstyleattributes_backup_2024_12_23 OWNER TO psql;
+
 --
--- Name: trd_ma_specstyleattributes_intraday; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1992 (class 1259 OID 108996860)
+-- Name: trd_ma_specstyleattributes_intraday; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_specstyleattributes_intraday (
@@ -19902,8 +21038,11 @@ CREATE TABLE public.trd_ma_specstyleattributes_intraday (
 );
 
 
+ALTER TABLE public.trd_ma_specstyleattributes_intraday OWNER TO psql;
+
 --
--- Name: trd_ma_specstylecolorattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1993 (class 1259 OID 108996865)
+-- Name: trd_ma_specstylecolorattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_specstylecolorattributes (
@@ -19962,8 +21101,11 @@ CREATE TABLE public.trd_ma_specstylecolorattributes (
 );
 
 
+ALTER TABLE public.trd_ma_specstylecolorattributes OWNER TO psql;
+
 --
--- Name: trd_ma_specstylecolorattributes_backup_2024_12_23; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1994 (class 1259 OID 108996870)
+-- Name: trd_ma_specstylecolorattributes_backup_2024_12_23; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_specstylecolorattributes_backup_2024_12_23 (
@@ -20011,8 +21153,11 @@ CREATE TABLE public.trd_ma_specstylecolorattributes_backup_2024_12_23 (
 );
 
 
+ALTER TABLE public.trd_ma_specstylecolorattributes_backup_2024_12_23 OWNER TO psql;
+
 --
--- Name: trd_ma_specstylecolorattributes_intraday; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1995 (class 1259 OID 108996875)
+-- Name: trd_ma_specstylecolorattributes_intraday; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_specstylecolorattributes_intraday (
@@ -20071,8 +21216,11 @@ CREATE TABLE public.trd_ma_specstylecolorattributes_intraday (
 );
 
 
+ALTER TABLE public.trd_ma_specstylecolorattributes_intraday OWNER TO psql;
+
 --
--- Name: trd_ma_storeattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1996 (class 1259 OID 108996880)
+-- Name: trd_ma_storeattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_storeattributes (
@@ -20186,8 +21334,11 @@ CREATE TABLE public.trd_ma_storeattributes (
 );
 
 
+ALTER TABLE public.trd_ma_storeattributes OWNER TO psql;
+
 --
--- Name: trd_ma_storeattributes_lat_long; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1997 (class 1259 OID 108996892)
+-- Name: trd_ma_storeattributes_lat_long; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_storeattributes_lat_long (
@@ -20205,8 +21356,11 @@ CREATE TABLE public.trd_ma_storeattributes_lat_long (
 );
 
 
+ALTER TABLE public.trd_ma_storeattributes_lat_long OWNER TO psql;
+
 --
--- Name: trd_ma_styleattributes_20251010; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1998 (class 1259 OID 108996904)
+-- Name: trd_ma_styleattributes_20251010; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_styleattributes_20251010 (
@@ -20256,8 +21410,11 @@ CREATE TABLE public.trd_ma_styleattributes_20251010 (
 );
 
 
+ALTER TABLE public.trd_ma_styleattributes_20251010 OWNER TO psql;
+
 --
--- Name: trd_ma_styleattributes_bkp_12212024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 1999 (class 1259 OID 108996909)
+-- Name: trd_ma_styleattributes_bkp_12212024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_styleattributes_bkp_12212024 (
@@ -20307,8 +21464,11 @@ CREATE TABLE public.trd_ma_styleattributes_bkp_12212024 (
 );
 
 
+ALTER TABLE public.trd_ma_styleattributes_bkp_12212024 OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolor_alloc_attributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2000 (class 1259 OID 108996914)
+-- Name: trd_ma_stylecolor_alloc_attributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolor_alloc_attributes (
@@ -20348,8 +21508,11 @@ CREATE TABLE public.trd_ma_stylecolor_alloc_attributes (
 );
 
 
+ALTER TABLE public.trd_ma_stylecolor_alloc_attributes OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolorattributes_20251010; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2001 (class 1259 OID 108996926)
+-- Name: trd_ma_stylecolorattributes_20251010; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolorattributes_20251010 (
@@ -20459,8 +21622,11 @@ CREATE TABLE public.trd_ma_stylecolorattributes_20251010 (
 );
 
 
+ALTER TABLE public.trd_ma_stylecolorattributes_20251010 OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolorattributes_bkp_12212024; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2002 (class 1259 OID 108996931)
+-- Name: trd_ma_stylecolorattributes_bkp_12212024; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolorattributes_bkp_12212024 (
@@ -20564,8 +21730,126 @@ CREATE TABLE public.trd_ma_stylecolorattributes_bkp_12212024 (
 );
 
 
+ALTER TABLE public.trd_ma_stylecolorattributes_bkp_12212024 OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolorchannelattributes_20250328; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2003 (class 1259 OID 108996936)
+-- Name: trd_ma_stylecolorchannelattributes_11050122_black_bad_ccrangeco; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.trd_ma_stylecolorchannelattributes_11050122_black_bad_ccrangeco (
+    product text,
+    location text,
+    dbt_wk text,
+    relaunchweek text,
+    erlstmkdnwk text,
+    exitdate text,
+    initrcptwk text,
+    too smallint,
+    mkdnwks smallint,
+    last_inv_wk text,
+    lstfpwk text,
+    last_rcpt_wk text,
+    lastdcorder text,
+    act_initrcptwk text,
+    act_dbt_wk text,
+    irw_indx integer,
+    dbtwk_indx integer,
+    relaunchwk_indx integer,
+    mdstart_indx integer,
+    lastdcorder_indx integer,
+    exitdate_indx integer,
+    preview_wks smallint,
+    preview_qty smallint,
+    plannedselldnwk text,
+    ccmdstrategy text,
+    slsrnk_store real,
+    slsrnk_ecom real,
+    validsizes text[],
+    cc_validsizes_store text[],
+    cc_validsizes_ecom text[],
+    ccrangecode text,
+    cc_presmin integer,
+    cc_presmin_weeks integer,
+    cc_rcptint integer,
+    cc_return_u_pct_store real,
+    cc_return_u_pct_ecom real,
+    cc_return_u_pct_cross real,
+    cc_ordermultiple integer,
+    cc_ordermin integer,
+    cc_buy_aps_letter text,
+    ccticketpricechannel real,
+    ccticketpricechannel_override real,
+    cc_imupct real,
+    cc_discount_pct real,
+    cc_existingwac real,
+    cc_systemcost real,
+    cc_plan_cost real,
+    ssnprf text,
+    adjaps_store real,
+    adjaps_ecom real,
+    smoothing_strategy text,
+    in_season_flag text,
+    auto_rollforward boolean,
+    irr_mode text,
+    plan_current text,
+    lock_agg_edit text,
+    cc_lead_time integer,
+    cc_service_level real,
+    eventdate date,
+    version_id bigint,
+    created_at timestamp without time zone,
+    created_by text,
+    updated_at timestamp without time zone,
+    updated_by text,
+    record_state smallint,
+    cc_store_min_multiple integer,
+    planned_sell_down_week text,
+    cc_selected_clusters text[],
+    cc_cluster_group text,
+    keep_initial_range_plan integer,
+    cc_sizeelig_rangecode text,
+    cc_presmin_stylecolor integer,
+    cc_presmin_weeks_stylecolor integer,
+    cc_final_cost real,
+    cc_discount_pct_store real,
+    cc_discount_pct_ecom real,
+    irw_debut_offset integer,
+    cc_service_level_ecom real,
+    cc_first_publish_date timestamp without time zone,
+    cc_first_publish_snapshot_op integer,
+    sclr_alloc_max real,
+    sclr_presmin real,
+    sclr_alloc_min real,
+    sclr_presmin_weeks real,
+    sclr_tgt_fwoc real,
+    sclr_fringe_flag real,
+    act_slsrnk_store real,
+    act_aps_store real,
+    act_aps_mult_adj_store real,
+    act_slsrnk_ecom real,
+    act_aps_ecom real,
+    act_aps_mult_adj_ecom real,
+    use_act_aps_or_act_rank text,
+    use_valid_sizes_from text,
+    apply_size_mins_to text,
+    cc_addoff_store real,
+    cc_addoff_ecom real,
+    irw_floorset text,
+    irw_superset text,
+    irw_floorset_display text,
+    irw_superset_display text,
+    irw_floorset_id text,
+    cc_size_eligibility_profile text,
+    cloned_at timestamp(0) without time zone
+);
+
+
+ALTER TABLE public.trd_ma_stylecolorchannelattributes_11050122_black_bad_ccrangeco OWNER TO psql;
+
+--
+-- TOC entry 2004 (class 1259 OID 108996941)
+-- Name: trd_ma_stylecolorchannelattributes_20250328; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolorchannelattributes_20250328 (
@@ -20652,8 +21936,11 @@ CREATE TABLE public.trd_ma_stylecolorchannelattributes_20250328 (
 );
 
 
+ALTER TABLE public.trd_ma_stylecolorchannelattributes_20250328 OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolorchannelattributes_20251010; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2005 (class 1259 OID 108996946)
+-- Name: trd_ma_stylecolorchannelattributes_20251010; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolorchannelattributes_20251010 (
@@ -20746,8 +22033,11 @@ CREATE TABLE public.trd_ma_stylecolorchannelattributes_20251010 (
 );
 
 
+ALTER TABLE public.trd_ma_stylecolorchannelattributes_20251010 OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolorchannelattributes_bk; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2006 (class 1259 OID 108996951)
+-- Name: trd_ma_stylecolorchannelattributes_bk; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolorchannelattributes_bk (
@@ -20834,8 +22124,11 @@ CREATE TABLE public.trd_ma_stylecolorchannelattributes_bk (
 );
 
 
+ALTER TABLE public.trd_ma_stylecolorchannelattributes_bk OWNER TO psql;
+
 --
--- Name: trd_ma_stylecolorchannelattributes_bk_20240922; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2007 (class 1259 OID 108996956)
+-- Name: trd_ma_stylecolorchannelattributes_bk_20240922; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_stylecolorchannelattributes_bk_20240922 (
@@ -20918,8 +22211,11 @@ CREATE TABLE public.trd_ma_stylecolorchannelattributes_bk_20240922 (
 );
 
 
+ALTER TABLE public.trd_ma_stylecolorchannelattributes_bk_20240922 OWNER TO psql;
+
 --
--- Name: trd_ma_weekattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2008 (class 1259 OID 108996961)
+-- Name: trd_ma_weekattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_ma_weekattributes (
@@ -20936,8 +22232,11 @@ CREATE TABLE public.trd_ma_weekattributes (
 );
 
 
+ALTER TABLE public.trd_ma_weekattributes OWNER TO psql;
+
 --
--- Name: trd_p_casepack; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2009 (class 1259 OID 108996973)
+-- Name: trd_p_casepack; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_casepack (
@@ -20967,8 +22266,11 @@ CREATE TABLE public.trd_p_casepack (
 );
 
 
+ALTER TABLE public.trd_p_casepack OWNER TO psql;
+
 --
--- Name: trd_p_channeloverride; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2010 (class 1259 OID 108996985)
+-- Name: trd_p_channeloverride; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_channeloverride (
@@ -20992,8 +22294,11 @@ CREATE TABLE public.trd_p_channeloverride (
 );
 
 
+ALTER TABLE public.trd_p_channeloverride OWNER TO psql;
+
 --
--- Name: trd_p_dc_adj; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2011 (class 1259 OID 108996998)
+-- Name: trd_p_dc_adj; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_dc_adj (
@@ -21061,8 +22366,11 @@ CREATE TABLE public.trd_p_dc_adj (
 );
 
 
+ALTER TABLE public.trd_p_dc_adj OWNER TO psql;
+
 --
--- Name: trd_p_dc_adj_size; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2012 (class 1259 OID 108997014)
+-- Name: trd_p_dc_adj_size; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_dc_adj_size (
@@ -21109,8 +22417,62 @@ CREATE TABLE public.trd_p_dc_adj_size (
 );
 
 
+ALTER TABLE public.trd_p_dc_adj_size OWNER TO psql;
+
 --
--- Name: trd_p_dept_store_attr_plan; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2013 (class 1259 OID 108997021)
+-- Name: trd_p_dc_adj_size_bkp29052026; Type: TABLE; Schema: public; Owner: psql
+--
+
+CREATE TABLE public.trd_p_dc_adj_size_bkp29052026 (
+    product text,
+    location text,
+    "time" text,
+    dc_publish real,
+    is_locked real,
+    dc_uservrp real,
+    dc_lockedqty real,
+    dc_useradj real,
+    dc_onorder real,
+    dc_finrev real,
+    dc_validwk real,
+    dc_finalqty real,
+    dc_adjcost real,
+    const_y_n real,
+    sbkt real,
+    dc_scadj real,
+    dc_ttluseradj real,
+    dc_scfinrev real,
+    dc_ttlfinrev real,
+    dc_isedited real,
+    dc_onorder_v real,
+    dc_onorder_c real,
+    current_week text,
+    dc_last_pub_u real,
+    dc_last_pub timestamp without time zone,
+    eventdate date,
+    version_id bigint,
+    created_at timestamp without time zone,
+    created_by text,
+    updated_at timestamp without time zone,
+    updated_by text,
+    record_state smallint,
+    dc_useradj_ecom real,
+    dc_onorder_ecom real,
+    dc_onorder_v_ecom real,
+    dc_onorder_c_ecom real,
+    dc_finrev_ecom real,
+    dc_publish_ecom real,
+    dc_last_pub_u_ecom real,
+    dc_last_pub_ecom timestamp without time zone
+);
+
+
+ALTER TABLE public.trd_p_dc_adj_size_bkp29052026 OWNER TO psql;
+
+--
+-- TOC entry 2014 (class 1259 OID 108997026)
+-- Name: trd_p_dept_store_attr_plan; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_dept_store_attr_plan (
@@ -21135,8 +22497,11 @@ CREATE TABLE public.trd_p_dept_store_attr_plan (
 );
 
 
+ALTER TABLE public.trd_p_dept_store_attr_plan OWNER TO psql;
+
 --
--- Name: trd_p_itemprice; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2015 (class 1259 OID 108997038)
+-- Name: trd_p_itemprice; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_itemprice (
@@ -21161,8 +22526,11 @@ CREATE TABLE public.trd_p_itemprice (
 );
 
 
+ALTER TABLE public.trd_p_itemprice OWNER TO psql;
+
 --
--- Name: trd_p_itemprice_20251013; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2016 (class 1259 OID 108997050)
+-- Name: trd_p_itemprice_20251013; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_itemprice_20251013 (
@@ -21187,8 +22555,11 @@ CREATE TABLE public.trd_p_itemprice_20251013 (
 );
 
 
+ALTER TABLE public.trd_p_itemprice_20251013 OWNER TO psql;
+
 --
--- Name: trd_p_reassigncluster; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2017 (class 1259 OID 108997055)
+-- Name: trd_p_reassigncluster; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_reassigncluster (
@@ -21207,8 +22578,11 @@ CREATE TABLE public.trd_p_reassigncluster (
 );
 
 
+ALTER TABLE public.trd_p_reassigncluster OWNER TO psql;
+
 --
--- Name: trd_p_receditclusters; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2018 (class 1259 OID 108997067)
+-- Name: trd_p_receditclusters; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_receditclusters (
@@ -21232,8 +22606,11 @@ CREATE TABLE public.trd_p_receditclusters (
 );
 
 
+ALTER TABLE public.trd_p_receditclusters OWNER TO psql;
+
 --
--- Name: trd_p_receditstores; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2019 (class 1259 OID 108997079)
+-- Name: trd_p_receditstores; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_receditstores (
@@ -21252,8 +22629,11 @@ CREATE TABLE public.trd_p_receditstores (
 );
 
 
+ALTER TABLE public.trd_p_receditstores OWNER TO psql;
+
 --
--- Name: trd_p_specstylecolorattributes; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2020 (class 1259 OID 108997091)
+-- Name: trd_p_specstylecolorattributes; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_specstylecolorattributes (
@@ -21310,8 +22690,11 @@ CREATE TABLE public.trd_p_specstylecolorattributes (
 );
 
 
+ALTER TABLE public.trd_p_specstylecolorattributes OWNER TO psql;
+
 --
--- Name: trd_p_store_attr_plan; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2021 (class 1259 OID 108997103)
+-- Name: trd_p_store_attr_plan; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_store_attr_plan (
@@ -21334,8 +22717,11 @@ CREATE TABLE public.trd_p_store_attr_plan (
 );
 
 
+ALTER TABLE public.trd_p_store_attr_plan OWNER TO psql;
+
 --
--- Name: trd_p_strategy_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2022 (class 1259 OID 108997115)
+-- Name: trd_p_strategy_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_strategy_params (
@@ -21370,8 +22756,11 @@ CREATE TABLE public.trd_p_strategy_params (
 );
 
 
+ALTER TABLE public.trd_p_strategy_params OWNER TO psql;
+
 --
--- Name: trd_p_strategy_params_bkp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2023 (class 1259 OID 108997128)
+-- Name: trd_p_strategy_params_bkp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_strategy_params_bkp (
@@ -21406,8 +22795,11 @@ CREATE TABLE public.trd_p_strategy_params_bkp (
 );
 
 
+ALTER TABLE public.trd_p_strategy_params_bkp OWNER TO psql;
+
 --
--- Name: trd_p_stylecolor_channel_alloc_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2024 (class 1259 OID 108997133)
+-- Name: trd_p_stylecolor_channel_alloc_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_stylecolor_channel_alloc_params (
@@ -21433,8 +22825,11 @@ CREATE TABLE public.trd_p_stylecolor_channel_alloc_params (
 );
 
 
+ALTER TABLE public.trd_p_stylecolor_channel_alloc_params OWNER TO psql;
+
 --
--- Name: trd_p_stylecolor_store_alloc_params; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2025 (class 1259 OID 108997146)
+-- Name: trd_p_stylecolor_store_alloc_params; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_stylecolor_store_alloc_params (
@@ -21463,8 +22858,11 @@ CREATE TABLE public.trd_p_stylecolor_store_alloc_params (
 );
 
 
+ALTER TABLE public.trd_p_stylecolor_store_alloc_params OWNER TO psql;
+
 --
--- Name: trd_p_stylecolor_store_eligibility; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2026 (class 1259 OID 108997159)
+-- Name: trd_p_stylecolor_store_eligibility; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_stylecolor_store_eligibility (
@@ -21481,8 +22879,11 @@ CREATE TABLE public.trd_p_stylecolor_store_eligibility (
 );
 
 
+ALTER TABLE public.trd_p_stylecolor_store_eligibility OWNER TO psql;
+
 --
--- Name: trd_p_stylecolor_store_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2027 (class 1259 OID 108997171)
+-- Name: trd_p_stylecolor_store_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_stylecolor_store_worklist (
@@ -21514,8 +22915,11 @@ CREATE TABLE public.trd_p_stylecolor_store_worklist (
 );
 
 
+ALTER TABLE public.trd_p_stylecolor_store_worklist OWNER TO psql;
+
 --
--- Name: trd_p_stylecolor_sysmanaged_attr_plan; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2028 (class 1259 OID 108997184)
+-- Name: trd_p_stylecolor_sysmanaged_attr_plan; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_stylecolor_sysmanaged_attr_plan (
@@ -21533,8 +22937,11 @@ CREATE TABLE public.trd_p_stylecolor_sysmanaged_attr_plan (
 );
 
 
+ALTER TABLE public.trd_p_stylecolor_sysmanaged_attr_plan OWNER TO psql;
+
 --
--- Name: trd_p_stylecolor_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2029 (class 1259 OID 108997189)
+-- Name: trd_p_stylecolor_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_stylecolor_worklist (
@@ -21560,8 +22967,11 @@ CREATE TABLE public.trd_p_stylecolor_worklist (
 );
 
 
+ALTER TABLE public.trd_p_stylecolor_worklist OWNER TO psql;
+
 --
--- Name: trd_p_stylecolor_worklist_tbl_approved_but_removed_archives; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2030 (class 1259 OID 108997201)
+-- Name: trd_p_stylecolor_worklist_tbl_approved_but_removed_archives; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_stylecolor_worklist_tbl_approved_but_removed_archives (
@@ -21588,8 +22998,11 @@ CREATE TABLE public.trd_p_stylecolor_worklist_tbl_approved_but_removed_archives 
 );
 
 
+ALTER TABLE public.trd_p_stylecolor_worklist_tbl_approved_but_removed_archives OWNER TO psql;
+
 --
--- Name: trd_p_stylecolorsize_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2031 (class 1259 OID 108997206)
+-- Name: trd_p_stylecolorsize_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_stylecolorsize_worklist (
@@ -21612,8 +23025,11 @@ CREATE TABLE public.trd_p_stylecolorsize_worklist (
 );
 
 
+ALTER TABLE public.trd_p_stylecolorsize_worklist OWNER TO psql;
+
 --
--- Name: trd_p_target_include_exclude; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2032 (class 1259 OID 108997218)
+-- Name: trd_p_target_include_exclude; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_p_target_include_exclude (
@@ -21632,8 +23048,11 @@ CREATE TABLE public.trd_p_target_include_exclude (
 );
 
 
+ALTER TABLE public.trd_p_target_include_exclude OWNER TO psql;
+
 --
--- Name: trd_pg_batch_validation; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2033 (class 1259 OID 108997230)
+-- Name: trd_pg_batch_validation; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_pg_batch_validation (
@@ -21657,8 +23076,11 @@ CREATE TABLE public.trd_pg_batch_validation (
 );
 
 
+ALTER TABLE public.trd_pg_batch_validation OWNER TO psql;
+
 --
--- Name: trd_pg_batch_validation_archive; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2034 (class 1259 OID 108997236)
+-- Name: trd_pg_batch_validation_archive; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_pg_batch_validation_archive (
@@ -21682,8 +23104,11 @@ CREATE TABLE public.trd_pg_batch_validation_archive (
 );
 
 
+ALTER TABLE public.trd_pg_batch_validation_archive OWNER TO psql;
+
 --
--- Name: trd_pg_batch_validation_failure; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2035 (class 1259 OID 108997242)
+-- Name: trd_pg_batch_validation_failure; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_pg_batch_validation_failure (
@@ -21708,8 +23133,11 @@ CREATE TABLE public.trd_pg_batch_validation_failure (
 );
 
 
+ALTER TABLE public.trd_pg_batch_validation_failure OWNER TO psql;
+
 --
--- Name: trd_pg_batch_validation_previous; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2036 (class 1259 OID 108997248)
+-- Name: trd_pg_batch_validation_previous; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_pg_batch_validation_previous (
@@ -21733,8 +23161,11 @@ CREATE TABLE public.trd_pg_batch_validation_previous (
 );
 
 
+ALTER TABLE public.trd_pg_batch_validation_previous OWNER TO psql;
+
 --
--- Name: trd_plan_these_cloned_style_stylecolors; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2037 (class 1259 OID 108997254)
+-- Name: trd_plan_these_cloned_style_stylecolors; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_plan_these_cloned_style_stylecolors (
@@ -21746,8 +23177,11 @@ CREATE TABLE public.trd_plan_these_cloned_style_stylecolors (
 );
 
 
+ALTER TABLE public.trd_plan_these_cloned_style_stylecolors OWNER TO psql;
+
 --
--- Name: trd_replan_again; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2038 (class 1259 OID 108997259)
+-- Name: trd_replan_again; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_replan_again (
@@ -21755,8 +23189,11 @@ CREATE TABLE public.trd_replan_again (
 );
 
 
+ALTER TABLE public.trd_replan_again OWNER TO psql;
+
 --
--- Name: trd_replannable_choices; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2039 (class 1259 OID 108997264)
+-- Name: trd_replannable_choices; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_replannable_choices (
@@ -21764,8 +23201,11 @@ CREATE TABLE public.trd_replannable_choices (
 );
 
 
+ALTER TABLE public.trd_replannable_choices OWNER TO psql;
+
 --
--- Name: trd_roledimension; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2040 (class 1259 OID 108997269)
+-- Name: trd_roledimension; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_roledimension (
@@ -21783,8 +23223,11 @@ CREATE TABLE public.trd_roledimension (
 );
 
 
+ALTER TABLE public.trd_roledimension OWNER TO psql;
+
 --
--- Name: trd_servicedefn; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2041 (class 1259 OID 108997281)
+-- Name: trd_servicedefn; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_servicedefn (
@@ -21800,8 +23243,11 @@ CREATE TABLE public.trd_servicedefn (
 );
 
 
+ALTER TABLE public.trd_servicedefn OWNER TO psql;
+
 --
--- Name: trd_size_range_mapping; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2042 (class 1259 OID 108997293)
+-- Name: trd_size_range_mapping; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_size_range_mapping (
@@ -21814,8 +23260,11 @@ CREATE TABLE public.trd_size_range_mapping (
 );
 
 
+ALTER TABLE public.trd_size_range_mapping OWNER TO psql;
+
 --
--- Name: trd_sizinglookup; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2043 (class 1259 OID 108997298)
+-- Name: trd_sizinglookup; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_sizinglookup (
@@ -21828,8 +23277,11 @@ CREATE TABLE public.trd_sizinglookup (
 );
 
 
+ALTER TABLE public.trd_sizinglookup OWNER TO psql;
+
 --
--- Name: trd_specimages; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2044 (class 1259 OID 108997303)
+-- Name: trd_specimages; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_specimages (
@@ -21838,8 +23290,11 @@ CREATE TABLE public.trd_specimages (
 );
 
 
+ALTER TABLE public.trd_specimages OWNER TO psql;
+
 --
--- Name: trd_specimages_intraday; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2045 (class 1259 OID 108997308)
+-- Name: trd_specimages_intraday; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_specimages_intraday (
@@ -21848,20 +23303,11 @@ CREATE TABLE public.trd_specimages_intraday (
 );
 
 
---
--- Name: trd_split_attrs_prefill; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.trd_split_attrs_prefill (
-    stylecolor text,
-    current_stylecolor_name text,
-    current_style_name text,
-    session_id text
-);
-
+ALTER TABLE public.trd_specimages_intraday OWNER TO psql;
 
 --
--- Name: trd_store_hier_attr; Type: VIEW; Schema: public; Owner: -
+-- TOC entry 2046 (class 1259 OID 108997313)
+-- Name: trd_store_hier_attr; Type: VIEW; Schema: public; Owner: psql
 --
 
 CREATE VIEW public.trd_store_hier_attr AS
@@ -21982,8 +23428,11 @@ CREATE VIEW public.trd_store_hier_attr AS
   ORDER BY a.location;
 
 
+ALTER VIEW public.trd_store_hier_attr OWNER TO psql;
+
 --
--- Name: trd_style_clone_stylecolor_size; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2047 (class 1259 OID 108997318)
+-- Name: trd_style_clone_stylecolor_size; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_style_clone_stylecolor_size (
@@ -22004,72 +23453,11 @@ CREATE TABLE public.trd_style_clone_stylecolor_size (
 );
 
 
---
--- Name: trd_style_merge_archives_tbl; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.trd_style_merge_archives_tbl (
-    source_style_id text NOT NULL,
-    target_style_id text NOT NULL,
-    source_stylecolor_id text NOT NULL,
-    session_id text NOT NULL,
-    updated_by text NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
-);
-
+ALTER TABLE public.trd_style_clone_stylecolor_size OWNER TO psql;
 
 --
--- Name: trd_style_merge_reparent; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.trd_style_merge_reparent (
-    source_stylecolor_id text NOT NULL,
-    source_style_id text NOT NULL,
-    target_style_id text NOT NULL,
-    session_id text NOT NULL,
-    updated_by text NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    cccolor text,
-    action text
-);
-
-
---
--- Name: trd_style_split_archives_tbl; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.trd_style_split_archives_tbl (
-    source_stylecolor_id text NOT NULL,
-    source_style_id text NOT NULL,
-    new_style_id text NOT NULL,
-    new_style_name text NOT NULL,
-    new_style_desc text NOT NULL,
-    cccolor text,
-    session_id text NOT NULL,
-    updated_by text NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
-);
-
-
---
--- Name: trd_style_split_stage; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.trd_style_split_stage (
-    source_stylecolor_id text NOT NULL,
-    source_style_id text NOT NULL,
-    new_style_id text NOT NULL,
-    new_style_name text NOT NULL,
-    new_style_desc text NOT NULL,
-    cccolor text,
-    session_id text NOT NULL,
-    updated_by text NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
-);
-
-
---
--- Name: trd_stylecolor_hier_attr; Type: VIEW; Schema: public; Owner: -
+-- TOC entry 2097 (class 1259 OID 110585282)
+-- Name: trd_stylecolor_hier_attr; Type: VIEW; Schema: public; Owner: psql
 --
 
 CREATE VIEW public.trd_stylecolor_hier_attr AS
@@ -22278,7 +23666,8 @@ CREATE VIEW public.trd_stylecolor_hier_attr AS
     a.cc_additional_tariff,
     a.cc_design_notes,
     a.cc_pd_notes,
-    a.cc_compliance_notes
+    a.cc_compliance_notes,
+    a.cc_orig_unit_retail_char
    FROM public.trd_ma_stylecolorattributes a,
     public.trd_h_prodstd b,
     public.trd_ma_styleattributes c,
@@ -22333,19 +23722,11 @@ CREATE VIEW public.trd_stylecolor_hier_attr AS
   ORDER BY b.id;
 
 
---
--- Name: trd_stylecolor_name_prefill; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.trd_stylecolor_name_prefill (
-    stylecolor text,
-    current_name text,
-    session_id text
-);
-
+ALTER VIEW public.trd_stylecolor_hier_attr OWNER TO psql;
 
 --
--- Name: trd_swatches; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2048 (class 1259 OID 108997328)
+-- Name: trd_swatches; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_swatches (
@@ -22364,8 +23745,11 @@ CREATE TABLE public.trd_swatches (
 );
 
 
+ALTER TABLE public.trd_swatches OWNER TO psql;
+
 --
--- Name: trd_v_memberbasedvalidvalues; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2049 (class 1259 OID 108997340)
+-- Name: trd_v_memberbasedvalidvalues; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_v_memberbasedvalidvalues (
@@ -22384,8 +23768,11 @@ CREATE TABLE public.trd_v_memberbasedvalidvalues (
 );
 
 
+ALTER TABLE public.trd_v_memberbasedvalidvalues OWNER TO psql;
+
 --
--- Name: trd_v_memberbasedvalidvalues_bkp; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2050 (class 1259 OID 108997352)
+-- Name: trd_v_memberbasedvalidvalues_bkp; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_v_memberbasedvalidvalues_bkp (
@@ -22404,8 +23791,11 @@ CREATE TABLE public.trd_v_memberbasedvalidvalues_bkp (
 );
 
 
+ALTER TABLE public.trd_v_memberbasedvalidvalues_bkp OWNER TO psql;
+
 --
--- Name: trd_v_memberbasedvalidvalues_bkp_03292025; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2051 (class 1259 OID 108997357)
+-- Name: trd_v_memberbasedvalidvalues_bkp_03292025; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.trd_v_memberbasedvalidvalues_bkp_03292025 (
@@ -22424,8 +23814,11 @@ CREATE TABLE public.trd_v_memberbasedvalidvalues_bkp_03292025 (
 );
 
 
+ALTER TABLE public.trd_v_memberbasedvalidvalues_bkp_03292025 OWNER TO psql;
+
 --
--- Name: tyly; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2052 (class 1259 OID 108997362)
+-- Name: tyly; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.tyly (
@@ -22434,8 +23827,11 @@ CREATE TABLE public.tyly (
 );
 
 
+ALTER TABLE public.tyly OWNER TO psql;
+
 --
--- Name: tyly_backup_refresh; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2053 (class 1259 OID 108997367)
+-- Name: tyly_backup_refresh; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.tyly_backup_refresh (
@@ -22444,8 +23840,11 @@ CREATE TABLE public.tyly_backup_refresh (
 );
 
 
+ALTER TABLE public.tyly_backup_refresh OWNER TO psql;
+
 --
--- Name: undo_display; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2054 (class 1259 OID 108997372)
+-- Name: undo_display; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.undo_display (
@@ -22454,8 +23853,11 @@ CREATE TABLE public.undo_display (
 );
 
 
+ALTER TABLE public.undo_display OWNER TO psql;
+
 --
--- Name: undo_log; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2055 (class 1259 OID 108997377)
+-- Name: undo_log; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.undo_log (
@@ -22472,8 +23874,11 @@ CREATE TABLE public.undo_log (
 );
 
 
+ALTER TABLE public.undo_log OWNER TO psql;
+
 --
--- Name: undo_modifications; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2056 (class 1259 OID 108997385)
+-- Name: undo_modifications; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.undo_modifications (
@@ -22488,8 +23893,11 @@ CREATE TABLE public.undo_modifications (
 );
 
 
+ALTER TABLE public.undo_modifications OWNER TO psql;
+
 --
--- Name: user_metadata; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2057 (class 1259 OID 108997390)
+-- Name: user_metadata; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.user_metadata (
@@ -22499,18 +23907,11 @@ CREATE TABLE public.user_metadata (
 );
 
 
---
--- Name: user_metadata_get_api; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.user_metadata_get_api (
-    uid text,
-    email text
-);
-
+ALTER TABLE public.user_metadata OWNER TO psql;
 
 --
--- Name: user_tbl; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2058 (class 1259 OID 108997395)
+-- Name: user_tbl; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.user_tbl (
@@ -22530,8 +23931,11 @@ CREATE TABLE public.user_tbl (
 );
 
 
+ALTER TABLE public.user_tbl OWNER TO psql;
+
 --
--- Name: user_worklist; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2059 (class 1259 OID 108997407)
+-- Name: user_worklist; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.user_worklist (
@@ -22543,8 +23947,11 @@ CREATE TABLE public.user_worklist (
 );
 
 
+ALTER TABLE public.user_worklist OWNER TO psql;
+
 --
--- Name: user_worklist_bkp_11172025; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2060 (class 1259 OID 108997415)
+-- Name: user_worklist_bkp_11172025; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.user_worklist_bkp_11172025 (
@@ -22556,8 +23963,11 @@ CREATE TABLE public.user_worklist_bkp_11172025 (
 );
 
 
+ALTER TABLE public.user_worklist_bkp_11172025 OWNER TO psql;
+
 --
--- Name: w38; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2061 (class 1259 OID 108997420)
+-- Name: w38; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.w38 (
@@ -22565,8 +23975,11 @@ CREATE TABLE public.w38 (
 );
 
 
+ALTER TABLE public.w38 OWNER TO psql;
+
 --
--- Name: w41; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2062 (class 1259 OID 108997425)
+-- Name: w41; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.w41 (
@@ -22574,8 +23987,11 @@ CREATE TABLE public.w41 (
 );
 
 
+ALTER TABLE public.w41 OWNER TO psql;
+
 --
--- Name: w42; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2063 (class 1259 OID 108997430)
+-- Name: w42; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.w42 (
@@ -22583,8 +23999,11 @@ CREATE TABLE public.w42 (
 );
 
 
+ALTER TABLE public.w42 OWNER TO psql;
+
 --
--- Name: worklist_map; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2064 (class 1259 OID 108997435)
+-- Name: worklist_map; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.worklist_map (
@@ -22593,8 +24012,11 @@ CREATE TABLE public.worklist_map (
 );
 
 
+ALTER TABLE public.worklist_map OWNER TO psql;
+
 --
--- Name: xt; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2065 (class 1259 OID 108997440)
+-- Name: xt; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.xt (
@@ -22604,8 +24026,11 @@ CREATE TABLE public.xt (
 );
 
 
+ALTER TABLE public.xt OWNER TO psql;
+
 --
--- Name: yt; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 2066 (class 1259 OID 108997445)
+-- Name: yt; Type: TABLE; Schema: public; Owner: psql
 --
 
 CREATE TABLE public.yt (
@@ -22615,8 +24040,11 @@ CREATE TABLE public.yt (
 );
 
 
+ALTER TABLE public.yt OWNER TO psql;
+
 --
--- Name: actuals_stage_wide; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2067 (class 1259 OID 108997450)
+-- Name: actuals_stage_wide; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.actuals_stage_wide (
@@ -22650,8 +24078,11 @@ CREATE TABLE target_setting.actuals_stage_wide (
 );
 
 
+ALTER TABLE target_setting.actuals_stage_wide OWNER TO psql;
+
 --
--- Name: actuals_wide; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2068 (class 1259 OID 108997455)
+-- Name: actuals_wide; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.actuals_wide (
@@ -22684,8 +24115,11 @@ CREATE TABLE target_setting.actuals_wide (
 );
 
 
+ALTER TABLE target_setting.actuals_wide OWNER TO psql;
+
 --
--- Name: dimensions; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2069 (class 1259 OID 108997460)
+-- Name: dimensions; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.dimensions (
@@ -22698,8 +24132,11 @@ CREATE TABLE target_setting.dimensions (
 );
 
 
+ALTER TABLE target_setting.dimensions OWNER TO psql;
+
 --
--- Name: hierarchies; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2070 (class 1259 OID 108997465)
+-- Name: hierarchies; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.hierarchies (
@@ -22710,8 +24147,11 @@ CREATE TABLE target_setting.hierarchies (
 );
 
 
+ALTER TABLE target_setting.hierarchies OWNER TO psql;
+
 --
--- Name: location_denorm; Type: VIEW; Schema: target_setting; Owner: -
+-- TOC entry 2071 (class 1259 OID 108997470)
+-- Name: location_denorm; Type: VIEW; Schema: target_setting; Owner: psql
 --
 
 CREATE VIEW target_setting.location_denorm AS
@@ -22729,8 +24169,11 @@ CREATE VIEW target_setting.location_denorm AS
           WHERE ((hierarchies.id = selling_channel.id) AND (hierarchies.hierarchy = 'locstd'::text))) channel ON (true));
 
 
+ALTER VIEW target_setting.location_denorm OWNER TO psql;
+
 --
--- Name: product_denorm; Type: VIEW; Schema: target_setting; Owner: -
+-- TOC entry 2072 (class 1259 OID 108997474)
+-- Name: product_denorm; Type: VIEW; Schema: target_setting; Owner: psql
 --
 
 CREATE VIEW target_setting.product_denorm AS
@@ -22752,8 +24195,11 @@ CREATE VIEW target_setting.product_denorm AS
           WHERE ((hierarchies.id = division.id) AND (hierarchies.hierarchy = 'prodstd'::text))) prodrootlevel ON (true));
 
 
+ALTER VIEW target_setting.product_denorm OWNER TO psql;
+
 --
--- Name: time_denorm; Type: VIEW; Schema: target_setting; Owner: -
+-- TOC entry 2073 (class 1259 OID 108997479)
+-- Name: time_denorm; Type: VIEW; Schema: target_setting; Owner: psql
 --
 
 CREATE VIEW target_setting.time_denorm AS
@@ -22775,8 +24221,11 @@ CREATE VIEW target_setting.time_denorm AS
           WHERE ((hierarchies.id = fiscal_year.id) AND (hierarchies.hierarchy = 'timestd'::text))) timerootlevel ON (true));
 
 
+ALTER VIEW target_setting.time_denorm OWNER TO psql;
+
 --
--- Name: actuals_wide_denorm; Type: MATERIALIZED VIEW; Schema: target_setting; Owner: -
+-- TOC entry 2074 (class 1259 OID 108997484)
+-- Name: actuals_wide_denorm; Type: MATERIALIZED VIEW; Schema: target_setting; Owner: psql
 --
 
 CREATE MATERIALIZED VIEW target_setting.actuals_wide_denorm AS
@@ -22825,8 +24274,11 @@ CREATE MATERIALIZED VIEW target_setting.actuals_wide_denorm AS
   WITH NO DATA;
 
 
+ALTER MATERIALIZED VIEW target_setting.actuals_wide_denorm OWNER TO psql;
+
 --
--- Name: comments; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2075 (class 1259 OID 108997491)
+-- Name: comments; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.comments (
@@ -22840,8 +24292,11 @@ CREATE TABLE target_setting.comments (
 );
 
 
+ALTER TABLE target_setting.comments OWNER TO psql;
+
 --
--- Name: currency_exchange_rates; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2076 (class 1259 OID 108997497)
+-- Name: currency_exchange_rates; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.currency_exchange_rates (
@@ -22852,8 +24307,11 @@ CREATE TABLE target_setting.currency_exchange_rates (
 );
 
 
+ALTER TABLE target_setting.currency_exchange_rates OWNER TO psql;
+
 --
--- Name: dimensions_done_prev; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2077 (class 1259 OID 108997503)
+-- Name: dimensions_done_prev; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.dimensions_done_prev (
@@ -22866,8 +24324,11 @@ CREATE TABLE target_setting.dimensions_done_prev (
 );
 
 
+ALTER TABLE target_setting.dimensions_done_prev OWNER TO psql;
+
 --
--- Name: hierarchies_done_prev; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2078 (class 1259 OID 108997508)
+-- Name: hierarchies_done_prev; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.hierarchies_done_prev (
@@ -22878,8 +24339,11 @@ CREATE TABLE target_setting.hierarchies_done_prev (
 );
 
 
+ALTER TABLE target_setting.hierarchies_done_prev OWNER TO psql;
+
 --
--- Name: metadata; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2079 (class 1259 OID 108997513)
+-- Name: metadata; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.metadata (
@@ -22892,8 +24356,11 @@ CREATE TABLE target_setting.metadata (
 );
 
 
+ALTER TABLE target_setting.metadata OWNER TO psql;
+
 --
--- Name: paired_dimension_links; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2080 (class 1259 OID 108997518)
+-- Name: paired_dimension_links; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.paired_dimension_links (
@@ -22904,8 +24371,11 @@ CREATE TABLE target_setting.paired_dimension_links (
 );
 
 
+ALTER TABLE target_setting.paired_dimension_links OWNER TO psql;
+
 --
--- Name: plan_archives; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2081 (class 1259 OID 108997523)
+-- Name: plan_archives; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.plan_archives (
@@ -22924,8 +24394,11 @@ CREATE TABLE target_setting.plan_archives (
 );
 
 
+ALTER TABLE target_setting.plan_archives OWNER TO psql;
+
 --
--- Name: plan_audit_log; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2082 (class 1259 OID 108997532)
+-- Name: plan_audit_log; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.plan_audit_log (
@@ -22936,8 +24409,11 @@ CREATE TABLE target_setting.plan_audit_log (
 );
 
 
+ALTER TABLE target_setting.plan_audit_log OWNER TO psql;
+
 --
--- Name: plan_data_wide; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2083 (class 1259 OID 108997538)
+-- Name: plan_data_wide; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.plan_data_wide (
@@ -22971,8 +24447,11 @@ CREATE TABLE target_setting.plan_data_wide (
 );
 
 
+ALTER TABLE target_setting.plan_data_wide OWNER TO psql;
+
 --
--- Name: plan_data_wide_archives; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2084 (class 1259 OID 108997543)
+-- Name: plan_data_wide_archives; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.plan_data_wide_archives (
@@ -23006,8 +24485,11 @@ CREATE TABLE target_setting.plan_data_wide_archives (
 );
 
 
+ALTER TABLE target_setting.plan_data_wide_archives OWNER TO psql;
+
 --
--- Name: plan_id_ticker; Type: SEQUENCE; Schema: target_setting; Owner: -
+-- TOC entry 2085 (class 1259 OID 108997548)
+-- Name: plan_id_ticker; Type: SEQUENCE; Schema: target_setting; Owner: psql
 --
 
 CREATE SEQUENCE target_setting.plan_id_ticker
@@ -23018,8 +24500,11 @@ CREATE SEQUENCE target_setting.plan_id_ticker
     CACHE 1;
 
 
+ALTER SEQUENCE target_setting.plan_id_ticker OWNER TO psql;
+
 --
--- Name: plan_init_status; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2086 (class 1259 OID 108997549)
+-- Name: plan_init_status; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.plan_init_status (
@@ -23029,8 +24514,11 @@ CREATE TABLE target_setting.plan_init_status (
 );
 
 
+ALTER TABLE target_setting.plan_init_status OWNER TO psql;
+
 --
--- Name: plans; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2087 (class 1259 OID 108997552)
+-- Name: plans; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.plans (
@@ -23049,8 +24537,11 @@ CREATE TABLE target_setting.plans (
 );
 
 
+ALTER TABLE target_setting.plans OWNER TO psql;
+
 --
--- Name: prev_dimensions; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2088 (class 1259 OID 108997561)
+-- Name: prev_dimensions; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.prev_dimensions (
@@ -23063,8 +24554,11 @@ CREATE TABLE target_setting.prev_dimensions (
 );
 
 
+ALTER TABLE target_setting.prev_dimensions OWNER TO psql;
+
 --
--- Name: prev_hierarchies; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2089 (class 1259 OID 108997566)
+-- Name: prev_hierarchies; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.prev_hierarchies (
@@ -23075,8 +24569,11 @@ CREATE TABLE target_setting.prev_hierarchies (
 );
 
 
+ALTER TABLE target_setting.prev_hierarchies OWNER TO psql;
+
 --
--- Name: prev_tyly; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2090 (class 1259 OID 108997571)
+-- Name: prev_tyly; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.prev_tyly (
@@ -23085,8 +24582,11 @@ CREATE TABLE target_setting.prev_tyly (
 );
 
 
+ALTER TABLE target_setting.prev_tyly OWNER TO psql;
+
 --
--- Name: sys_gen_wide; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2091 (class 1259 OID 108997576)
+-- Name: sys_gen_wide; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.sys_gen_wide (
@@ -23120,8 +24620,11 @@ CREATE TABLE target_setting.sys_gen_wide (
 );
 
 
+ALTER TABLE target_setting.sys_gen_wide OWNER TO psql;
+
 --
--- Name: sys_gen_wide_denorm; Type: MATERIALIZED VIEW; Schema: target_setting; Owner: -
+-- TOC entry 2092 (class 1259 OID 108997581)
+-- Name: sys_gen_wide_denorm; Type: MATERIALIZED VIEW; Schema: target_setting; Owner: psql
 --
 
 CREATE MATERIALIZED VIEW target_setting.sys_gen_wide_denorm AS
@@ -23171,8 +24674,11 @@ CREATE MATERIALIZED VIEW target_setting.sys_gen_wide_denorm AS
   WITH NO DATA;
 
 
+ALTER MATERIALIZED VIEW target_setting.sys_gen_wide_denorm OWNER TO psql;
+
 --
--- Name: tyly; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2093 (class 1259 OID 108997588)
+-- Name: tyly; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.tyly (
@@ -23181,8 +24687,11 @@ CREATE TABLE target_setting.tyly (
 );
 
 
+ALTER TABLE target_setting.tyly OWNER TO psql;
+
 --
--- Name: tyly_done_prev; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2094 (class 1259 OID 108997593)
+-- Name: tyly_done_prev; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.tyly_done_prev (
@@ -23191,8 +24700,11 @@ CREATE TABLE target_setting.tyly_done_prev (
 );
 
 
+ALTER TABLE target_setting.tyly_done_prev OWNER TO psql;
+
 --
--- Name: user_kv_store; Type: TABLE; Schema: target_setting; Owner: -
+-- TOC entry 2095 (class 1259 OID 108997598)
+-- Name: user_kv_store; Type: TABLE; Schema: target_setting; Owner: psql
 --
 
 CREATE TABLE target_setting.user_kv_store (
@@ -23202,8 +24714,11 @@ CREATE TABLE target_setting.user_kv_store (
 );
 
 
+ALTER TABLE target_setting.user_kv_store OWNER TO psql;
+
 --
--- Name: view_target_plan_wide; Type: VIEW; Schema: target_setting; Owner: -
+-- TOC entry 2096 (class 1259 OID 108997603)
+-- Name: view_target_plan_wide; Type: VIEW; Schema: target_setting; Owner: psql
 --
 
 CREATE VIEW target_setting.view_target_plan_wide AS
@@ -23243,8 +24758,11 @@ CREATE VIEW target_setting.view_target_plan_wide AS
      JOIN latest_plans lp ON ((d.id = lp.id)));
 
 
+ALTER VIEW target_setting.view_target_plan_wide OWNER TO psql;
+
 --
--- Name: comments comments_pkey; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8028 (class 2606 OID 109233138)
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.comments
@@ -23252,7 +24770,8 @@ ALTER TABLE ONLY mfp.comments
 
 
 --
--- Name: dimensions dimension_levelid_indx_unique; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8019 (class 2606 OID 109233140)
+-- Name: dimensions dimension_levelid_indx_unique; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.dimensions
@@ -23260,7 +24779,8 @@ ALTER TABLE ONLY mfp.dimensions
 
 
 --
--- Name: dimensions dimensions_pk; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8021 (class 2606 OID 109233142)
+-- Name: dimensions dimensions_pk; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.dimensions
@@ -23268,7 +24788,8 @@ ALTER TABLE ONLY mfp.dimensions
 
 
 --
--- Name: hierarchies hierarchies_unq; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8023 (class 2606 OID 109233144)
+-- Name: hierarchies hierarchies_unq; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.hierarchies
@@ -23276,7 +24797,8 @@ ALTER TABLE ONLY mfp.hierarchies
 
 
 --
--- Name: metadata metadata_pk; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8030 (class 2606 OID 109233146)
+-- Name: metadata metadata_pk; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.metadata
@@ -23284,7 +24806,8 @@ ALTER TABLE ONLY mfp.metadata
 
 
 --
--- Name: plan_init_status plan_init_status_pkey; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8033 (class 2606 OID 109233148)
+-- Name: plan_init_status plan_init_status_pkey; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.plan_init_status
@@ -23292,7 +24815,8 @@ ALTER TABLE ONLY mfp.plan_init_status
 
 
 --
--- Name: plans plans_unique; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8035 (class 2606 OID 109233150)
+-- Name: plans plans_unique; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.plans
@@ -23300,7 +24824,8 @@ ALTER TABLE ONLY mfp.plans
 
 
 --
--- Name: plans plans_unique_id; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8037 (class 2606 OID 109233152)
+-- Name: plans plans_unique_id; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.plans
@@ -23308,7 +24833,8 @@ ALTER TABLE ONLY mfp.plans
 
 
 --
--- Name: tyly tyly_uniq; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8041 (class 2606 OID 109233154)
+-- Name: tyly tyly_uniq; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.tyly
@@ -23316,7 +24842,8 @@ ALTER TABLE ONLY mfp.tyly
 
 
 --
--- Name: user_kv_store user_kv_store_pkey; Type: CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8043 (class 2606 OID 109233156)
+-- Name: user_kv_store user_kv_store_pkey; Type: CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.user_kv_store
@@ -23324,7 +24851,8 @@ ALTER TABLE ONLY mfp.user_kv_store
 
 
 --
--- Name: comments comments_pkey; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8054 (class 2606 OID 109233158)
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.comments
@@ -23332,7 +24860,8 @@ ALTER TABLE ONLY mfp_td.comments
 
 
 --
--- Name: dimensions dimension_levelid_indx_unique; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8046 (class 2606 OID 109233160)
+-- Name: dimensions dimension_levelid_indx_unique; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.dimensions
@@ -23340,7 +24869,8 @@ ALTER TABLE ONLY mfp_td.dimensions
 
 
 --
--- Name: dimensions dimensions_pk; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8048 (class 2606 OID 109233162)
+-- Name: dimensions dimensions_pk; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.dimensions
@@ -23348,7 +24878,8 @@ ALTER TABLE ONLY mfp_td.dimensions
 
 
 --
--- Name: hierarchies hierarchies_unq; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8050 (class 2606 OID 109233164)
+-- Name: hierarchies hierarchies_unq; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.hierarchies
@@ -23356,7 +24887,8 @@ ALTER TABLE ONLY mfp_td.hierarchies
 
 
 --
--- Name: metadata metadata_pk; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8056 (class 2606 OID 109233166)
+-- Name: metadata metadata_pk; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.metadata
@@ -23364,7 +24896,8 @@ ALTER TABLE ONLY mfp_td.metadata
 
 
 --
--- Name: plan_init_status plan_init_status_pkey; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8059 (class 2606 OID 109233168)
+-- Name: plan_init_status plan_init_status_pkey; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.plan_init_status
@@ -23372,7 +24905,8 @@ ALTER TABLE ONLY mfp_td.plan_init_status
 
 
 --
--- Name: plans plans_unique; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8061 (class 2606 OID 109233170)
+-- Name: plans plans_unique; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.plans
@@ -23380,7 +24914,8 @@ ALTER TABLE ONLY mfp_td.plans
 
 
 --
--- Name: plans plans_unique_id; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8063 (class 2606 OID 109233172)
+-- Name: plans plans_unique_id; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.plans
@@ -23388,7 +24923,8 @@ ALTER TABLE ONLY mfp_td.plans
 
 
 --
--- Name: tyly tyly_uniq; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8066 (class 2606 OID 109233174)
+-- Name: tyly tyly_uniq; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.tyly
@@ -23396,7 +24932,8 @@ ALTER TABLE ONLY mfp_td.tyly
 
 
 --
--- Name: user_kv_store user_kv_store_pkey; Type: CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8068 (class 2606 OID 109233176)
+-- Name: user_kv_store user_kv_store_pkey; Type: CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.user_kv_store
@@ -23404,7 +24941,8 @@ ALTER TABLE ONLY mfp_td.user_kv_store
 
 
 --
--- Name: agent_conversations_log agent_conversations_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8072 (class 2606 OID 109233178)
+-- Name: agent_conversations_log agent_conversations_log_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.agent_conversations_log
@@ -23412,7 +24950,8 @@ ALTER TABLE ONLY public.agent_conversations_log
 
 
 --
--- Name: agent_conversations agent_conversations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8070 (class 2606 OID 109233180)
+-- Name: agent_conversations agent_conversations_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.agent_conversations
@@ -23420,7 +24959,8 @@ ALTER TABLE ONLY public.agent_conversations
 
 
 --
--- Name: allocation_plan_queue allocation_plan_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8074 (class 2606 OID 109233182)
+-- Name: allocation_plan_queue allocation_plan_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.allocation_plan_queue
@@ -23428,7 +24968,8 @@ ALTER TABLE ONLY public.allocation_plan_queue
 
 
 --
--- Name: assort_period_from_dpt assort_period_from_dpt_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8094 (class 2606 OID 109233184)
+-- Name: assort_period_from_dpt assort_period_from_dpt_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.assort_period_from_dpt
@@ -23436,7 +24977,8 @@ ALTER TABLE ONLY public.assort_period_from_dpt
 
 
 --
--- Name: cart_queue cart_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8096 (class 2606 OID 109233186)
+-- Name: cart_queue cart_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.cart_queue
@@ -23444,7 +24986,8 @@ ALTER TABLE ONLY public.cart_queue
 
 
 --
--- Name: databasechangeloglock databasechangeloglock_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8098 (class 2606 OID 109233188)
+-- Name: databasechangeloglock databasechangeloglock_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.databasechangeloglock
@@ -23452,7 +24995,8 @@ ALTER TABLE ONLY public.databasechangeloglock
 
 
 --
--- Name: dev_session dev_session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8100 (class 2606 OID 109233190)
+-- Name: dev_session dev_session_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.dev_session
@@ -23460,7 +25004,8 @@ ALTER TABLE ONLY public.dev_session
 
 
 --
--- Name: favorites favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8102 (class 2606 OID 109233192)
+-- Name: favorites favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.favorites
@@ -23468,7 +25013,8 @@ ALTER TABLE ONLY public.favorites
 
 
 --
--- Name: from_torrid_department_default_for_flrset_merge from_torrid_department_default_for_flrset_merge_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8107 (class 2606 OID 109233194)
+-- Name: from_torrid_department_default_for_flrset_merge from_torrid_department_default_for_flrset_merge_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.from_torrid_department_default_for_flrset_merge
@@ -23476,7 +25022,8 @@ ALTER TABLE ONLY public.from_torrid_department_default_for_flrset_merge
 
 
 --
--- Name: from_torrid_department_flrset_default_for_flrset_merge from_torrid_department_flrset_default_for_flrset_merge_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8109 (class 2606 OID 109233196)
+-- Name: from_torrid_department_flrset_default_for_flrset_merge from_torrid_department_flrset_default_for_flrset_merge_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.from_torrid_department_flrset_default_for_flrset_merge
@@ -23484,7 +25031,8 @@ ALTER TABLE ONLY public.from_torrid_department_flrset_default_for_flrset_merge
 
 
 --
--- Name: pivot_execution pivot_execution_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8115 (class 2606 OID 109233198)
+-- Name: pivot_execution pivot_execution_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.pivot_execution
@@ -23492,7 +25040,8 @@ ALTER TABLE ONLY public.pivot_execution
 
 
 --
--- Name: trd_p_stylecolor_sysmanaged_attr_plan pk_stylecolor_sysmanaged_attr_plan; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8232 (class 2606 OID 109233200)
+-- Name: trd_p_stylecolor_sysmanaged_attr_plan pk_stylecolor_sysmanaged_attr_plan; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_stylecolor_sysmanaged_attr_plan
@@ -23500,7 +25049,8 @@ ALTER TABLE ONLY public.trd_p_stylecolor_sysmanaged_attr_plan
 
 
 --
--- Name: plan_queue plan_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8117 (class 2606 OID 109233202)
+-- Name: plan_queue plan_queue_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.plan_queue
@@ -23508,7 +25058,8 @@ ALTER TABLE ONLY public.plan_queue
 
 
 --
--- Name: s5_tunableparams s5_tunableparams_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8122 (class 2606 OID 109233204)
+-- Name: s5_tunableparams s5_tunableparams_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.s5_tunableparams
@@ -23516,7 +25067,8 @@ ALTER TABLE ONLY public.s5_tunableparams
 
 
 --
--- Name: scope scope_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8124 (class 2606 OID 109233206)
+-- Name: scope scope_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.scope
@@ -23524,7 +25076,8 @@ ALTER TABLE ONLY public.scope
 
 
 --
--- Name: trd_p_strategy_params strategy_params_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8222 (class 2606 OID 109233208)
+-- Name: trd_p_strategy_params strategy_params_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_strategy_params
@@ -23532,7 +25085,8 @@ ALTER TABLE ONLY public.trd_p_strategy_params
 
 
 --
--- Name: trd_a_assortment trd_a_assortment_2_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8126 (class 2606 OID 109233210)
+-- Name: trd_a_assortment trd_a_assortment_2_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_a_assortment
@@ -23540,7 +25094,8 @@ ALTER TABLE ONLY public.trd_a_assortment
 
 
 --
--- Name: trd_an_price_storecount_info trd_an_price_storecount_info_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8128 (class 2606 OID 109233221)
+-- Name: trd_an_price_storecount_info trd_an_price_storecount_info_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_an_price_storecount_info
@@ -23548,7 +25103,8 @@ ALTER TABLE ONLY public.trd_an_price_storecount_info
 
 
 --
--- Name: trd_authorization trd_authorization_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8130 (class 2606 OID 109233229)
+-- Name: trd_authorization trd_authorization_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_authorization
@@ -23556,7 +25112,8 @@ ALTER TABLE ONLY public.trd_authorization
 
 
 --
--- Name: trd_d_cluster trd_d_cluster_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8136 (class 2606 OID 109233231)
+-- Name: trd_d_cluster trd_d_cluster_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_d_cluster
@@ -23564,7 +25121,8 @@ ALTER TABLE ONLY public.trd_d_cluster
 
 
 --
--- Name: trd_d_location trd_d_location_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8138 (class 2606 OID 109233233)
+-- Name: trd_d_location trd_d_location_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_d_location
@@ -23572,7 +25130,8 @@ ALTER TABLE ONLY public.trd_d_location
 
 
 --
--- Name: trd_d_prodlife trd_d_prodlife_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8140 (class 2606 OID 109233235)
+-- Name: trd_d_prodlife trd_d_prodlife_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_d_prodlife
@@ -23580,7 +25139,8 @@ ALTER TABLE ONLY public.trd_d_prodlife
 
 
 --
--- Name: trd_d_product trd_d_product_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8076 (class 2606 OID 109233237)
+-- Name: trd_d_product trd_d_product_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_d_product
@@ -23588,7 +25148,8 @@ ALTER TABLE ONLY public.trd_d_product
 
 
 --
--- Name: trd_d_time trd_d_time_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8111 (class 2606 OID 109233239)
+-- Name: trd_d_time trd_d_time_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_d_time
@@ -23596,7 +25157,8 @@ ALTER TABLE ONLY public.trd_d_time
 
 
 --
--- Name: trd_eohdata_stylecolor trd_eohdata_stylecolor_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8142 (class 2606 OID 109233241)
+-- Name: trd_eohdata_stylecolor trd_eohdata_stylecolor_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_eohdata_stylecolor
@@ -23604,7 +25166,8 @@ ALTER TABLE ONLY public.trd_eohdata_stylecolor
 
 
 --
--- Name: trd_h_clusterstd trd_h_clusterstd_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8146 (class 2606 OID 109233246)
+-- Name: trd_h_clusterstd trd_h_clusterstd_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_clusterstd
@@ -23612,7 +25175,8 @@ ALTER TABLE ONLY public.trd_h_clusterstd
 
 
 --
--- Name: trd_h_locdc trd_h_locdc_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8148 (class 2606 OID 109233248)
+-- Name: trd_h_locdc trd_h_locdc_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_locdc
@@ -23620,7 +25184,8 @@ ALTER TABLE ONLY public.trd_h_locdc
 
 
 --
--- Name: trd_h_locdcstd trd_h_locdcstd_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8150 (class 2606 OID 109233250)
+-- Name: trd_h_locdcstd trd_h_locdcstd_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_locdcstd
@@ -23628,7 +25193,8 @@ ALTER TABLE ONLY public.trd_h_locdcstd
 
 
 --
--- Name: trd_h_locstd trd_h_locstd_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8152 (class 2606 OID 109233252)
+-- Name: trd_h_locstd trd_h_locstd_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_locstd
@@ -23636,7 +25202,8 @@ ALTER TABLE ONLY public.trd_h_locstd
 
 
 --
--- Name: trd_h_prodlifestd trd_h_prodlifestd_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8158 (class 2606 OID 109233254)
+-- Name: trd_h_prodlifestd trd_h_prodlifestd_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_prodlifestd
@@ -23644,7 +25211,8 @@ ALTER TABLE ONLY public.trd_h_prodlifestd
 
 
 --
--- Name: trd_h_prodstd_bk2024010302 trd_h_prodstd_bk2024010302_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8160 (class 2606 OID 109233256)
+-- Name: trd_h_prodstd_bk2024010302 trd_h_prodstd_bk2024010302_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_prodstd_bk2024010302
@@ -23652,7 +25220,8 @@ ALTER TABLE ONLY public.trd_h_prodstd_bk2024010302
 
 
 --
--- Name: trd_h_prodstd trd_h_prodstd_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8079 (class 2606 OID 109233268)
+-- Name: trd_h_prodstd trd_h_prodstd_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_prodstd
@@ -23660,7 +25229,8 @@ ALTER TABLE ONLY public.trd_h_prodstd
 
 
 --
--- Name: trd_h_timeflrset trd_h_timeflrset_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8144 (class 2606 OID 109233282)
+-- Name: trd_h_timeflrset trd_h_timeflrset_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_timeflrset
@@ -23668,7 +25238,8 @@ ALTER TABLE ONLY public.trd_h_timeflrset
 
 
 --
--- Name: trd_h_timestd trd_h_timestd_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8162 (class 2606 OID 109233284)
+-- Name: trd_h_timestd trd_h_timestd_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_h_timestd
@@ -23676,7 +25247,8 @@ ALTER TABLE ONLY public.trd_h_timestd
 
 
 --
--- Name: trd_corpdisc trd_l_corpdisc_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8134 (class 2606 OID 109233286)
+-- Name: trd_corpdisc trd_l_corpdisc_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_corpdisc
@@ -23684,7 +25256,8 @@ ALTER TABLE ONLY public.trd_corpdisc
 
 
 --
--- Name: trd_l_dclookup trd_l_dclookup_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8164 (class 2606 OID 109233291)
+-- Name: trd_l_dclookup trd_l_dclookup_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_l_dclookup
@@ -23692,7 +25265,8 @@ ALTER TABLE ONLY public.trd_l_dclookup
 
 
 --
--- Name: trd_l_priceeventlookup trd_l_priceeventlookup_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8167 (class 2606 OID 109233293)
+-- Name: trd_l_priceeventlookup trd_l_priceeventlookup_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_l_priceeventlookup
@@ -23700,7 +25274,8 @@ ALTER TABLE ONLY public.trd_l_priceeventlookup
 
 
 --
--- Name: trd_sizinglookup trd_l_sizinglookup_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8243 (class 2606 OID 109233295)
+-- Name: trd_sizinglookup trd_l_sizinglookup_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_sizinglookup
@@ -23708,7 +25283,8 @@ ALTER TABLE ONLY public.trd_sizinglookup
 
 
 --
--- Name: trd_l_ssglookup trd_l_ssglookup_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8172 (class 2606 OID 109233297)
+-- Name: trd_l_ssglookup trd_l_ssglookup_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_l_ssglookup
@@ -23716,7 +25292,8 @@ ALTER TABLE ONLY public.trd_l_ssglookup
 
 
 --
--- Name: trd_l_storedclookup trd_l_storedclookup_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8174 (class 2606 OID 109233299)
+-- Name: trd_l_storedclookup trd_l_storedclookup_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_l_storedclookup
@@ -23724,7 +25301,8 @@ ALTER TABLE ONLY public.trd_l_storedclookup
 
 
 --
--- Name: trd_l_storelookup trd_l_storelookup_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8176 (class 2606 OID 109233301)
+-- Name: trd_l_storelookup trd_l_storelookup_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_l_storelookup
@@ -23732,7 +25310,8 @@ ALTER TABLE ONLY public.trd_l_storelookup
 
 
 --
--- Name: trd_ma_departmentalloc_attributes trd_ma_departmentalloc_attributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8178 (class 2606 OID 109233321)
+-- Name: trd_ma_departmentalloc_attributes trd_ma_departmentalloc_attributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_departmentalloc_attributes
@@ -23740,7 +25319,8 @@ ALTER TABLE ONLY public.trd_ma_departmentalloc_attributes
 
 
 --
--- Name: trd_ma_departmentquarter_attributes trd_ma_departmentquarter_attributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8180 (class 2606 OID 109233323)
+-- Name: trd_ma_departmentquarter_attributes trd_ma_departmentquarter_attributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_departmentquarter_attributes
@@ -23748,7 +25328,8 @@ ALTER TABLE ONLY public.trd_ma_departmentquarter_attributes
 
 
 --
--- Name: trd_ma_departmentquarter_attributes_temporary trd_ma_departmentquarter_attributes_temporary_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8182 (class 2606 OID 109233325)
+-- Name: trd_ma_departmentquarter_attributes_temporary trd_ma_departmentquarter_attributes_temporary_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_departmentquarter_attributes_temporary
@@ -23756,7 +25337,8 @@ ALTER TABLE ONLY public.trd_ma_departmentquarter_attributes_temporary
 
 
 --
--- Name: trd_ma_dptflrsetattributes trd_ma_dptflrsetattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8113 (class 2606 OID 109233327)
+-- Name: trd_ma_dptflrsetattributes trd_ma_dptflrsetattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_dptflrsetattributes
@@ -23764,7 +25346,8 @@ ALTER TABLE ONLY public.trd_ma_dptflrsetattributes
 
 
 --
--- Name: trd_ma_imgattributes trd_ma_imgattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8184 (class 2606 OID 109233329)
+-- Name: trd_ma_imgattributes trd_ma_imgattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_imgattributes
@@ -23772,7 +25355,8 @@ ALTER TABLE ONLY public.trd_ma_imgattributes
 
 
 --
--- Name: trd_ma_sizeattributes trd_ma_sizeattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8186 (class 2606 OID 109233331)
+-- Name: trd_ma_sizeattributes trd_ma_sizeattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_sizeattributes
@@ -23780,7 +25364,8 @@ ALTER TABLE ONLY public.trd_ma_sizeattributes
 
 
 --
--- Name: trd_ma_specstyleattributes trd_ma_specstyleattributes_pk; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8188 (class 2606 OID 109233339)
+-- Name: trd_ma_specstyleattributes trd_ma_specstyleattributes_pk; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_specstyleattributes
@@ -23788,7 +25373,8 @@ ALTER TABLE ONLY public.trd_ma_specstyleattributes
 
 
 --
--- Name: trd_ma_specstylecolorattributes trd_ma_specstylecolorattributes_primary_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8190 (class 2606 OID 109233341)
+-- Name: trd_ma_specstylecolorattributes trd_ma_specstylecolorattributes_primary_key; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_specstylecolorattributes
@@ -23796,7 +25382,8 @@ ALTER TABLE ONLY public.trd_ma_specstylecolorattributes
 
 
 --
--- Name: trd_ma_storeattributes trd_ma_storeattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8192 (class 2606 OID 109233343)
+-- Name: trd_ma_storeattributes trd_ma_storeattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_storeattributes
@@ -23804,7 +25391,8 @@ ALTER TABLE ONLY public.trd_ma_storeattributes
 
 
 --
--- Name: trd_ma_styleattributes trd_ma_styleattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8088 (class 2606 OID 109233345)
+-- Name: trd_ma_styleattributes trd_ma_styleattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_styleattributes
@@ -23812,7 +25400,8 @@ ALTER TABLE ONLY public.trd_ma_styleattributes
 
 
 --
--- Name: trd_ma_stylecolor_alloc_attributes trd_ma_stylecolor_alloc_attributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8194 (class 2606 OID 109233347)
+-- Name: trd_ma_stylecolor_alloc_attributes trd_ma_stylecolor_alloc_attributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_stylecolor_alloc_attributes
@@ -23820,7 +25409,8 @@ ALTER TABLE ONLY public.trd_ma_stylecolor_alloc_attributes
 
 
 --
--- Name: trd_ma_stylecolorattributes trd_ma_stylecolorattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8090 (class 2606 OID 109233349)
+-- Name: trd_ma_stylecolorattributes trd_ma_stylecolorattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_stylecolorattributes
@@ -23828,7 +25418,8 @@ ALTER TABLE ONLY public.trd_ma_stylecolorattributes
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trd_ma_stylecolorchannelattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8092 (class 2606 OID 109233351)
+-- Name: trd_ma_stylecolorchannelattributes trd_ma_stylecolorchannelattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_stylecolorchannelattributes
@@ -23836,7 +25427,8 @@ ALTER TABLE ONLY public.trd_ma_stylecolorchannelattributes
 
 
 --
--- Name: trd_ma_weekattributes trd_ma_weekattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8196 (class 2606 OID 109233353)
+-- Name: trd_ma_weekattributes trd_ma_weekattributes_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_ma_weekattributes
@@ -23844,7 +25436,8 @@ ALTER TABLE ONLY public.trd_ma_weekattributes
 
 
 --
--- Name: trd_p_approvedclusters trd_p_approvedclusters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8132 (class 2606 OID 109233355)
+-- Name: trd_p_approvedclusters trd_p_approvedclusters_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_approvedclusters
@@ -23852,7 +25445,8 @@ ALTER TABLE ONLY public.trd_p_approvedclusters
 
 
 --
--- Name: trd_p_casepack trd_p_casepack_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8198 (class 2606 OID 109233357)
+-- Name: trd_p_casepack trd_p_casepack_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_casepack
@@ -23860,7 +25454,8 @@ ALTER TABLE ONLY public.trd_p_casepack
 
 
 --
--- Name: trd_p_channeloverride trd_p_channeloverride_pkey1; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8200 (class 2606 OID 109233359)
+-- Name: trd_p_channeloverride trd_p_channeloverride_pkey1; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_channeloverride
@@ -23868,7 +25463,8 @@ ALTER TABLE ONLY public.trd_p_channeloverride
 
 
 --
--- Name: trd_p_dc_adj trd_p_dc_adj_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8202 (class 2606 OID 109233361)
+-- Name: trd_p_dc_adj trd_p_dc_adj_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_dc_adj
@@ -23876,7 +25472,8 @@ ALTER TABLE ONLY public.trd_p_dc_adj
 
 
 --
--- Name: trd_p_dc_adj_size trd_p_dc_adj_size_pk; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8204 (class 2606 OID 109233366)
+-- Name: trd_p_dc_adj_size trd_p_dc_adj_size_pk; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_dc_adj_size
@@ -23884,7 +25481,8 @@ ALTER TABLE ONLY public.trd_p_dc_adj_size
 
 
 --
--- Name: trd_p_dept_store_attr_plan trd_p_dept_store_attr_plan_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8206 (class 2606 OID 109233368)
+-- Name: trd_p_dept_store_attr_plan trd_p_dept_store_attr_plan_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_dept_store_attr_plan
@@ -23892,7 +25490,8 @@ ALTER TABLE ONLY public.trd_p_dept_store_attr_plan
 
 
 --
--- Name: trd_p_itemprice trd_p_itemprice_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8208 (class 2606 OID 109233370)
+-- Name: trd_p_itemprice trd_p_itemprice_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_itemprice
@@ -23900,7 +25499,8 @@ ALTER TABLE ONLY public.trd_p_itemprice
 
 
 --
--- Name: trd_p_reassigncluster trd_p_reassigncluster_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8210 (class 2606 OID 109233378)
+-- Name: trd_p_reassigncluster trd_p_reassigncluster_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_reassigncluster
@@ -23908,7 +25508,8 @@ ALTER TABLE ONLY public.trd_p_reassigncluster
 
 
 --
--- Name: trd_p_receditclusters trd_p_receditclusters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8212 (class 2606 OID 109233383)
+-- Name: trd_p_receditclusters trd_p_receditclusters_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_receditclusters
@@ -23916,7 +25517,8 @@ ALTER TABLE ONLY public.trd_p_receditclusters
 
 
 --
--- Name: trd_p_receditstores trd_p_receditstores_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8214 (class 2606 OID 109233385)
+-- Name: trd_p_receditstores trd_p_receditstores_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_receditstores
@@ -23924,7 +25526,8 @@ ALTER TABLE ONLY public.trd_p_receditstores
 
 
 --
--- Name: trd_p_specstylecolorattributes trd_p_specstylecolorattributes_pk; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8216 (class 2606 OID 109233387)
+-- Name: trd_p_specstylecolorattributes trd_p_specstylecolorattributes_pk; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_specstylecolorattributes
@@ -23932,7 +25535,8 @@ ALTER TABLE ONLY public.trd_p_specstylecolorattributes
 
 
 --
--- Name: trd_p_specstylecolorattributes trd_p_specstylecolorattributes_primary_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8218 (class 2606 OID 109233389)
+-- Name: trd_p_specstylecolorattributes trd_p_specstylecolorattributes_primary_key; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_specstylecolorattributes
@@ -23940,7 +25544,8 @@ ALTER TABLE ONLY public.trd_p_specstylecolorattributes
 
 
 --
--- Name: trd_p_store_attr_plan trd_p_store_attr_plan_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8220 (class 2606 OID 109233391)
+-- Name: trd_p_store_attr_plan trd_p_store_attr_plan_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_store_attr_plan
@@ -23948,7 +25553,8 @@ ALTER TABLE ONLY public.trd_p_store_attr_plan
 
 
 --
--- Name: trd_p_stylecolor_channel_alloc_params trd_p_stylecolor_channel_alloc_params_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8224 (class 2606 OID 109233393)
+-- Name: trd_p_stylecolor_channel_alloc_params trd_p_stylecolor_channel_alloc_params_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_stylecolor_channel_alloc_params
@@ -23956,7 +25562,8 @@ ALTER TABLE ONLY public.trd_p_stylecolor_channel_alloc_params
 
 
 --
--- Name: trd_p_stylecolor_store_alloc_params trd_p_stylecolor_store_alloc_params_okey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8226 (class 2606 OID 109233395)
+-- Name: trd_p_stylecolor_store_alloc_params trd_p_stylecolor_store_alloc_params_okey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_stylecolor_store_alloc_params
@@ -23964,7 +25571,8 @@ ALTER TABLE ONLY public.trd_p_stylecolor_store_alloc_params
 
 
 --
--- Name: trd_p_stylecolor_store_eligibility trd_p_stylecolor_store_eligibility_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8228 (class 2606 OID 109233397)
+-- Name: trd_p_stylecolor_store_eligibility trd_p_stylecolor_store_eligibility_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_stylecolor_store_eligibility
@@ -23972,7 +25580,8 @@ ALTER TABLE ONLY public.trd_p_stylecolor_store_eligibility
 
 
 --
--- Name: trd_p_stylecolor_store_worklist trd_p_stylecolor_store_worklist_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8230 (class 2606 OID 109233402)
+-- Name: trd_p_stylecolor_store_worklist trd_p_stylecolor_store_worklist_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_stylecolor_store_worklist
@@ -23980,7 +25589,8 @@ ALTER TABLE ONLY public.trd_p_stylecolor_store_worklist
 
 
 --
--- Name: trd_p_stylecolor_worklist trd_p_stylecolor_worklist_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8234 (class 2606 OID 109233407)
+-- Name: trd_p_stylecolor_worklist trd_p_stylecolor_worklist_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_stylecolor_worklist
@@ -23988,7 +25598,8 @@ ALTER TABLE ONLY public.trd_p_stylecolor_worklist
 
 
 --
--- Name: trd_p_stylecolorsize_worklist trd_p_stylecolorsize_worklist_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8236 (class 2606 OID 109233409)
+-- Name: trd_p_stylecolorsize_worklist trd_p_stylecolorsize_worklist_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_stylecolorsize_worklist
@@ -23996,7 +25607,8 @@ ALTER TABLE ONLY public.trd_p_stylecolorsize_worklist
 
 
 --
--- Name: trd_p_target_include_exclude trd_p_target_include_exclude_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8238 (class 2606 OID 109233411)
+-- Name: trd_p_target_include_exclude trd_p_target_include_exclude_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_p_target_include_exclude
@@ -24004,7 +25616,8 @@ ALTER TABLE ONLY public.trd_p_target_include_exclude
 
 
 --
--- Name: trd_roledimension trd_roledimension_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8241 (class 2606 OID 109233416)
+-- Name: trd_roledimension trd_roledimension_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_roledimension
@@ -24012,7 +25625,8 @@ ALTER TABLE ONLY public.trd_roledimension
 
 
 --
--- Name: trd_specimages trd_specimages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8245 (class 2606 OID 109233418)
+-- Name: trd_specimages trd_specimages_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.trd_specimages
@@ -24020,7 +25634,8 @@ ALTER TABLE ONLY public.trd_specimages
 
 
 --
--- Name: favorites triplet; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8104 (class 2606 OID 109233420)
+-- Name: favorites triplet; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.favorites
@@ -24028,7 +25643,8 @@ ALTER TABLE ONLY public.favorites
 
 
 --
--- Name: undo_log undo_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8249 (class 2606 OID 109233422)
+-- Name: undo_log undo_log_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.undo_log
@@ -24036,7 +25652,8 @@ ALTER TABLE ONLY public.undo_log
 
 
 --
--- Name: user_metadata user_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8251 (class 2606 OID 109233424)
+-- Name: user_metadata user_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.user_metadata
@@ -24044,7 +25661,8 @@ ALTER TABLE ONLY public.user_metadata
 
 
 --
--- Name: user_tbl user_tbl_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8253 (class 2606 OID 109233426)
+-- Name: user_tbl user_tbl_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.user_tbl
@@ -24052,7 +25670,8 @@ ALTER TABLE ONLY public.user_tbl
 
 
 --
--- Name: user_worklist user_worklist_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8255 (class 2606 OID 109233428)
+-- Name: user_worklist user_worklist_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.user_worklist
@@ -24060,7 +25679,8 @@ ALTER TABLE ONLY public.user_worklist
 
 
 --
--- Name: worklist_map worklist_map_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8257 (class 2606 OID 109233430)
+-- Name: worklist_map worklist_map_pkey; Type: CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.worklist_map
@@ -24068,7 +25688,8 @@ ALTER TABLE ONLY public.worklist_map
 
 
 --
--- Name: comments comments_pkey; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8268 (class 2606 OID 109233432)
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.comments
@@ -24076,7 +25697,8 @@ ALTER TABLE ONLY target_setting.comments
 
 
 --
--- Name: dimensions dimension_levelid_indx_unique; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8260 (class 2606 OID 109233434)
+-- Name: dimensions dimension_levelid_indx_unique; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.dimensions
@@ -24084,7 +25706,8 @@ ALTER TABLE ONLY target_setting.dimensions
 
 
 --
--- Name: dimensions dimensions_pk; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8262 (class 2606 OID 109233436)
+-- Name: dimensions dimensions_pk; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.dimensions
@@ -24092,7 +25715,8 @@ ALTER TABLE ONLY target_setting.dimensions
 
 
 --
--- Name: hierarchies hierarchies_unq; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8264 (class 2606 OID 109233438)
+-- Name: hierarchies hierarchies_unq; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.hierarchies
@@ -24100,7 +25724,8 @@ ALTER TABLE ONLY target_setting.hierarchies
 
 
 --
--- Name: metadata metadata_pk; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8270 (class 2606 OID 109233440)
+-- Name: metadata metadata_pk; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.metadata
@@ -24108,7 +25733,8 @@ ALTER TABLE ONLY target_setting.metadata
 
 
 --
--- Name: plan_init_status plan_init_status_pkey; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8273 (class 2606 OID 109233442)
+-- Name: plan_init_status plan_init_status_pkey; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.plan_init_status
@@ -24116,7 +25742,8 @@ ALTER TABLE ONLY target_setting.plan_init_status
 
 
 --
--- Name: plans plans_unique; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8275 (class 2606 OID 109233444)
+-- Name: plans plans_unique; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.plans
@@ -24124,7 +25751,8 @@ ALTER TABLE ONLY target_setting.plans
 
 
 --
--- Name: plans plans_unique_id; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8277 (class 2606 OID 109233446)
+-- Name: plans plans_unique_id; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.plans
@@ -24132,7 +25760,8 @@ ALTER TABLE ONLY target_setting.plans
 
 
 --
--- Name: tyly tyly_uniq; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8280 (class 2606 OID 109233448)
+-- Name: tyly tyly_uniq; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.tyly
@@ -24140,7 +25769,8 @@ ALTER TABLE ONLY target_setting.tyly
 
 
 --
--- Name: user_kv_store user_kv_store_pkey; Type: CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8282 (class 2606 OID 109233450)
+-- Name: user_kv_store user_kv_store_pkey; Type: CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.user_kv_store
@@ -24148,350 +25778,376 @@ ALTER TABLE ONLY target_setting.user_kv_store
 
 
 --
--- Name: actuals_wide_denorm_bottom_up; Type: INDEX; Schema: mfp; Owner: -
+-- TOC entry 8024 (class 1259 OID 109233451)
+-- Name: actuals_wide_denorm_bottom_up; Type: INDEX; Schema: mfp; Owner: psql
 --
 
 CREATE INDEX actuals_wide_denorm_bottom_up ON mfp.actuals_wide_denorm USING btree (time_year, product_department, location_channel, prodlife_prodliferootlevel);
 
 
 --
--- Name: actuals_wide_denorm_middle_out; Type: INDEX; Schema: mfp; Owner: -
+-- TOC entry 8025 (class 1259 OID 109233452)
+-- Name: actuals_wide_denorm_middle_out; Type: INDEX; Schema: mfp; Owner: psql
 --
 
 CREATE INDEX actuals_wide_denorm_middle_out ON mfp.actuals_wide_denorm USING btree (time_year, product_total_brand, location_channel, prodlife_prodliferootlevel);
 
 
 --
--- Name: actuals_wide_denorm_unique_concurrent; Type: INDEX; Schema: mfp; Owner: -
+-- TOC entry 8026 (class 1259 OID 109233453)
+-- Name: actuals_wide_denorm_unique_concurrent; Type: INDEX; Schema: mfp; Owner: psql
 --
 
 CREATE UNIQUE INDEX actuals_wide_denorm_unique_concurrent ON mfp.actuals_wide_denorm USING btree ("time", product, location, prodlife);
 
 
 --
--- Name: actuals_wide_dimensions_idx; Type: INDEX; Schema: mfp; Owner: -
+-- TOC entry 8017 (class 1259 OID 109233454)
+-- Name: actuals_wide_dimensions_idx; Type: INDEX; Schema: mfp; Owner: psql
 --
 
 CREATE INDEX actuals_wide_dimensions_idx ON mfp.actuals_wide USING btree ("time", product, location, prodlife);
 
 
 --
--- Name: plan_data_wide_id_idx; Type: INDEX; Schema: mfp; Owner: -
+-- TOC entry 8031 (class 1259 OID 109233461)
+-- Name: plan_data_wide_id_idx; Type: INDEX; Schema: mfp; Owner: psql
 --
 
 CREATE INDEX plan_data_wide_id_idx ON mfp.plan_data_wide USING hash (id);
 
 
 --
--- Name: sys_gen_wide_denorm_bottom_up; Type: INDEX; Schema: mfp; Owner: -
+-- TOC entry 8038 (class 1259 OID 109233471)
+-- Name: sys_gen_wide_denorm_bottom_up; Type: INDEX; Schema: mfp; Owner: psql
 --
 
 CREATE INDEX sys_gen_wide_denorm_bottom_up ON mfp.sys_gen_wide_denorm USING btree (time_year, product_department, location_channel, prodlife_prodliferootlevel);
 
 
 --
--- Name: sys_gen_wide_denorm_middle_out; Type: INDEX; Schema: mfp; Owner: -
+-- TOC entry 8039 (class 1259 OID 109233472)
+-- Name: sys_gen_wide_denorm_middle_out; Type: INDEX; Schema: mfp; Owner: psql
 --
 
 CREATE INDEX sys_gen_wide_denorm_middle_out ON mfp.sys_gen_wide_denorm USING btree (time_year, product_total_brand, location_channel, prodlife_prodliferootlevel);
 
 
 --
--- Name: actuals_wide_denorm_top_down; Type: INDEX; Schema: mfp_td; Owner: -
+-- TOC entry 8051 (class 1259 OID 109233473)
+-- Name: actuals_wide_denorm_top_down; Type: INDEX; Schema: mfp_td; Owner: psql
 --
 
 CREATE INDEX actuals_wide_denorm_top_down ON mfp_td.actuals_wide_denorm USING btree (time_year, product_total_brand, location_channel, prodlife_prodliferootlevel);
 
 
 --
--- Name: actuals_wide_denorm_unique_concurrent; Type: INDEX; Schema: mfp_td; Owner: -
+-- TOC entry 8052 (class 1259 OID 109233474)
+-- Name: actuals_wide_denorm_unique_concurrent; Type: INDEX; Schema: mfp_td; Owner: psql
 --
 
 CREATE UNIQUE INDEX actuals_wide_denorm_unique_concurrent ON mfp_td.actuals_wide_denorm USING btree ("time", product, location, prodlife);
 
 
 --
--- Name: actuals_wide_dimensions_idx; Type: INDEX; Schema: mfp_td; Owner: -
+-- TOC entry 8044 (class 1259 OID 109233481)
+-- Name: actuals_wide_dimensions_idx; Type: INDEX; Schema: mfp_td; Owner: psql
 --
 
 CREATE INDEX actuals_wide_dimensions_idx ON mfp_td.actuals_wide USING btree ("time", product, location, prodlife);
 
 
 --
--- Name: plan_data_wide_id_idx; Type: INDEX; Schema: mfp_td; Owner: -
+-- TOC entry 8057 (class 1259 OID 109233488)
+-- Name: plan_data_wide_id_idx; Type: INDEX; Schema: mfp_td; Owner: psql
 --
 
 CREATE INDEX plan_data_wide_id_idx ON mfp_td.plan_data_wide USING hash (id);
 
 
 --
--- Name: sys_gen_wide_denorm_top_down; Type: INDEX; Schema: mfp_td; Owner: -
+-- TOC entry 8064 (class 1259 OID 109233492)
+-- Name: sys_gen_wide_denorm_top_down; Type: INDEX; Schema: mfp_td; Owner: psql
 --
 
 CREATE INDEX sys_gen_wide_denorm_top_down ON mfp_td.sys_gen_wide_denorm USING btree (time_year, product_total_brand, location_channel, prodlife_prodliferootlevel);
 
 
 --
--- Name: idx_s5_actual_initrcptwk_archives_product; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8118 (class 1259 OID 109233493)
+-- Name: idx_s5_actual_initrcptwk_archives_product; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX idx_s5_actual_initrcptwk_archives_product ON public.s5_actual_initrcptwk_archives USING btree (product);
 
 
 --
--- Name: idx_s5_actual_initrcptwk_archives_product_updated_at; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8119 (class 1259 OID 109233494)
+-- Name: idx_s5_actual_initrcptwk_archives_product_updated_at; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX idx_s5_actual_initrcptwk_archives_product_updated_at ON public.s5_actual_initrcptwk_archives USING btree (product, updated_at);
 
 
 --
--- Name: idx_s5_actual_initrcptwk_update_product; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8120 (class 1259 OID 109233495)
+-- Name: idx_s5_actual_initrcptwk_update_product; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX idx_s5_actual_initrcptwk_update_product ON public.s5_actual_initrcptwk_update USING btree (product);
 
 
 --
--- Name: idx_sizeeligibility_range_member_store; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8168 (class 1259 OID 109233496)
+-- Name: idx_sizeeligibility_range_member_store; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX idx_sizeeligibility_range_member_store ON public.trd_l_sizeeligibility_with_ccrangecode USING btree (size_range_id, size_member_id) WHERE (store_ineligible = 1);
 
 
 --
--- Name: idx_sizeeligibility_range_member_web; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8169 (class 1259 OID 109233497)
+-- Name: idx_sizeeligibility_range_member_web; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX idx_sizeeligibility_range_member_web ON public.trd_l_sizeeligibility_with_ccrangecode USING btree (size_range_id, size_member_id) WHERE (web_ineligible = 1);
 
 
 --
--- Name: idx_trd_l_sizeeligibility_ccrangecode; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8170 (class 1259 OID 109233498)
+-- Name: idx_trd_l_sizeeligibility_ccrangecode; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX idx_trd_l_sizeeligibility_ccrangecode ON public.trd_l_sizeeligibility_with_ccrangecode USING btree (ccrangecode);
 
 
 --
--- Name: idx_trd_style_merge_reparent_session; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX idx_trd_style_merge_reparent_session ON public.trd_style_merge_reparent USING btree (session_id);
-
-
---
--- Name: idx_trd_style_split_archives_tbl_session; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX idx_trd_style_split_archives_tbl_session ON public.trd_style_split_archives_tbl USING btree (session_id);
-
-
---
--- Name: idx_trd_style_split_stage_session; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX idx_trd_style_split_stage_session ON public.trd_style_split_stage USING btree (session_id);
-
-
---
--- Name: ldl_lookuptarget; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8165 (class 1259 OID 109233499)
+-- Name: ldl_lookuptarget; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX ldl_lookuptarget ON public.trd_l_dependencylookup USING btree (lookup_id, lookup_value, target_id);
 
 
 --
--- Name: trd_locstd_ances0_str_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8153 (class 1259 OID 109233500)
+-- Name: trd_locstd_ances0_str_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_locstd_ances0_str_indx ON public.trd_h_locstd USING btree (ancestor0);
 
 
 --
--- Name: trd_locstd_ances1_str_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8154 (class 1259 OID 109233501)
+-- Name: trd_locstd_ances1_str_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_locstd_ances1_str_indx ON public.trd_h_locstd USING btree (ancestor1);
 
 
 --
--- Name: trd_locstd_ances2_str_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8155 (class 1259 OID 109233502)
+-- Name: trd_locstd_ances2_str_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_locstd_ances2_str_indx ON public.trd_h_locstd USING btree (ancestor2);
 
 
 --
--- Name: trd_locstd_ances3_str_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8156 (class 1259 OID 109233503)
+-- Name: trd_locstd_ances3_str_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_locstd_ances3_str_indx ON public.trd_h_locstd USING btree (ancestor3);
 
 
 --
--- Name: trd_plan_these_cloned_style_stylecolors_session_id_idx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8239 (class 1259 OID 109233504)
+-- Name: trd_plan_these_cloned_style_stylecolors_session_id_idx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_plan_these_cloned_style_stylecolors_session_id_idx ON public.trd_plan_these_cloned_style_stylecolors USING btree (session_id);
 
 
 --
--- Name: trd_prodstd_ances0_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8080 (class 1259 OID 109233505)
+-- Name: trd_prodstd_ances0_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_prodstd_ances0_indx ON public.trd_h_prodstd USING btree (ancestor0);
 
 
 --
--- Name: trd_prodstd_ances1_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8081 (class 1259 OID 109233515)
+-- Name: trd_prodstd_ances1_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_prodstd_ances1_indx ON public.trd_h_prodstd USING btree (ancestor1);
 
 
 --
--- Name: trd_prodstd_ances2_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8082 (class 1259 OID 109233528)
+-- Name: trd_prodstd_ances2_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_prodstd_ances2_indx ON public.trd_h_prodstd USING btree (ancestor2);
 
 
 --
--- Name: trd_prodstd_ances3_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8083 (class 1259 OID 109233532)
+-- Name: trd_prodstd_ances3_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_prodstd_ances3_indx ON public.trd_h_prodstd USING btree (ancestor3);
 
 
 --
--- Name: trd_prodstd_ances4_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8084 (class 1259 OID 109233539)
+-- Name: trd_prodstd_ances4_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_prodstd_ances4_indx ON public.trd_h_prodstd USING btree (ancestor4);
 
 
 --
--- Name: trd_prodstd_ances5_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8085 (class 1259 OID 109233540)
+-- Name: trd_prodstd_ances5_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_prodstd_ances5_indx ON public.trd_h_prodstd USING btree (ancestor5);
 
 
 --
--- Name: trd_prodstd_ances6_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8086 (class 1259 OID 109233544)
+-- Name: trd_prodstd_ances6_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_prodstd_ances6_indx ON public.trd_h_prodstd USING btree (ancestor6);
 
 
 --
--- Name: trd_product_levelid_indx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8077 (class 1259 OID 109233551)
+-- Name: trd_product_levelid_indx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_product_levelid_indx ON public.trd_d_product USING btree (levelid);
 
 
 --
--- Name: trd_style_clone_stylecolor_size_session_id_idx; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8246 (class 1259 OID 109233552)
+-- Name: trd_style_clone_stylecolor_size_session_id_idx; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX trd_style_clone_stylecolor_size_session_id_idx ON public.trd_style_clone_stylecolor_size USING btree (session_id);
 
 
 --
--- Name: triplet_index; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8105 (class 1259 OID 109233553)
+-- Name: triplet_index; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE UNIQUE INDEX triplet_index ON public.favorites USING btree (user_id, module, favorite_name);
 
 
 --
--- Name: tyly_ty; Type: INDEX; Schema: public; Owner: -
+-- TOC entry 8247 (class 1259 OID 109233554)
+-- Name: tyly_ty; Type: INDEX; Schema: public; Owner: psql
 --
 
 CREATE INDEX tyly_ty ON public.tyly USING btree (ty);
 
 
 --
--- Name: actuals_wide_denorm_target_setting; Type: INDEX; Schema: target_setting; Owner: -
+-- TOC entry 8265 (class 1259 OID 109233555)
+-- Name: actuals_wide_denorm_target_setting; Type: INDEX; Schema: target_setting; Owner: psql
 --
 
 CREATE INDEX actuals_wide_denorm_target_setting ON target_setting.actuals_wide_denorm USING btree (time_quarter, product_department, location_channel);
 
 
 --
--- Name: actuals_wide_denorm_unique_concurrent; Type: INDEX; Schema: target_setting; Owner: -
+-- TOC entry 8266 (class 1259 OID 109233556)
+-- Name: actuals_wide_denorm_unique_concurrent; Type: INDEX; Schema: target_setting; Owner: psql
 --
 
 CREATE UNIQUE INDEX actuals_wide_denorm_unique_concurrent ON target_setting.actuals_wide_denorm USING btree ("time", product, location);
 
 
 --
--- Name: actuals_wide_dimensions_idx; Type: INDEX; Schema: target_setting; Owner: -
+-- TOC entry 8258 (class 1259 OID 109233557)
+-- Name: actuals_wide_dimensions_idx; Type: INDEX; Schema: target_setting; Owner: psql
 --
 
 CREATE INDEX actuals_wide_dimensions_idx ON target_setting.actuals_wide USING btree ("time", product, location);
 
 
 --
--- Name: plan_data_wide_id_idx; Type: INDEX; Schema: target_setting; Owner: -
+-- TOC entry 8271 (class 1259 OID 109233558)
+-- Name: plan_data_wide_id_idx; Type: INDEX; Schema: target_setting; Owner: psql
 --
 
 CREATE INDEX plan_data_wide_id_idx ON target_setting.plan_data_wide USING hash (id);
 
 
 --
--- Name: sys_gen_wide_denorm_target_setting; Type: INDEX; Schema: target_setting; Owner: -
+-- TOC entry 8278 (class 1259 OID 109233559)
+-- Name: sys_gen_wide_denorm_target_setting; Type: INDEX; Schema: target_setting; Owner: psql
 --
 
 CREATE INDEX sys_gen_wide_denorm_target_setting ON target_setting.sys_gen_wide_denorm USING btree (time_quarter, product_department, location_channel);
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes ca_1_trigger_on_update; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8321 (class 2620 OID 109233560)
+-- Name: trd_ma_stylecolorchannelattributes ca_1_trigger_on_update; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER ca_1_trigger_on_update AFTER UPDATE OF dbt_wk, relaunchweek, exitdate ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW WHEN (((COALESCE(new.relaunchweek, new.dbt_wk) < new.erlstmkdnwk) AND (new.erlstmkdnwk < new.exitdate) AND (new.exitdate > new.erlstmkdnwk) AND (pg_trigger_depth() = 0))) EXECUTE FUNCTION public.store_eligibility_trigger();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes dbt_trigger_on_update; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8322 (class 2620 OID 109233561)
+-- Name: trd_ma_stylecolorchannelattributes dbt_trigger_on_update; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER dbt_trigger_on_update AFTER UPDATE OF dbt_wk ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW WHEN (((new.dbt_wk >= new.erlstmkdnwk) AND (pg_trigger_depth() = 0))) EXECUTE FUNCTION public.dbt_after_md_trigger_on_update_validity_check();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes exit_trigger_on_update; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8323 (class 2620 OID 109233562)
+-- Name: trd_ma_stylecolorchannelattributes exit_trigger_on_update; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER exit_trigger_on_update AFTER UPDATE OF exitdate ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW WHEN (((((new.relaunchweek IS NULL) AND (new.exitdate <= new.erlstmkdnwk)) OR ((new.relaunchweek IS NOT NULL) AND (new.exitdate <= new.erlstmkdnwk))) AND (pg_trigger_depth() = 0))) EXECUTE FUNCTION public.exit_trigger_on_update_validity_check();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes md_trigger_on_update; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8324 (class 2620 OID 109233563)
+-- Name: trd_ma_stylecolorchannelattributes md_trigger_on_update; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER md_trigger_on_update AFTER UPDATE OF erlstmkdnwk ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW WHEN (((((new.relaunchweek IS NULL) AND ((new.erlstmkdnwk <= new.dbt_wk) OR (new.exitdate <= new.erlstmkdnwk))) OR ((new.relaunchweek IS NOT NULL) AND ((new.erlstmkdnwk <= new.relaunchweek) OR (new.exitdate <= new.erlstmkdnwk)))) AND (pg_trigger_depth() = 0))) EXECUTE FUNCTION public.md_trigger_on_update_validity_check();
 
 
 --
--- Name: pivot_execution on_pivot_execution_change; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8338 (class 2620 OID 109233564)
+-- Name: pivot_execution on_pivot_execution_change; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER on_pivot_execution_change AFTER INSERT OR DELETE OR UPDATE ON public.pivot_execution FOR EACH STATEMENT EXECUTE FUNCTION public.notify_pivot_execution_change();
 
 
 --
--- Name: plan_queue on_plan_queue_change; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8339 (class 2620 OID 109233565)
+-- Name: plan_queue on_plan_queue_change; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER on_plan_queue_change AFTER INSERT OR DELETE OR UPDATE ON public.plan_queue FOR EACH STATEMENT EXECUTE FUNCTION public.notify_plan_queue_change();
 
 
 --
--- Name: trd_p_stylecolor_worklist on_publish_remove_from_worklist_trigger; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8360 (class 2620 OID 109233566)
+-- Name: trd_p_stylecolor_worklist on_publish_remove_from_worklist_trigger; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER on_publish_remove_from_worklist_trigger AFTER UPDATE ON public.trd_p_stylecolor_worklist FOR EACH ROW WHEN (((new.in_worklist = (1)::double precision) AND (old.in_worklist = (0)::double precision))) EXECUTE FUNCTION public.on_publish_remove_from_worklist();
@@ -24500,7 +26156,8 @@ ALTER TABLE public.trd_p_stylecolor_worklist DISABLE TRIGGER on_publish_remove_f
 
 
 --
--- Name: trd_p_stylecolor_worklist on_publish_remove_from_worklist_trigger_insert; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8361 (class 2620 OID 109233567)
+-- Name: trd_p_stylecolor_worklist on_publish_remove_from_worklist_trigger_insert; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER on_publish_remove_from_worklist_trigger_insert AFTER INSERT ON public.trd_p_stylecolor_worklist FOR EACH ROW WHEN ((new.in_worklist = (1)::double precision)) EXECUTE FUNCTION public.on_publish_remove_from_worklist();
@@ -24509,7 +26166,8 @@ ALTER TABLE public.trd_p_stylecolor_worklist DISABLE TRIGGER on_publish_remove_f
 
 
 --
--- Name: trd_p_stylecolor_worklist on_unpublish_remove_from_worklist_trigger; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8362 (class 2620 OID 109233568)
+-- Name: trd_p_stylecolor_worklist on_unpublish_remove_from_worklist_trigger; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER on_unpublish_remove_from_worklist_trigger AFTER UPDATE ON public.trd_p_stylecolor_worklist FOR EACH ROW WHEN (((new.in_worklist = (0)::double precision) AND (old.in_worklist = (1)::double precision))) EXECUTE FUNCTION public.on_unpublish_remove_from_worklist();
@@ -24518,154 +26176,176 @@ ALTER TABLE public.trd_p_stylecolor_worklist DISABLE TRIGGER on_unpublish_remove
 
 
 --
--- Name: trd_p_dc_adj_size set_dc_ttluseradj_p_dc_adj_size; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8352 (class 2620 OID 109233569)
+-- Name: trd_p_dc_adj_size set_dc_ttluseradj_p_dc_adj_size; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_dc_ttluseradj_p_dc_adj_size BEFORE INSERT OR UPDATE ON public.trd_p_dc_adj_size FOR EACH ROW EXECUTE FUNCTION public.trigger_set_dc_ttl_useradj();
 
 
 --
--- Name: trd_v_memberbasedvalidvalues set_mvv_indx; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8363 (class 2620 OID 109233570)
+-- Name: trd_v_memberbasedvalidvalues set_mvv_indx; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_mvv_indx BEFORE INSERT ON public.trd_v_memberbasedvalidvalues FOR EACH ROW EXECUTE FUNCTION public.trigger_set_indx_valid_values();
 
 
 --
--- Name: trd_p_dc_adj set_pack_ind_flag; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8348 (class 2620 OID 109233571)
+-- Name: trd_p_dc_adj set_pack_ind_flag; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_pack_ind_flag BEFORE INSERT OR UPDATE OF reason_code ON public.trd_p_dc_adj FOR EACH ROW EXECUTE FUNCTION public.trigger_set_pack_ind_flag();
 
 
 --
--- Name: trd_a_assortment set_timestamp_a_assortment; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8340 (class 2620 OID 109233572)
+-- Name: trd_a_assortment set_timestamp_a_assortment; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_a_assortment BEFORE UPDATE ON public.trd_a_assortment FOR EACH ROW EXECUTE FUNCTION public.trigger_set_timestamp();
 
 
 --
--- Name: trd_p_casepack set_timestamp_cp_publish; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8345 (class 2620 OID 109233573)
+-- Name: trd_p_casepack set_timestamp_cp_publish; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_cp_publish BEFORE UPDATE OF po_status ON public.trd_p_casepack FOR EACH ROW EXECUTE FUNCTION public.trigger_set_cp_publish_timestamp();
 
 
 --
--- Name: trd_p_casepack set_timestamp_cp_publish_ins; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8346 (class 2620 OID 109233574)
+-- Name: trd_p_casepack set_timestamp_cp_publish_ins; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_cp_publish_ins BEFORE INSERT ON public.trd_p_casepack FOR EACH ROW EXECUTE FUNCTION public.trigger_set_cp_publish_timestamp();
 
 
 --
--- Name: trd_p_channeloverride set_timestamp_p_channeloverride; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8347 (class 2620 OID 109233575)
+-- Name: trd_p_channeloverride set_timestamp_p_channeloverride; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_p_channeloverride BEFORE UPDATE ON public.trd_p_channeloverride FOR EACH ROW EXECUTE FUNCTION public.trigger_set_timestamp();
 
 
 --
--- Name: trd_p_dc_adj set_timestamp_p_dc_adj; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8349 (class 2620 OID 109233576)
+-- Name: trd_p_dc_adj set_timestamp_p_dc_adj; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_p_dc_adj BEFORE UPDATE ON public.trd_p_dc_adj FOR EACH ROW EXECUTE FUNCTION public.trigger_set_timestamp();
 
 
 --
--- Name: trd_p_dc_adj_size set_timestamp_p_dc_adj_size; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8353 (class 2620 OID 109233577)
+-- Name: trd_p_dc_adj_size set_timestamp_p_dc_adj_size; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_p_dc_adj_size BEFORE UPDATE ON public.trd_p_dc_adj_size FOR EACH ROW EXECUTE FUNCTION public.trigger_set_timestamp();
 
 
 --
--- Name: trd_p_dc_adj set_timestamp_p_dc_publish_adj; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8350 (class 2620 OID 109233578)
+-- Name: trd_p_dc_adj set_timestamp_p_dc_publish_adj; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_p_dc_publish_adj BEFORE UPDATE OF dc_publish ON public.trd_p_dc_adj FOR EACH ROW EXECUTE FUNCTION public.trigger_set_publish_timestamp();
 
 
 --
--- Name: trd_p_dc_adj set_timestamp_p_dc_publish_adj_ins; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8351 (class 2620 OID 109233579)
+-- Name: trd_p_dc_adj set_timestamp_p_dc_publish_adj_ins; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_p_dc_publish_adj_ins BEFORE INSERT ON public.trd_p_dc_adj FOR EACH ROW EXECUTE FUNCTION public.trigger_set_publish_timestamp();
 
 
 --
--- Name: trd_ma_sizeattributes set_timestamp_sizeattr; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8343 (class 2620 OID 109233580)
+-- Name: trd_ma_sizeattributes set_timestamp_sizeattr; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_sizeattr BEFORE UPDATE ON public.trd_ma_sizeattributes FOR EACH ROW EXECUTE FUNCTION public.trigger_set_timestamp();
 
 
 --
--- Name: trd_ma_styleattributes set_timestamp_styleattr; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8313 (class 2620 OID 109233581)
+-- Name: trd_ma_styleattributes set_timestamp_styleattr; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_styleattr BEFORE UPDATE ON public.trd_ma_styleattributes FOR EACH ROW EXECUTE FUNCTION public.trigger_set_timestamp();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes set_timestamp_styleclrchannel; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8325 (class 2620 OID 109233582)
+-- Name: trd_ma_stylecolorchannelattributes set_timestamp_styleclrchannel; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_styleclrchannel BEFORE UPDATE ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW EXECUTE FUNCTION public.trigger_set_timestamp();
 
 
 --
--- Name: trd_ma_stylecolorattributes set_timestamp_stylecolorattr; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8316 (class 2620 OID 109233583)
+-- Name: trd_ma_stylecolorattributes set_timestamp_stylecolorattr; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER set_timestamp_stylecolorattr BEFORE UPDATE ON public.trd_ma_stylecolorattributes FOR EACH ROW EXECUTE FUNCTION public.trigger_set_timestamp();
 
 
 --
--- Name: worklist_map trg_ai_worklist_map; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8364 (class 2620 OID 109233584)
+-- Name: worklist_map trg_ai_worklist_map; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_ai_worklist_map AFTER INSERT ON public.worklist_map FOR EACH ROW EXECUTE FUNCTION public.trg_ins_stylecolor_alloc_attrs();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trg_cc_validsizes_on_change; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8326 (class 2620 OID 109233585)
+-- Name: trd_ma_stylecolorchannelattributes trg_cc_validsizes_on_change; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_cc_validsizes_on_change BEFORE UPDATE OF ccrangecode, use_valid_sizes_from, cc_size_eligibility_profile ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW WHEN ((pg_trigger_depth() < 2)) EXECUTE FUNCTION public.update_cc_validsizes_on_ccrangecode();
 
 
 --
--- Name: trd_p_strategy_params trg_p_strategy_params_set_apply_targets; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8356 (class 2620 OID 109233586)
+-- Name: trd_p_strategy_params trg_p_strategy_params_set_apply_targets; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_p_strategy_params_set_apply_targets BEFORE INSERT OR UPDATE ON public.trd_p_strategy_params FOR EACH ROW EXECUTE FUNCTION public.trg_set_apply_targets_to_plan();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trg_set_floorset_fields_on_initrcptwk_change; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8327 (class 2620 OID 109233587)
+-- Name: trd_ma_stylecolorchannelattributes trg_set_floorset_fields_on_initrcptwk_change; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_set_floorset_fields_on_initrcptwk_change BEFORE INSERT OR UPDATE OF initrcptwk ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW WHEN ((pg_trigger_depth() = 0)) EXECUTE FUNCTION public.set_floorset_fields_on_initrcptwk_change();
 
 
 --
--- Name: trd_ma_departmentalloc_attributes trg_set_overflow_ok_when_scaling; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8342 (class 2620 OID 109233588)
+-- Name: trd_ma_departmentalloc_attributes trg_set_overflow_ok_when_scaling; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_set_overflow_ok_when_scaling BEFORE UPDATE ON public.trd_ma_departmentalloc_attributes FOR EACH ROW EXECUTE FUNCTION public.trg_allow_scaling_set_overflow_ok();
 
 
 --
--- Name: trd_ma_stylecolor_alloc_attributes trg_set_sclr_overflow_ok_when_scaling; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8344 (class 2620 OID 109233589)
+-- Name: trd_ma_stylecolor_alloc_attributes trg_set_sclr_overflow_ok_when_scaling; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_set_sclr_overflow_ok_when_scaling BEFORE UPDATE ON public.trd_ma_stylecolor_alloc_attributes FOR EACH ROW EXECUTE FUNCTION public.trg_sclr_allow_scaling_set_overflow_ok();
 
 
 --
--- Name: trd_p_stylecolor_store_worklist trg_sync_alloc_and_override_trigger; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8358 (class 2620 OID 109233590)
+-- Name: trd_p_stylecolor_store_worklist trg_sync_alloc_and_override_trigger; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_sync_alloc_and_override_trigger BEFORE INSERT OR UPDATE ON public.trd_p_stylecolor_store_worklist FOR EACH ROW EXECUTE FUNCTION public.trg_sync_alloc_and_override();
@@ -24674,28 +26354,32 @@ ALTER TABLE public.trd_p_stylecolor_store_worklist DISABLE TRIGGER trg_sync_allo
 
 
 --
--- Name: trd_a_assortment trg_upd_assortment_ranging; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8341 (class 2620 OID 109233591)
+-- Name: trd_a_assortment trg_upd_assortment_ranging; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_upd_assortment_ranging AFTER UPDATE OF str_grade, str_store_climate, str_capacity, str_store_banner, str_geo_region, str_hazmat, ssg, str_grade_or, str_store_climate_or, str_capacity_or, str_store_banner_or, str_geo_region_or, str_hazmat_or ON public.trd_a_assortment FOR EACH ROW WHEN ((pg_trigger_depth() = 0)) EXECUTE FUNCTION public.propagate_assortment_to_floorsets();
 
 
 --
--- Name: trd_ma_stylecolorattributes trg_upd_specstylecolor; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8317 (class 2620 OID 109233592)
+-- Name: trd_ma_stylecolorattributes trg_upd_specstylecolor; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_upd_specstylecolor AFTER UPDATE OF cc_vpn_color ON public.trd_ma_stylecolorattributes FOR EACH ROW EXECUTE FUNCTION public.update_specstylecolor_id();
 
 
 --
--- Name: trd_ma_styleattributes trg_upd_specstyleid; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8314 (class 2620 OID 109233593)
+-- Name: trd_ma_styleattributes trg_upd_specstyleid; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_upd_specstyleid BEFORE UPDATE OF sty_vpn ON public.trd_ma_styleattributes FOR EACH ROW EXECUTE FUNCTION public.update_specstyle_id();
 
 
 --
--- Name: trd_p_stylecolor_store_worklist trg_update_alloc_qty; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8359 (class 2620 OID 109233594)
+-- Name: trd_p_stylecolor_store_worklist trg_update_alloc_qty; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_update_alloc_qty BEFORE INSERT OR UPDATE ON public.trd_p_stylecolor_store_worklist FOR EACH ROW EXECUTE FUNCTION public.trg_sum_override_array();
@@ -24704,140 +26388,160 @@ ALTER TABLE public.trd_p_stylecolor_store_worklist DISABLE TRIGGER trg_update_al
 
 
 --
--- Name: trd_ma_stylecolorattributes trg_update_cc_floorset; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8318 (class 2620 OID 109233595)
+-- Name: trd_ma_stylecolorattributes trg_update_cc_floorset; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_update_cc_floorset BEFORE UPDATE OF cc_floorset ON public.trd_ma_stylecolorattributes FOR EACH ROW EXECUTE FUNCTION public.update_cc_use_sys_floorset();
 
 
 --
--- Name: trd_p_stylecolor_store_eligibility trg_update_eligibility_from_null_to_zero; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8357 (class 2620 OID 109233596)
+-- Name: trd_p_stylecolor_store_eligibility trg_update_eligibility_from_null_to_zero; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trg_update_eligibility_from_null_to_zero AFTER UPDATE OF sclr_str_eligibility ON public.trd_p_stylecolor_store_eligibility FOR EACH ROW WHEN (((new.sclr_str_eligibility IS NULL) AND (pg_trigger_depth() = 0))) EXECUTE FUNCTION public.update_eligibility_from_null_to_zero();
 
 
 --
--- Name: trd_ma_stylecolorattributes trig_upd_on_color_change; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8319 (class 2620 OID 109233597)
+-- Name: trd_ma_stylecolorattributes trig_upd_on_color_change; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trig_upd_on_color_change AFTER UPDATE OF cccolor ON public.trd_ma_stylecolorattributes FOR EACH ROW EXECUTE FUNCTION public.update_color_change();
 
 
 --
--- Name: trd_ma_stylecolorattributes trig_upd_on_ticketprice; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8320 (class 2620 OID 109233598)
+-- Name: trd_ma_stylecolorattributes trig_upd_on_ticketprice; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trig_upd_on_ticketprice BEFORE UPDATE OF cc_orig_unit_retail ON public.trd_ma_stylecolorattributes FOR EACH ROW EXECUTE FUNCTION public.update_ticket_price();
 
 
 --
--- Name: cart_params trigger_cartparams_irw_debut_offset; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8336 (class 2620 OID 109233599)
+-- Name: cart_params trigger_cartparams_irw_debut_offset; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_cartparams_irw_debut_offset BEFORE UPDATE OF dbt_wk ON public.cart_params FOR EACH ROW EXECUTE FUNCTION public.update_trigger_cartparams_irw_debut_offset();
 
 
 --
--- Name: cart_params trigger_cartparams_ranging; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8337 (class 2620 OID 109233600)
+-- Name: cart_params trigger_cartparams_ranging; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_cartparams_ranging AFTER UPDATE OF dbt_wk, exitdate ON public.cart_params FOR EACH ROW EXECUTE FUNCTION public.update_trigger_cartparams_ranging();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trigger_cost; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8328 (class 2620 OID 109233601)
+-- Name: trd_ma_stylecolorchannelattributes trigger_cost; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_cost AFTER UPDATE OF cc_plan_cost, cc_systemcost ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW EXECUTE FUNCTION public.trigger_final_cost();
 
 
 --
--- Name: trd_p_itemprice trigger_eff_aur; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8354 (class 2620 OID 109233602)
+-- Name: trd_p_itemprice trigger_eff_aur; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_eff_aur AFTER INSERT OR UPDATE ON public.trd_p_itemprice FOR EACH ROW WHEN ((pg_trigger_depth() <= 1)) EXECUTE FUNCTION public.update_eff_aur();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trigger_for_time_indx; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8329 (class 2620 OID 109233603)
+-- Name: trd_ma_stylecolorchannelattributes trigger_for_time_indx; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_for_time_indx AFTER INSERT OR UPDATE OF dbt_wk, relaunchweek, erlstmkdnwk, exitdate ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW EXECUTE FUNCTION public.update_week_indxes();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trigger_for_time_indx_insert; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8330 (class 2620 OID 109233604)
+-- Name: trd_ma_stylecolorchannelattributes trigger_for_time_indx_insert; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_for_time_indx_insert AFTER INSERT ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW EXECUTE FUNCTION public.update_week_indxes();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trigger_for_time_indx_update; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8331 (class 2620 OID 109233605)
+-- Name: trd_ma_stylecolorchannelattributes trigger_for_time_indx_update; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_for_time_indx_update AFTER UPDATE OF dbt_wk, relaunchweek, erlstmkdnwk, exitdate ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW WHEN (((COALESCE(new.relaunchweek, new.dbt_wk) < new.erlstmkdnwk) AND (new.erlstmkdnwk < new.exitdate) AND (new.exitdate > new.erlstmkdnwk))) EXECUTE FUNCTION public.update_week_indxes();
 
 
 --
--- Name: trd_p_itemprice trigger_itemprice_fetchdepartment; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8355 (class 2620 OID 109233606)
+-- Name: trd_p_itemprice trigger_itemprice_fetchdepartment; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_itemprice_fetchdepartment BEFORE INSERT ON public.trd_p_itemprice FOR EACH ROW EXECUTE FUNCTION public.itemprice_fetchdepartment();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trigger_lifecycle_plan_update; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8332 (class 2620 OID 109233607)
+-- Name: trd_ma_stylecolorchannelattributes trigger_lifecycle_plan_update; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_lifecycle_plan_update AFTER UPDATE OF erlstmkdnwk ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW EXECUTE FUNCTION public.lifecycle_plan_update();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trigger_remove_from_assortment; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8333 (class 2620 OID 109233608)
+-- Name: trd_ma_stylecolorchannelattributes trigger_remove_from_assortment; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_remove_from_assortment AFTER UPDATE OF record_state ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW WHEN ((new.record_state = 1)) EXECUTE FUNCTION public.remove_from_assortment();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trigger_sizerangecode_isvalid; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8334 (class 2620 OID 109233609)
+-- Name: trd_ma_stylecolorchannelattributes trigger_sizerangecode_isvalid; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_sizerangecode_isvalid AFTER UPDATE OF validsizes ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW EXECUTE FUNCTION public.sizerangecode_isvalid();
 
 
 --
--- Name: trd_ma_stylecolorchannelattributes trigger_sizerangecode_validsizes_members; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8335 (class 2620 OID 109233610)
+-- Name: trd_ma_stylecolorchannelattributes trigger_sizerangecode_validsizes_members; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_sizerangecode_validsizes_members AFTER UPDATE OF ccrangecode ON public.trd_ma_stylecolorchannelattributes FOR EACH ROW EXECUTE FUNCTION public.sizerangecode_validsizes_members();
 
 
 --
--- Name: trd_d_product trigger_upd_name_description; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8311 (class 2620 OID 109233611)
+-- Name: trd_d_product trigger_upd_name_description; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER trigger_upd_name_description AFTER UPDATE OF name, description ON public.trd_d_product FOR EACH ROW WHEN ((new.levelid = 'style'::text)) EXECUTE FUNCTION public.update_name_description();
 
 
 --
--- Name: trd_ma_styleattributes update_ccrangecode; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8315 (class 2620 OID 109233612)
+-- Name: trd_ma_styleattributes update_ccrangecode; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER update_ccrangecode AFTER UPDATE OF sty_size_range ON public.trd_ma_styleattributes FOR EACH ROW EXECUTE FUNCTION public.update_stylecolorchannelattributes_ccrangecode();
 
 
 --
--- Name: trd_h_prodstd update_ccsizerange_after_class_change_ancestor1; Type: TRIGGER; Schema: public; Owner: -
+-- TOC entry 8312 (class 2620 OID 109233613)
+-- Name: trd_h_prodstd update_ccsizerange_after_class_change_ancestor1; Type: TRIGGER; Schema: public; Owner: psql
 --
 
 CREATE TRIGGER update_ccsizerange_after_class_change_ancestor1 AFTER UPDATE OF ancestor1 ON public.trd_h_prodstd FOR EACH ROW WHEN (((new.ancestor1 ~~ 'CL-%'::text) AND (new.ancestor1 IS DISTINCT FROM old.ancestor1))) EXECUTE FUNCTION public.update_ccrangecode_on_class_change();
 
 
 --
--- Name: hierarchies hierarchies_ancestor_fk; Type: FK CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8283 (class 2606 OID 109233614)
+-- Name: hierarchies hierarchies_ancestor_fk; Type: FK CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.hierarchies
@@ -24845,7 +26549,8 @@ ALTER TABLE ONLY mfp.hierarchies
 
 
 --
--- Name: hierarchies hierarchies_id_fk; Type: FK CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8284 (class 2606 OID 109233619)
+-- Name: hierarchies hierarchies_id_fk; Type: FK CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.hierarchies
@@ -24853,7 +26558,8 @@ ALTER TABLE ONLY mfp.hierarchies
 
 
 --
--- Name: tyly ly_dimension_fkey; Type: FK CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8287 (class 2606 OID 109233624)
+-- Name: tyly ly_dimension_fkey; Type: FK CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.tyly
@@ -24861,7 +26567,8 @@ ALTER TABLE ONLY mfp.tyly
 
 
 --
--- Name: comments plan_id_fkey; Type: FK CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8285 (class 2606 OID 109233629)
+-- Name: comments plan_id_fkey; Type: FK CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.comments
@@ -24869,7 +26576,8 @@ ALTER TABLE ONLY mfp.comments
 
 
 --
--- Name: plan_init_status plan_init_status_id_fkey; Type: FK CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8286 (class 2606 OID 109233634)
+-- Name: plan_init_status plan_init_status_id_fkey; Type: FK CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.plan_init_status
@@ -24877,7 +26585,8 @@ ALTER TABLE ONLY mfp.plan_init_status
 
 
 --
--- Name: tyly ty_dimension_fkey; Type: FK CONSTRAINT; Schema: mfp; Owner: -
+-- TOC entry 8288 (class 2606 OID 109233639)
+-- Name: tyly ty_dimension_fkey; Type: FK CONSTRAINT; Schema: mfp; Owner: psql
 --
 
 ALTER TABLE ONLY mfp.tyly
@@ -24885,7 +26594,8 @@ ALTER TABLE ONLY mfp.tyly
 
 
 --
--- Name: hierarchies hierarchies_ancestor_fk; Type: FK CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8289 (class 2606 OID 109233644)
+-- Name: hierarchies hierarchies_ancestor_fk; Type: FK CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.hierarchies
@@ -24893,7 +26603,8 @@ ALTER TABLE ONLY mfp_td.hierarchies
 
 
 --
--- Name: hierarchies hierarchies_id_fk; Type: FK CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8290 (class 2606 OID 109233649)
+-- Name: hierarchies hierarchies_id_fk; Type: FK CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.hierarchies
@@ -24901,7 +26612,8 @@ ALTER TABLE ONLY mfp_td.hierarchies
 
 
 --
--- Name: tyly ly_dimension_fkey; Type: FK CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8293 (class 2606 OID 109233654)
+-- Name: tyly ly_dimension_fkey; Type: FK CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.tyly
@@ -24909,7 +26621,8 @@ ALTER TABLE ONLY mfp_td.tyly
 
 
 --
--- Name: comments plan_id_fkey; Type: FK CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8291 (class 2606 OID 109233659)
+-- Name: comments plan_id_fkey; Type: FK CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.comments
@@ -24917,7 +26630,8 @@ ALTER TABLE ONLY mfp_td.comments
 
 
 --
--- Name: plan_init_status plan_init_status_id_fkey; Type: FK CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8292 (class 2606 OID 109233664)
+-- Name: plan_init_status plan_init_status_id_fkey; Type: FK CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.plan_init_status
@@ -24925,7 +26639,8 @@ ALTER TABLE ONLY mfp_td.plan_init_status
 
 
 --
--- Name: tyly ty_dimension_fkey; Type: FK CONSTRAINT; Schema: mfp_td; Owner: -
+-- TOC entry 8294 (class 2606 OID 109233669)
+-- Name: tyly ty_dimension_fkey; Type: FK CONSTRAINT; Schema: mfp_td; Owner: psql
 --
 
 ALTER TABLE ONLY mfp_td.tyly
@@ -24933,7 +26648,8 @@ ALTER TABLE ONLY mfp_td.tyly
 
 
 --
--- Name: cart_master cart_queue_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8297 (class 2606 OID 109233674)
+-- Name: cart_master cart_queue_fkey; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.cart_master
@@ -24941,7 +26657,8 @@ ALTER TABLE ONLY public.cart_master
 
 
 --
--- Name: cart_params cart_queue_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8298 (class 2606 OID 109233679)
+-- Name: cart_params cart_queue_fkey; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.cart_params
@@ -24949,7 +26666,8 @@ ALTER TABLE ONLY public.cart_params
 
 
 --
--- Name: cart_ranging cart_queue_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8300 (class 2606 OID 109233684)
+-- Name: cart_ranging cart_queue_fkey; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.cart_ranging
@@ -24957,7 +26675,8 @@ ALTER TABLE ONLY public.cart_ranging
 
 
 --
--- Name: agent_conversations_log fk_agent_conversations_log_conversation_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8295 (class 2606 OID 109233695)
+-- Name: agent_conversations_log fk_agent_conversations_log_conversation_id; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.agent_conversations_log
@@ -24965,7 +26684,8 @@ ALTER TABLE ONLY public.agent_conversations_log
 
 
 --
--- Name: allocation_plan_queue_items fk_allocation_plan_queue_items_allocation_plan_queue; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8296 (class 2606 OID 109233700)
+-- Name: allocation_plan_queue_items fk_allocation_plan_queue_items_allocation_plan_queue; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.allocation_plan_queue_items
@@ -24973,7 +26693,8 @@ ALTER TABLE ONLY public.allocation_plan_queue_items
 
 
 --
--- Name: undo_display fk_undo_display_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8303 (class 2606 OID 109233705)
+-- Name: undo_display fk_undo_display_id; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.undo_display
@@ -24981,7 +26702,8 @@ ALTER TABLE ONLY public.undo_display
 
 
 --
--- Name: undo_modifications fk_undo_modification_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8304 (class 2606 OID 109233710)
+-- Name: undo_modifications fk_undo_modification_id; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.undo_modifications
@@ -24989,7 +26711,8 @@ ALTER TABLE ONLY public.undo_modifications
 
 
 --
--- Name: cart_queue scope_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8299 (class 2606 OID 109233715)
+-- Name: cart_queue scope_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.cart_queue
@@ -24997,7 +26720,8 @@ ALTER TABLE ONLY public.cart_queue
 
 
 --
--- Name: pivot_execution scope_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8302 (class 2606 OID 109233720)
+-- Name: pivot_execution scope_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.pivot_execution
@@ -25005,7 +26729,8 @@ ALTER TABLE ONLY public.pivot_execution
 
 
 --
--- Name: dev_session target_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 8301 (class 2606 OID 109233725)
+-- Name: dev_session target_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: psql
 --
 
 ALTER TABLE ONLY public.dev_session
@@ -25013,7 +26738,8 @@ ALTER TABLE ONLY public.dev_session
 
 
 --
--- Name: hierarchies hierarchies_ancestor_fk; Type: FK CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8305 (class 2606 OID 109233730)
+-- Name: hierarchies hierarchies_ancestor_fk; Type: FK CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.hierarchies
@@ -25021,7 +26747,8 @@ ALTER TABLE ONLY target_setting.hierarchies
 
 
 --
--- Name: hierarchies hierarchies_id_fk; Type: FK CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8306 (class 2606 OID 109233735)
+-- Name: hierarchies hierarchies_id_fk; Type: FK CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.hierarchies
@@ -25029,7 +26756,8 @@ ALTER TABLE ONLY target_setting.hierarchies
 
 
 --
--- Name: tyly ly_dimension_fkey; Type: FK CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8309 (class 2606 OID 109233740)
+-- Name: tyly ly_dimension_fkey; Type: FK CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.tyly
@@ -25037,7 +26765,8 @@ ALTER TABLE ONLY target_setting.tyly
 
 
 --
--- Name: comments plan_id_fkey; Type: FK CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8307 (class 2606 OID 109233745)
+-- Name: comments plan_id_fkey; Type: FK CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.comments
@@ -25045,7 +26774,8 @@ ALTER TABLE ONLY target_setting.comments
 
 
 --
--- Name: plan_init_status plan_init_status_id_fkey; Type: FK CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8308 (class 2606 OID 109233750)
+-- Name: plan_init_status plan_init_status_id_fkey; Type: FK CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.plan_init_status
@@ -25053,7 +26783,8 @@ ALTER TABLE ONLY target_setting.plan_init_status
 
 
 --
--- Name: tyly ty_dimension_fkey; Type: FK CONSTRAINT; Schema: target_setting; Owner: -
+-- TOC entry 8310 (class 2606 OID 109233755)
+-- Name: tyly ty_dimension_fkey; Type: FK CONSTRAINT; Schema: target_setting; Owner: psql
 --
 
 ALTER TABLE ONLY target_setting.tyly
@@ -25061,8 +26792,3169 @@ ALTER TABLE ONLY target_setting.tyly
 
 
 --
+-- TOC entry 8535 (class 0 OID 0)
+-- Dependencies: 1385
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: oci_superuser
+--
+
+REVOKE USAGE ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- TOC entry 8537 (class 0 OID 0)
+-- Dependencies: 1711
+-- Name: TABLE agent_conversations; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.agent_conversations TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8538 (class 0 OID 0)
+-- Dependencies: 1712
+-- Name: TABLE agent_conversations_log; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.agent_conversations_log TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8539 (class 0 OID 0)
+-- Dependencies: 1713
+-- Name: TABLE allocation_plan_queue; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.allocation_plan_queue TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8540 (class 0 OID 0)
+-- Dependencies: 1714
+-- Name: TABLE allocation_plan_queue_items; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.allocation_plan_queue_items TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8541 (class 0 OID 0)
+-- Dependencies: 1715
+-- Name: TABLE trd_d_product; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_product TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8542 (class 0 OID 0)
+-- Dependencies: 1716
+-- Name: TABLE trd_h_prodstd; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8543 (class 0 OID 0)
+-- Dependencies: 1717
+-- Name: TABLE trd_ma_styleattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_styleattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8544 (class 0 OID 0)
+-- Dependencies: 1718
+-- Name: TABLE trd_ma_stylecolorattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8545 (class 0 OID 0)
+-- Dependencies: 1719
+-- Name: TABLE trd_ma_stylecolorchannelattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorchannelattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8546 (class 0 OID 0)
+-- Dependencies: 1720
+-- Name: TABLE alt_trd_stylecolor_hier_attr; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.alt_trd_stylecolor_hier_attr TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8547 (class 0 OID 0)
+-- Dependencies: 1721
+-- Name: TABLE arf; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.arf TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8548 (class 0 OID 0)
+-- Dependencies: 1722
+-- Name: TABLE assort_period_from_dpt; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.assort_period_from_dpt TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8549 (class 0 OID 0)
+-- Dependencies: 1723
+-- Name: TABLE ata_cart_master; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.ata_cart_master TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8550 (class 0 OID 0)
+-- Dependencies: 1724
+-- Name: TABLE ata_cart_master_archive; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.ata_cart_master_archive TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8551 (class 0 OID 0)
+-- Dependencies: 1725
+-- Name: TABLE ata_cart_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.ata_cart_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8552 (class 0 OID 0)
+-- Dependencies: 1726
+-- Name: TABLE ata_cart_params_archive; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.ata_cart_params_archive TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8553 (class 0 OID 0)
+-- Dependencies: 1727
+-- Name: TABLE ata_cart_ranging; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.ata_cart_ranging TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8554 (class 0 OID 0)
+-- Dependencies: 1728
+-- Name: TABLE ata_cart_ranging_archive; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.ata_cart_ranging_archive TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8555 (class 0 OID 0)
+-- Dependencies: 1729
+-- Name: TABLE ata_plan_these_style_stylecolors; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.ata_plan_these_style_stylecolors TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8556 (class 0 OID 0)
+-- Dependencies: 1730
+-- Name: TABLE bi_assortmentbyfloorset_staging; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.bi_assortmentbyfloorset_staging TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8557 (class 0 OID 0)
+-- Dependencies: 1731
+-- Name: TABLE bi_assortmentbyfloorset_summary; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.bi_assortmentbyfloorset_summary TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8558 (class 0 OID 0)
+-- Dependencies: 1732
+-- Name: TABLE bulk_import_audit; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.bulk_import_audit TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8559 (class 0 OID 0)
+-- Dependencies: 1733
+-- Name: TABLE bulk_import_refs; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.bulk_import_refs TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8560 (class 0 OID 0)
+-- Dependencies: 1734
+-- Name: TABLE bulk_import_run_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.bulk_import_run_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8561 (class 0 OID 0)
+-- Dependencies: 1736
+-- Name: TABLE cart_master; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.cart_master TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8562 (class 0 OID 0)
+-- Dependencies: 1737
+-- Name: TABLE cart_master_archive; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.cart_master_archive TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8563 (class 0 OID 0)
+-- Dependencies: 1738
+-- Name: TABLE cart_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.cart_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8564 (class 0 OID 0)
+-- Dependencies: 1739
+-- Name: TABLE cart_params_archive; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.cart_params_archive TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8565 (class 0 OID 0)
+-- Dependencies: 1740
+-- Name: TABLE cart_params_bkp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.cart_params_bkp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8566 (class 0 OID 0)
+-- Dependencies: 1741
+-- Name: TABLE cart_queue; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.cart_queue TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8567 (class 0 OID 0)
+-- Dependencies: 1742
+-- Name: TABLE cart_ranging; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.cart_ranging TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8568 (class 0 OID 0)
+-- Dependencies: 1743
+-- Name: TABLE cart_ranging_archive; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.cart_ranging_archive TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8569 (class 0 OID 0)
+-- Dependencies: 1744
+-- Name: TABLE culprits_0223; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.culprits_0223 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8570 (class 0 OID 0)
+-- Dependencies: 1745
+-- Name: TABLE culprits_0302; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.culprits_0302 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8571 (class 0 OID 0)
+-- Dependencies: 1746
+-- Name: TABLE culprits_0323; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.culprits_0323 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8572 (class 0 OID 0)
+-- Dependencies: 1747
+-- Name: TABLE curr_prod; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.curr_prod TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8573 (class 0 OID 0)
+-- Dependencies: 1748
+-- Name: TABLE databasechangelog; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.databasechangelog TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8574 (class 0 OID 0)
+-- Dependencies: 1749
+-- Name: TABLE databasechangeloglock; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.databasechangeloglock TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8575 (class 0 OID 0)
+-- Dependencies: 1750
+-- Name: TABLE debug_stats_ts; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.debug_stats_ts TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8576 (class 0 OID 0)
+-- Dependencies: 1751
+-- Name: TABLE default_disc_md; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.default_disc_md TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8577 (class 0 OID 0)
+-- Dependencies: 1752
+-- Name: TABLE delete_me_user_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.delete_me_user_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8578 (class 0 OID 0)
+-- Dependencies: 1753
+-- Name: TABLE deleteme_20250928_planning_failures; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_20250928_planning_failures TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8579 (class 0 OID 0)
+-- Dependencies: 1754
+-- Name: TABLE deleteme_44231008_richblack_d_product; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_44231008_richblack_d_product TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8580 (class 0 OID 0)
+-- Dependencies: 1755
+-- Name: TABLE deleteme_44231008_richblack_h_prodstd; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_44231008_richblack_h_prodstd TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8581 (class 0 OID 0)
+-- Dependencies: 1756
+-- Name: TABLE deleteme_44231008_richblack_sizeattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_44231008_richblack_sizeattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8582 (class 0 OID 0)
+-- Dependencies: 1757
+-- Name: TABLE deleteme_failed_items_20250327; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_failed_items_20250327 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8583 (class 0 OID 0)
+-- Dependencies: 1758
+-- Name: TABLE deleteme_failed_items_20250328; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_failed_items_20250328 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8584 (class 0 OID 0)
+-- Dependencies: 1759
+-- Name: TABLE deleteme_fix_floorsets_after_reclass; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_fix_floorsets_after_reclass TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8585 (class 0 OID 0)
+-- Dependencies: 1760
+-- Name: TABLE deleteme_fix_floorsets_after_reclass_assortment; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_fix_floorsets_after_reclass_assortment TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8586 (class 0 OID 0)
+-- Dependencies: 1761
+-- Name: TABLE deleteme_fix_floorsets_after_reclass_assortmentssg; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_fix_floorsets_after_reclass_assortmentssg TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8587 (class 0 OID 0)
+-- Dependencies: 1762
+-- Name: TABLE deleteme_fix_str_grade; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_fix_str_grade TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8588 (class 0 OID 0)
+-- Dependencies: 1763
+-- Name: TABLE deleteme_itmes_44231008_richblack; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_itmes_44231008_richblack TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8589 (class 0 OID 0)
+-- Dependencies: 1764
+-- Name: TABLE deleteme_itmes_deplicates; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_itmes_deplicates TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8590 (class 0 OID 0)
+-- Dependencies: 1765
+-- Name: TABLE deleteme_itmes_deplicates_d_product; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_itmes_deplicates_d_product TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8591 (class 0 OID 0)
+-- Dependencies: 1766
+-- Name: TABLE deleteme_itmes_deplicates_h_prodstd; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_itmes_deplicates_h_prodstd TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8592 (class 0 OID 0)
+-- Dependencies: 1767
+-- Name: TABLE deleteme_itmes_deplicates_sizeattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_itmes_deplicates_sizeattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8593 (class 0 OID 0)
+-- Dependencies: 1768
+-- Name: TABLE deleteme_new_mdstrategy; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_new_mdstrategy TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8594 (class 0 OID 0)
+-- Dependencies: 1769
+-- Name: TABLE deleteme_plan_queue_20250201; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_plan_queue_20250201 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8595 (class 0 OID 0)
+-- Dependencies: 1770
+-- Name: TABLE deleteme_plan_queue_20250201_01; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_plan_queue_20250201_01 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8596 (class 0 OID 0)
+-- Dependencies: 1771
+-- Name: TABLE deleteme_plan_queue_20250202_02; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_plan_queue_20250202_02 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8597 (class 0 OID 0)
+-- Dependencies: 1772
+-- Name: TABLE deleteme_trd_a_assortment_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_a_assortment_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8598 (class 0 OID 0)
+-- Dependencies: 1773
+-- Name: TABLE deleteme_trd_all_sizes_possible; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_all_sizes_possible TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8599 (class 0 OID 0)
+-- Dependencies: 1774
+-- Name: TABLE deleteme_trd_d_product_20250422; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_d_product_20250422 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8600 (class 0 OID 0)
+-- Dependencies: 1775
+-- Name: TABLE deleteme_trd_d_product_20250425; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_d_product_20250425 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8601 (class 0 OID 0)
+-- Dependencies: 1776
+-- Name: TABLE deleteme_trd_d_product_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_d_product_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8602 (class 0 OID 0)
+-- Dependencies: 1777
+-- Name: TABLE deleteme_trd_fix_ccticketpricechannel; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_fix_ccticketpricechannel TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8603 (class 0 OID 0)
+-- Dependencies: 1778
+-- Name: TABLE deleteme_trd_fix_unit_retail_cloning; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_fix_unit_retail_cloning TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8604 (class 0 OID 0)
+-- Dependencies: 1779
+-- Name: TABLE deleteme_trd_h_prodstd_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_h_prodstd_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8605 (class 0 OID 0)
+-- Dependencies: 1780
+-- Name: TABLE deleteme_trd_in_prd_attrstyle; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_in_prd_attrstyle TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8606 (class 0 OID 0)
+-- Dependencies: 1781
+-- Name: TABLE deleteme_trd_l_dependencylookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_l_dependencylookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8607 (class 0 OID 0)
+-- Dependencies: 1782
+-- Name: TABLE deleteme_trd_ma_dptflrsetattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_dptflrsetattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8608 (class 0 OID 0)
+-- Dependencies: 1783
+-- Name: TABLE deleteme_trd_ma_dptflrsetattributes_ccmdstrategy; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_dptflrsetattributes_ccmdstrategy TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8609 (class 0 OID 0)
+-- Dependencies: 1784
+-- Name: TABLE deleteme_trd_ma_imgattributes_fixed; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_imgattributes_fixed TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8610 (class 0 OID 0)
+-- Dependencies: 1785
+-- Name: TABLE deleteme_trd_ma_imgattributes_jr; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_imgattributes_jr TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8611 (class 0 OID 0)
+-- Dependencies: 1786
+-- Name: TABLE deleteme_trd_ma_sizeattributes_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_sizeattributes_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8612 (class 0 OID 0)
+-- Dependencies: 1787
+-- Name: TABLE deleteme_trd_ma_sizeattributes_new_sizes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_sizeattributes_new_sizes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8613 (class 0 OID 0)
+-- Dependencies: 1788
+-- Name: TABLE deleteme_trd_ma_styleattributes_20250331; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_styleattributes_20250331 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8614 (class 0 OID 0)
+-- Dependencies: 1789
+-- Name: TABLE deleteme_trd_ma_stylecolorattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_stylecolorattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8615 (class 0 OID 0)
+-- Dependencies: 1790
+-- Name: TABLE deleteme_trd_ma_stylecolorattributes_20250331; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_stylecolorattributes_20250331 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8616 (class 0 OID 0)
+-- Dependencies: 1791
+-- Name: TABLE deleteme_trd_ma_stylecolorattributes_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_stylecolorattributes_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8617 (class 0 OID 0)
+-- Dependencies: 1792
+-- Name: TABLE deleteme_trd_ma_stylecolorchannelattributes_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_ma_stylecolorchannelattributes_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8618 (class 0 OID 0)
+-- Dependencies: 1793
+-- Name: TABLE deleteme_trd_new_sizes_list; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_new_sizes_list TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8619 (class 0 OID 0)
+-- Dependencies: 1794
+-- Name: TABLE deleteme_trd_p_channeloverride_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_p_channeloverride_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8620 (class 0 OID 0)
+-- Dependencies: 1795
+-- Name: TABLE deleteme_trd_p_dc_adj_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_p_dc_adj_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8621 (class 0 OID 0)
+-- Dependencies: 1796
+-- Name: TABLE deleteme_trd_p_dc_adj_size_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_p_dc_adj_size_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8622 (class 0 OID 0)
+-- Dependencies: 1797
+-- Name: TABLE deleteme_trd_p_itemprice_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_p_itemprice_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8623 (class 0 OID 0)
+-- Dependencies: 1798
+-- Name: TABLE deleteme_trd_specimages; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_specimages TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8624 (class 0 OID 0)
+-- Dependencies: 1799
+-- Name: TABLE deleteme_trd_specimages_fixed; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_specimages_fixed TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8625 (class 0 OID 0)
+-- Dependencies: 1800
+-- Name: TABLE deleteme_trd_update_floorsets; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_update_floorsets TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8626 (class 0 OID 0)
+-- Dependencies: 1801
+-- Name: TABLE deleteme_trd_v_memberbasedvalidvalues_2025_03_29; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_trd_v_memberbasedvalidvalues_2025_03_29 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8627 (class 0 OID 0)
+-- Dependencies: 1802
+-- Name: TABLE deleteme_ttrd_a_assortment_20251028; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_ttrd_a_assortment_20251028 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8628 (class 0 OID 0)
+-- Dependencies: 1803
+-- Name: TABLE deleteme_update_images_existing_202050828; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_update_images_existing_202050828 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8629 (class 0 OID 0)
+-- Dependencies: 1804
+-- Name: TABLE deleteme_update_images_step1_202050828; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_update_images_step1_202050828 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8630 (class 0 OID 0)
+-- Dependencies: 1805
+-- Name: TABLE deleteme_update_price_bands_20240331; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.deleteme_update_price_bands_20240331 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8631 (class 0 OID 0)
+-- Dependencies: 1806
+-- Name: TABLE dept_plan_item_conversion; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.dept_plan_item_conversion TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8632 (class 0 OID 0)
+-- Dependencies: 1807
+-- Name: TABLE dept_plan_items; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.dept_plan_items TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8633 (class 0 OID 0)
+-- Dependencies: 1808
+-- Name: TABLE dept_plan_items_active; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.dept_plan_items_active TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8634 (class 0 OID 0)
+-- Dependencies: 1809
+-- Name: TABLE dept_plan_items_daily; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.dept_plan_items_daily TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8635 (class 0 OID 0)
+-- Dependencies: 1810
+-- Name: TABLE dept_plan_items_temp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.dept_plan_items_temp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8636 (class 0 OID 0)
+-- Dependencies: 1811
+-- Name: TABLE dev_session; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.dev_session TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8637 (class 0 OID 0)
+-- Dependencies: 1812
+-- Name: TABLE duplicate_sizes_sup3663; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.duplicate_sizes_sup3663 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8638 (class 0 OID 0)
+-- Dependencies: 1813
+-- Name: TABLE failed_items; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.failed_items TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8639 (class 0 OID 0)
+-- Dependencies: 1814
+-- Name: TABLE failed_items_20240925; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.failed_items_20240925 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8640 (class 0 OID 0)
+-- Dependencies: 1815
+-- Name: TABLE failed_items_20250404; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.failed_items_20250404 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8641 (class 0 OID 0)
+-- Dependencies: 1816
+-- Name: TABLE failed_items_20250511; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.failed_items_20250511 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8642 (class 0 OID 0)
+-- Dependencies: 1817
+-- Name: TABLE failed_items_20250601; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.failed_items_20250601 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8643 (class 0 OID 0)
+-- Dependencies: 1818
+-- Name: TABLE favorites; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.favorites TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8644 (class 0 OID 0)
+-- Dependencies: 1819
+-- Name: TABLE fcstable_product; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.fcstable_product TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8645 (class 0 OID 0)
+-- Dependencies: 1820
+-- Name: TABLE flrset_hierarchy_prep; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.flrset_hierarchy_prep TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8646 (class 0 OID 0)
+-- Dependencies: 1821
+-- Name: TABLE from_torrid_department_default_for_flrset_merge; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.from_torrid_department_default_for_flrset_merge TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8647 (class 0 OID 0)
+-- Dependencies: 1822
+-- Name: TABLE from_torrid_department_flrset_and_default_merged; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.from_torrid_department_flrset_and_default_merged TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8648 (class 0 OID 0)
+-- Dependencies: 1823
+-- Name: TABLE from_torrid_department_flrset_default_for_flrset_merge; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.from_torrid_department_flrset_default_for_flrset_merge TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8649 (class 0 OID 0)
+-- Dependencies: 1824
+-- Name: TABLE mark_plan_queue_temp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.mark_plan_queue_temp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8650 (class 0 OID 0)
+-- Dependencies: 1825
+-- Name: TABLE md_strategy; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.md_strategy TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8651 (class 0 OID 0)
+-- Dependencies: 1826
+-- Name: TABLE missed_planning_delete_me; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.missed_planning_delete_me TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8652 (class 0 OID 0)
+-- Dependencies: 1827
+-- Name: TABLE missing_from_plan_1029_1016; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.missing_from_plan_1029_1016 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8653 (class 0 OID 0)
+-- Dependencies: 1828
+-- Name: TABLE missing_from_plan_1029_1016_with_dept; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.missing_from_plan_1029_1016_with_dept TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8654 (class 0 OID 0)
+-- Dependencies: 1829
+-- Name: TABLE missing_from_plan_1029_1016_with_dept_sca; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.missing_from_plan_1029_1016_with_dept_sca TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8655 (class 0 OID 0)
+-- Dependencies: 1830
+-- Name: TABLE missing_from_plan_1029_1016_with_dept_sca_sizerange; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.missing_from_plan_1029_1016_with_dept_sca_sizerange TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8656 (class 0 OID 0)
+-- Dependencies: 1831
+-- Name: TABLE nov18_products; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.nov18_products TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8657 (class 0 OID 0)
+-- Dependencies: 1832
+-- Name: TABLE trd_d_time; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_time TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8658 (class 0 OID 0)
+-- Dependencies: 1833
+-- Name: TABLE trd_ma_dptflrsetattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_dptflrsetattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8659 (class 0 OID 0)
+-- Dependencies: 1834
+-- Name: TABLE perf_assortperiod_week; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.perf_assortperiod_week TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8660 (class 0 OID 0)
+-- Dependencies: 1835
+-- Name: TABLE pivot_clean_session; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.pivot_clean_session TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8661 (class 0 OID 0)
+-- Dependencies: 1836
+-- Name: TABLE pivot_execution; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.pivot_execution TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8662 (class 0 OID 0)
+-- Dependencies: 1837
+-- Name: TABLE pivot_tables; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.pivot_tables TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8663 (class 0 OID 0)
+-- Dependencies: 1838
+-- Name: TABLE plan_data_export; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_data_export TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8664 (class 0 OID 0)
+-- Dependencies: 1839
+-- Name: TABLE plan_queue; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_queue TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8665 (class 0 OID 0)
+-- Dependencies: 1840
+-- Name: TABLE plan_queue_bk_20240922; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_queue_bk_20240922 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8666 (class 0 OID 0)
+-- Dependencies: 1841
+-- Name: TABLE plan_queue_bk_20250103; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_queue_bk_20250103 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8667 (class 0 OID 0)
+-- Dependencies: 1842
+-- Name: TABLE plan_queue_bkp_11112024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_queue_bkp_11112024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8668 (class 0 OID 0)
+-- Dependencies: 1843
+-- Name: TABLE plan_queue_bkp_1227; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_queue_bkp_1227 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8669 (class 0 OID 0)
+-- Dependencies: 1844
+-- Name: TABLE plan_queue_fails; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_queue_fails TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8670 (class 0 OID 0)
+-- Dependencies: 1845
+-- Name: TABLE plan_queue_last_run; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_queue_last_run TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8671 (class 0 OID 0)
+-- Dependencies: 1846
+-- Name: TABLE plan_status; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.plan_status TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8672 (class 0 OID 0)
+-- Dependencies: 1847
+-- Name: TABLE pre_12062026_p_stylecolor_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.pre_12062026_p_stylecolor_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8673 (class 0 OID 0)
+-- Dependencies: 1848
+-- Name: TABLE prev_next_flrset; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_next_flrset TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8674 (class 0 OID 0)
+-- Dependencies: 1849
+-- Name: TABLE prev_next_superset; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_next_superset TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8675 (class 0 OID 0)
+-- Dependencies: 1850
+-- Name: TABLE prev_s5_analytics_inseason_sls_rnk_transposed; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_s5_analytics_inseason_sls_rnk_transposed TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8676 (class 0 OID 0)
+-- Dependencies: 1851
+-- Name: TABLE prev_trd_ma_departmentquarter_attributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_trd_ma_departmentquarter_attributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8677 (class 0 OID 0)
+-- Dependencies: 1852
+-- Name: TABLE prev_trd_p_strategy_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_trd_p_strategy_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8678 (class 0 OID 0)
+-- Dependencies: 1853
+-- Name: TABLE prev_trd_p_stylecolor_channel_alloc_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_trd_p_stylecolor_channel_alloc_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8679 (class 0 OID 0)
+-- Dependencies: 1854
+-- Name: TABLE prev_trd_p_stylecolor_store_alloc_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_trd_p_stylecolor_store_alloc_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8680 (class 0 OID 0)
+-- Dependencies: 1855
+-- Name: TABLE prev_trd_p_stylecolor_store_eligibility; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_trd_p_stylecolor_store_eligibility TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8681 (class 0 OID 0)
+-- Dependencies: 1856
+-- Name: TABLE prev_trd_p_stylecolor_store_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_trd_p_stylecolor_store_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8682 (class 0 OID 0)
+-- Dependencies: 1857
+-- Name: TABLE prev_trd_p_stylecolor_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_trd_p_stylecolor_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8683 (class 0 OID 0)
+-- Dependencies: 1858
+-- Name: TABLE prev_trd_p_stylecolorsize_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_trd_p_stylecolorsize_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8684 (class 0 OID 0)
+-- Dependencies: 1859
+-- Name: TABLE prev_user_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.prev_user_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8685 (class 0 OID 0)
+-- Dependencies: 1860
+-- Name: TABLE pricing_table; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.pricing_table TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8686 (class 0 OID 0)
+-- Dependencies: 1861
+-- Name: TABLE products; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.products TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8687 (class 0 OID 0)
+-- Dependencies: 1862
+-- Name: TABLE products_delete_me; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.products_delete_me TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8688 (class 0 OID 0)
+-- Dependencies: 1863
+-- Name: TABLE rerun_temp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.rerun_temp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8689 (class 0 OID 0)
+-- Dependencies: 1864
+-- Name: TABLE rerun_temp_valid; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.rerun_temp_valid TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8690 (class 0 OID 0)
+-- Dependencies: 1865
+-- Name: TABLE s5_actual_initrcptwk_archives; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.s5_actual_initrcptwk_archives TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8691 (class 0 OID 0)
+-- Dependencies: 1866
+-- Name: TABLE s5_actual_initrcptwk_update; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.s5_actual_initrcptwk_update TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8692 (class 0 OID 0)
+-- Dependencies: 1867
+-- Name: TABLE s5_analytics_inseason_sls_rnk_transposed; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.s5_analytics_inseason_sls_rnk_transposed TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8693 (class 0 OID 0)
+-- Dependencies: 1868
+-- Name: TABLE s5_profile_master; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.s5_profile_master TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8694 (class 0 OID 0)
+-- Dependencies: 1869
+-- Name: TABLE s5_tunableparams; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.s5_tunableparams TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8695 (class 0 OID 0)
+-- Dependencies: 1870
+-- Name: TABLE scope; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.scope TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8696 (class 0 OID 0)
+-- Dependencies: 1876
+-- Name: TABLE size_ids; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.size_ids TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8697 (class 0 OID 0)
+-- Dependencies: 1878
+-- Name: TABLE stylecolor_sizerange_size_master_with_existing_products; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.stylecolor_sizerange_size_master_with_existing_products TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8698 (class 0 OID 0)
+-- Dependencies: 1879
+-- Name: TABLE sup4164_in_sca; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.sup4164_in_sca TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8699 (class 0 OID 0)
+-- Dependencies: 1880
+-- Name: TABLE sup4164_in_sca_fix; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.sup4164_in_sca_fix TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8700 (class 0 OID 0)
+-- Dependencies: 1881
+-- Name: TABLE sup4164_ma_sizeattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.sup4164_ma_sizeattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8701 (class 0 OID 0)
+-- Dependencies: 1882
+-- Name: TABLE sup4164_ma_stylecolorchannelattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.sup4164_ma_stylecolorchannelattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8702 (class 0 OID 0)
+-- Dependencies: 1883
+-- Name: TABLE sync_outbound_dataqueue; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.sync_outbound_dataqueue TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8703 (class 0 OID 0)
+-- Dependencies: 1884
+-- Name: TABLE temp1_trd_c_week1; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.temp1_trd_c_week1 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8704 (class 0 OID 0)
+-- Dependencies: 1885
+-- Name: TABLE temp1_trd_c_week4; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.temp1_trd_c_week4 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8705 (class 0 OID 0)
+-- Dependencies: 1886
+-- Name: TABLE temp_corpdisc; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.temp_corpdisc TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8706 (class 0 OID 0)
+-- Dependencies: 1887
+-- Name: TABLE temp_failed_items; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.temp_failed_items TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8707 (class 0 OID 0)
+-- Dependencies: 1888
+-- Name: TABLE tmp_trd_l_dependencylookup_20241002; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.tmp_trd_l_dependencylookup_20241002 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8708 (class 0 OID 0)
+-- Dependencies: 1889
+-- Name: TABLE tmp_trd_v_memberbasedvalidvalues; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.tmp_trd_v_memberbasedvalidvalues TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8709 (class 0 OID 0)
+-- Dependencies: 1890
+-- Name: TABLE trd_a_assortment; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_a_assortment TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8710 (class 0 OID 0)
+-- Dependencies: 1891
+-- Name: TABLE trd_a_assortment_43515774_black; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_a_assortment_43515774_black TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8711 (class 0 OID 0)
+-- Dependencies: 1892
+-- Name: TABLE trd_a_assortment_bk; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_a_assortment_bk TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8712 (class 0 OID 0)
+-- Dependencies: 1893
+-- Name: TABLE trd_a_assortment_bk_20240922; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_a_assortment_bk_20240922 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8713 (class 0 OID 0)
+-- Dependencies: 1894
+-- Name: TABLE trd_a_assortment_storecount; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_a_assortment_storecount TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8714 (class 0 OID 0)
+-- Dependencies: 1895
+-- Name: TABLE trd_an_price_storecount_info; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_an_price_storecount_info TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8715 (class 0 OID 0)
+-- Dependencies: 1896
+-- Name: TABLE trd_authorization; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_authorization TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8716 (class 0 OID 0)
+-- Dependencies: 1897
+-- Name: TABLE trd_c_conversion_file; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_c_conversion_file TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8717 (class 0 OID 0)
+-- Dependencies: 1898
+-- Name: TABLE trd_c_conversion_file_bk_20240922; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_c_conversion_file_bk_20240922 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8718 (class 0 OID 0)
+-- Dependencies: 1899
+-- Name: TABLE trd_c_conversion_file_issues; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_c_conversion_file_issues TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8719 (class 0 OID 0)
+-- Dependencies: 1900
+-- Name: TABLE trd_c_conversion_file_lifecycle; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_c_conversion_file_lifecycle TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8720 (class 0 OID 0)
+-- Dependencies: 1901
+-- Name: TABLE trd_c_conversion_history_lifecycle; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_c_conversion_history_lifecycle TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8721 (class 0 OID 0)
+-- Dependencies: 1902
+-- Name: TABLE trd_c_conversion_history_stylecolorchannelattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_c_conversion_history_stylecolorchannelattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8722 (class 0 OID 0)
+-- Dependencies: 1903
+-- Name: TABLE trd_c_conversion_history_validsizes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_c_conversion_history_validsizes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8723 (class 0 OID 0)
+-- Dependencies: 1904
+-- Name: TABLE trd_c_cutover_prep_history; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_c_cutover_prep_history TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8724 (class 0 OID 0)
+-- Dependencies: 1905
+-- Name: TABLE trd_p_approvedclusters; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_approvedclusters TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8725 (class 0 OID 0)
+-- Dependencies: 1906
+-- Name: TABLE trd_serviceparams; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_serviceparams TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8726 (class 0 OID 0)
+-- Dependencies: 1907
+-- Name: TABLE trd_clustering_needs_attention; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_clustering_needs_attention TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8727 (class 0 OID 0)
+-- Dependencies: 1908
+-- Name: TABLE trd_corpdisc; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_corpdisc TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8728 (class 0 OID 0)
+-- Dependencies: 1909
+-- Name: TABLE trd_corpdisc_backup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_corpdisc_backup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8729 (class 0 OID 0)
+-- Dependencies: 1910
+-- Name: TABLE trd_corpdisc_temp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_corpdisc_temp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8730 (class 0 OID 0)
+-- Dependencies: 1911
+-- Name: TABLE trd_d_cluster; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_cluster TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8731 (class 0 OID 0)
+-- Dependencies: 1912
+-- Name: TABLE trd_d_cluster_delete_me; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_cluster_delete_me TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8732 (class 0 OID 0)
+-- Dependencies: 1913
+-- Name: TABLE trd_d_location; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_location TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8733 (class 0 OID 0)
+-- Dependencies: 1914
+-- Name: TABLE trd_d_prodlife; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_prodlife TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8734 (class 0 OID 0)
+-- Dependencies: 1915
+-- Name: TABLE trd_d_prodlife_delete_me; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_prodlife_delete_me TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8735 (class 0 OID 0)
+-- Dependencies: 1916
+-- Name: TABLE trd_d_product_backup_2025_04_24; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_product_backup_2025_04_24 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8736 (class 0 OID 0)
+-- Dependencies: 1917
+-- Name: TABLE trd_d_product_bk20241107; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_product_bk20241107 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8737 (class 0 OID 0)
+-- Dependencies: 1918
+-- Name: TABLE trd_d_product_bk_sup_3663; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_product_bk_sup_3663 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8738 (class 0 OID 0)
+-- Dependencies: 1919
+-- Name: TABLE trd_d_product_bkp29052026; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_product_bkp29052026 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8739 (class 0 OID 0)
+-- Dependencies: 1920
+-- Name: TABLE trd_d_product_for_stylecolorsize_missing; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_product_for_stylecolorsize_missing TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8740 (class 0 OID 0)
+-- Dependencies: 1921
+-- Name: TABLE trd_d_product_mock_sup3663; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_product_mock_sup3663 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8741 (class 0 OID 0)
+-- Dependencies: 1922
+-- Name: TABLE trd_d_time_bk_20250928; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_time_bk_20250928 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8742 (class 0 OID 0)
+-- Dependencies: 1923
+-- Name: TABLE trd_d_time_bkp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_time_bkp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8743 (class 0 OID 0)
+-- Dependencies: 1924
+-- Name: TABLE trd_d_time_bkp_08172024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_time_bkp_08172024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8744 (class 0 OID 0)
+-- Dependencies: 1925
+-- Name: TABLE trd_d_time_new_11102024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_d_time_new_11102024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8745 (class 0 OID 0)
+-- Dependencies: 1926
+-- Name: TABLE trd_designimages; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_designimages TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8746 (class 0 OID 0)
+-- Dependencies: 1927
+-- Name: TABLE trd_eohdata_stylecolor; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_eohdata_stylecolor TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8747 (class 0 OID 0)
+-- Dependencies: 1928
+-- Name: TABLE trd_h_timeflrset; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_timeflrset TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8748 (class 0 OID 0)
+-- Dependencies: 1929
+-- Name: TABLE trd_for_tgt_flrset_hier; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_for_tgt_flrset_hier TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8749 (class 0 OID 0)
+-- Dependencies: 1930
+-- Name: TABLE trd_h_clusterstd; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_clusterstd TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8750 (class 0 OID 0)
+-- Dependencies: 1931
+-- Name: TABLE trd_h_locdc; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_locdc TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8751 (class 0 OID 0)
+-- Dependencies: 1932
+-- Name: TABLE trd_h_locdcstd; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_locdcstd TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8752 (class 0 OID 0)
+-- Dependencies: 1933
+-- Name: TABLE trd_h_locstd; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_locstd TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8753 (class 0 OID 0)
+-- Dependencies: 1934
+-- Name: TABLE trd_h_prodlifestd; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodlifestd TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8754 (class 0 OID 0)
+-- Dependencies: 1935
+-- Name: TABLE trd_h_prodlifestd_delete_me; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodlifestd_delete_me TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8755 (class 0 OID 0)
+-- Dependencies: 1936
+-- Name: TABLE trd_h_prodstd_backup_2025_04_24; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd_backup_2025_04_24 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8756 (class 0 OID 0)
+-- Dependencies: 1937
+-- Name: TABLE trd_h_prodstd_bk2024010302; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd_bk2024010302 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8757 (class 0 OID 0)
+-- Dependencies: 1938
+-- Name: TABLE trd_h_prodstd_bk20241107; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd_bk20241107 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8758 (class 0 OID 0)
+-- Dependencies: 1939
+-- Name: TABLE trd_h_prodstd_bk2025010302; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd_bk2025010302 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8759 (class 0 OID 0)
+-- Dependencies: 1940
+-- Name: TABLE trd_h_prodstd_bk_sup_3663; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd_bk_sup_3663 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8760 (class 0 OID 0)
+-- Dependencies: 1941
+-- Name: TABLE trd_h_prodstd_bkp29052026; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd_bkp29052026 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8761 (class 0 OID 0)
+-- Dependencies: 1942
+-- Name: TABLE trd_h_prodstd_for_stylecolorsize_missing; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd_for_stylecolorsize_missing TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8762 (class 0 OID 0)
+-- Dependencies: 1943
+-- Name: TABLE trd_h_prodstd_sup3311; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_prodstd_sup3311 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8763 (class 0 OID 0)
+-- Dependencies: 1944
+-- Name: TABLE trd_h_timeflrset_bk_20250928; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_timeflrset_bk_20250928 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8764 (class 0 OID 0)
+-- Dependencies: 1945
+-- Name: TABLE trd_h_timeflrset_bkp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_timeflrset_bkp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8765 (class 0 OID 0)
+-- Dependencies: 1946
+-- Name: TABLE trd_h_timeflrset_bkp_08162024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_timeflrset_bkp_08162024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8766 (class 0 OID 0)
+-- Dependencies: 1947
+-- Name: TABLE trd_h_timeflrset_new; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_timeflrset_new TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8767 (class 0 OID 0)
+-- Dependencies: 1948
+-- Name: TABLE trd_h_timeflrset_new_11102024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_timeflrset_new_11102024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8768 (class 0 OID 0)
+-- Dependencies: 1949
+-- Name: TABLE trd_h_timestd; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_h_timestd TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8769 (class 0 OID 0)
+-- Dependencies: 1950
+-- Name: TABLE trd_in_bus_sizerange_mapping; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_in_bus_sizerange_mapping TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8770 (class 0 OID 0)
+-- Dependencies: 1951
+-- Name: TABLE trd_in_prd_attrsku; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_in_prd_attrsku TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8771 (class 0 OID 0)
+-- Dependencies: 1952
+-- Name: TABLE trd_in_prd_attrstyle; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_in_prd_attrstyle TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8772 (class 0 OID 0)
+-- Dependencies: 1953
+-- Name: TABLE trd_l_dclookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_dclookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8773 (class 0 OID 0)
+-- Dependencies: 1954
+-- Name: TABLE trd_l_dependencylookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_dependencylookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8774 (class 0 OID 0)
+-- Dependencies: 1955
+-- Name: TABLE trd_l_dependencylookup_mdstrategy; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_dependencylookup_mdstrategy TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8775 (class 0 OID 0)
+-- Dependencies: 1956
+-- Name: TABLE trd_l_dependencylookup_refresh; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_dependencylookup_refresh TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8776 (class 0 OID 0)
+-- Dependencies: 1958
+-- Name: TABLE trd_l_pricebandlookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_pricebandlookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8777 (class 0 OID 0)
+-- Dependencies: 1959
+-- Name: TABLE trd_l_priceeventlookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_priceeventlookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8778 (class 0 OID 0)
+-- Dependencies: 1960
+-- Name: TABLE trd_l_sizeeligibility; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_sizeeligibility TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8779 (class 0 OID 0)
+-- Dependencies: 1961
+-- Name: TABLE trd_l_sizeeligibility_with_ccrangecode; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_sizeeligibility_with_ccrangecode TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8780 (class 0 OID 0)
+-- Dependencies: 1962
+-- Name: TABLE trd_l_ssglookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_ssglookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8781 (class 0 OID 0)
+-- Dependencies: 1963
+-- Name: TABLE trd_l_storedclookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_storedclookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8782 (class 0 OID 0)
+-- Dependencies: 1964
+-- Name: TABLE trd_l_storelookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_storelookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8783 (class 0 OID 0)
+-- Dependencies: 1965
+-- Name: TABLE trd_l_ticketprice; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_l_ticketprice TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8784 (class 0 OID 0)
+-- Dependencies: 1966
+-- Name: TABLE trd_location_attributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_location_attributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8785 (class 0 OID 0)
+-- Dependencies: 1967
+-- Name: TABLE trd_ma_areaattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_areaattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8786 (class 0 OID 0)
+-- Dependencies: 1968
+-- Name: TABLE trd_ma_departmentalloc_attributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_departmentalloc_attributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8787 (class 0 OID 0)
+-- Dependencies: 1969
+-- Name: TABLE trd_ma_departmentquarter_attributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_departmentquarter_attributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8788 (class 0 OID 0)
+-- Dependencies: 1970
+-- Name: TABLE trd_ma_departmentquarter_attributes_bkp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_departmentquarter_attributes_bkp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8789 (class 0 OID 0)
+-- Dependencies: 1971
+-- Name: TABLE trd_ma_departmentquarter_attributes_temporary; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_departmentquarter_attributes_temporary TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8790 (class 0 OID 0)
+-- Dependencies: 1972
+-- Name: TABLE trd_ma_districtattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_districtattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8791 (class 0 OID 0)
+-- Dependencies: 1973
+-- Name: TABLE trd_ma_dptflrsetattributes_bkp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_dptflrsetattributes_bkp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8792 (class 0 OID 0)
+-- Dependencies: 1974
+-- Name: TABLE trd_ma_dptflrsetattributes_bkp_12212024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_dptflrsetattributes_bkp_12212024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8793 (class 0 OID 0)
+-- Dependencies: 1975
+-- Name: TABLE trd_ma_dptflrsetattributes_new_11102024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_dptflrsetattributes_new_11102024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8794 (class 0 OID 0)
+-- Dependencies: 1976
+-- Name: TABLE trd_ma_dptflrsetattributes_view_verification; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_dptflrsetattributes_view_verification TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8795 (class 0 OID 0)
+-- Dependencies: 1977
+-- Name: TABLE trd_ma_imgattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_imgattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8796 (class 0 OID 0)
+-- Dependencies: 1978
+-- Name: TABLE trd_ma_imgattributes_archive; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_imgattributes_archive TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8797 (class 0 OID 0)
+-- Dependencies: 1979
+-- Name: TABLE trd_ma_regionattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_regionattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8798 (class 0 OID 0)
+-- Dependencies: 1980
+-- Name: TABLE trd_ma_scr_temp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_scr_temp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8799 (class 0 OID 0)
+-- Dependencies: 1981
+-- Name: TABLE trd_ma_scr_temp_removed; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_scr_temp_removed TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8800 (class 0 OID 0)
+-- Dependencies: 1982
+-- Name: TABLE trd_ma_sellingchannelattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_sellingchannelattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8801 (class 0 OID 0)
+-- Dependencies: 1983
+-- Name: TABLE trd_ma_sizeattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_sizeattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8802 (class 0 OID 0)
+-- Dependencies: 1984
+-- Name: TABLE trd_ma_sizeattributes_20250328; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_sizeattributes_20250328 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8803 (class 0 OID 0)
+-- Dependencies: 1985
+-- Name: TABLE trd_ma_sizeattributes_bk20241107; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_sizeattributes_bk20241107 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8804 (class 0 OID 0)
+-- Dependencies: 1986
+-- Name: TABLE trd_ma_sizeattributes_bk_20261015; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_sizeattributes_bk_20261015 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8805 (class 0 OID 0)
+-- Dependencies: 1987
+-- Name: TABLE trd_ma_sizeattributes_bk_sup_3663; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_sizeattributes_bk_sup_3663 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8806 (class 0 OID 0)
+-- Dependencies: 1988
+-- Name: TABLE trd_ma_sizeattributes_bkp29052026; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_sizeattributes_bkp29052026 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8807 (class 0 OID 0)
+-- Dependencies: 1989
+-- Name: TABLE trd_ma_sizeattributes_for_stylecolorsize_missing; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_sizeattributes_for_stylecolorsize_missing TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8808 (class 0 OID 0)
+-- Dependencies: 1990
+-- Name: TABLE trd_ma_specstyleattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_specstyleattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8809 (class 0 OID 0)
+-- Dependencies: 1991
+-- Name: TABLE trd_ma_specstyleattributes_backup_2024_12_23; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_specstyleattributes_backup_2024_12_23 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8810 (class 0 OID 0)
+-- Dependencies: 1992
+-- Name: TABLE trd_ma_specstyleattributes_intraday; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_specstyleattributes_intraday TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8811 (class 0 OID 0)
+-- Dependencies: 1993
+-- Name: TABLE trd_ma_specstylecolorattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_specstylecolorattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8812 (class 0 OID 0)
+-- Dependencies: 1994
+-- Name: TABLE trd_ma_specstylecolorattributes_backup_2024_12_23; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_specstylecolorattributes_backup_2024_12_23 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8813 (class 0 OID 0)
+-- Dependencies: 1995
+-- Name: TABLE trd_ma_specstylecolorattributes_intraday; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_specstylecolorattributes_intraday TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8814 (class 0 OID 0)
+-- Dependencies: 1996
+-- Name: TABLE trd_ma_storeattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_storeattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8815 (class 0 OID 0)
+-- Dependencies: 1997
+-- Name: TABLE trd_ma_storeattributes_lat_long; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_storeattributes_lat_long TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8816 (class 0 OID 0)
+-- Dependencies: 1998
+-- Name: TABLE trd_ma_styleattributes_20251010; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_styleattributes_20251010 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8817 (class 0 OID 0)
+-- Dependencies: 1999
+-- Name: TABLE trd_ma_styleattributes_bkp_12212024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_styleattributes_bkp_12212024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8818 (class 0 OID 0)
+-- Dependencies: 2000
+-- Name: TABLE trd_ma_stylecolor_alloc_attributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolor_alloc_attributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8819 (class 0 OID 0)
+-- Dependencies: 2001
+-- Name: TABLE trd_ma_stylecolorattributes_20251010; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorattributes_20251010 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8820 (class 0 OID 0)
+-- Dependencies: 2002
+-- Name: TABLE trd_ma_stylecolorattributes_bkp_12212024; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorattributes_bkp_12212024 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8821 (class 0 OID 0)
+-- Dependencies: 2003
+-- Name: TABLE trd_ma_stylecolorchannelattributes_11050122_black_bad_ccrangeco; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorchannelattributes_11050122_black_bad_ccrangeco TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8822 (class 0 OID 0)
+-- Dependencies: 2004
+-- Name: TABLE trd_ma_stylecolorchannelattributes_20250328; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorchannelattributes_20250328 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8823 (class 0 OID 0)
+-- Dependencies: 2005
+-- Name: TABLE trd_ma_stylecolorchannelattributes_20251010; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorchannelattributes_20251010 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8824 (class 0 OID 0)
+-- Dependencies: 2006
+-- Name: TABLE trd_ma_stylecolorchannelattributes_bk; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorchannelattributes_bk TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8825 (class 0 OID 0)
+-- Dependencies: 2007
+-- Name: TABLE trd_ma_stylecolorchannelattributes_bk_20240922; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_stylecolorchannelattributes_bk_20240922 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8826 (class 0 OID 0)
+-- Dependencies: 2008
+-- Name: TABLE trd_ma_weekattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_ma_weekattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8827 (class 0 OID 0)
+-- Dependencies: 2009
+-- Name: TABLE trd_p_casepack; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_casepack TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8828 (class 0 OID 0)
+-- Dependencies: 2010
+-- Name: TABLE trd_p_channeloverride; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_channeloverride TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8829 (class 0 OID 0)
+-- Dependencies: 2011
+-- Name: TABLE trd_p_dc_adj; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_dc_adj TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8830 (class 0 OID 0)
+-- Dependencies: 2012
+-- Name: TABLE trd_p_dc_adj_size; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_dc_adj_size TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8831 (class 0 OID 0)
+-- Dependencies: 2013
+-- Name: TABLE trd_p_dc_adj_size_bkp29052026; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_dc_adj_size_bkp29052026 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8832 (class 0 OID 0)
+-- Dependencies: 2014
+-- Name: TABLE trd_p_dept_store_attr_plan; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_dept_store_attr_plan TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8833 (class 0 OID 0)
+-- Dependencies: 2015
+-- Name: TABLE trd_p_itemprice; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_itemprice TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8834 (class 0 OID 0)
+-- Dependencies: 2016
+-- Name: TABLE trd_p_itemprice_20251013; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_itemprice_20251013 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8835 (class 0 OID 0)
+-- Dependencies: 2017
+-- Name: TABLE trd_p_reassigncluster; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_reassigncluster TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8836 (class 0 OID 0)
+-- Dependencies: 2018
+-- Name: TABLE trd_p_receditclusters; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_receditclusters TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8837 (class 0 OID 0)
+-- Dependencies: 2019
+-- Name: TABLE trd_p_receditstores; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_receditstores TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8838 (class 0 OID 0)
+-- Dependencies: 2020
+-- Name: TABLE trd_p_specstylecolorattributes; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_specstylecolorattributes TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8839 (class 0 OID 0)
+-- Dependencies: 2021
+-- Name: TABLE trd_p_store_attr_plan; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_store_attr_plan TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8840 (class 0 OID 0)
+-- Dependencies: 2022
+-- Name: TABLE trd_p_strategy_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_strategy_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8841 (class 0 OID 0)
+-- Dependencies: 2023
+-- Name: TABLE trd_p_strategy_params_bkp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_strategy_params_bkp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8842 (class 0 OID 0)
+-- Dependencies: 2024
+-- Name: TABLE trd_p_stylecolor_channel_alloc_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_stylecolor_channel_alloc_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8843 (class 0 OID 0)
+-- Dependencies: 2025
+-- Name: TABLE trd_p_stylecolor_store_alloc_params; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_stylecolor_store_alloc_params TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8844 (class 0 OID 0)
+-- Dependencies: 2026
+-- Name: TABLE trd_p_stylecolor_store_eligibility; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_stylecolor_store_eligibility TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8845 (class 0 OID 0)
+-- Dependencies: 2027
+-- Name: TABLE trd_p_stylecolor_store_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_stylecolor_store_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8846 (class 0 OID 0)
+-- Dependencies: 2028
+-- Name: TABLE trd_p_stylecolor_sysmanaged_attr_plan; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_stylecolor_sysmanaged_attr_plan TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8847 (class 0 OID 0)
+-- Dependencies: 2029
+-- Name: TABLE trd_p_stylecolor_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_stylecolor_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8848 (class 0 OID 0)
+-- Dependencies: 2030
+-- Name: TABLE trd_p_stylecolor_worklist_tbl_approved_but_removed_archives; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_stylecolor_worklist_tbl_approved_but_removed_archives TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8849 (class 0 OID 0)
+-- Dependencies: 2031
+-- Name: TABLE trd_p_stylecolorsize_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_stylecolorsize_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8850 (class 0 OID 0)
+-- Dependencies: 2032
+-- Name: TABLE trd_p_target_include_exclude; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_p_target_include_exclude TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8851 (class 0 OID 0)
+-- Dependencies: 2033
+-- Name: TABLE trd_pg_batch_validation; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_pg_batch_validation TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8852 (class 0 OID 0)
+-- Dependencies: 2034
+-- Name: TABLE trd_pg_batch_validation_archive; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_pg_batch_validation_archive TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8853 (class 0 OID 0)
+-- Dependencies: 2035
+-- Name: TABLE trd_pg_batch_validation_failure; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_pg_batch_validation_failure TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8854 (class 0 OID 0)
+-- Dependencies: 2036
+-- Name: TABLE trd_pg_batch_validation_previous; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_pg_batch_validation_previous TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8855 (class 0 OID 0)
+-- Dependencies: 2037
+-- Name: TABLE trd_plan_these_cloned_style_stylecolors; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_plan_these_cloned_style_stylecolors TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8856 (class 0 OID 0)
+-- Dependencies: 2038
+-- Name: TABLE trd_replan_again; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_replan_again TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8857 (class 0 OID 0)
+-- Dependencies: 2039
+-- Name: TABLE trd_replannable_choices; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_replannable_choices TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8858 (class 0 OID 0)
+-- Dependencies: 2040
+-- Name: TABLE trd_roledimension; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_roledimension TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8859 (class 0 OID 0)
+-- Dependencies: 2041
+-- Name: TABLE trd_servicedefn; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_servicedefn TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8860 (class 0 OID 0)
+-- Dependencies: 2042
+-- Name: TABLE trd_size_range_mapping; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_size_range_mapping TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8861 (class 0 OID 0)
+-- Dependencies: 2043
+-- Name: TABLE trd_sizinglookup; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_sizinglookup TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8862 (class 0 OID 0)
+-- Dependencies: 2044
+-- Name: TABLE trd_specimages; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_specimages TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8863 (class 0 OID 0)
+-- Dependencies: 2045
+-- Name: TABLE trd_specimages_intraday; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_specimages_intraday TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8864 (class 0 OID 0)
+-- Dependencies: 2046
+-- Name: TABLE trd_store_hier_attr; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_store_hier_attr TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8865 (class 0 OID 0)
+-- Dependencies: 2047
+-- Name: TABLE trd_style_clone_stylecolor_size; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_style_clone_stylecolor_size TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8866 (class 0 OID 0)
+-- Dependencies: 2097
+-- Name: TABLE trd_stylecolor_hier_attr; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_stylecolor_hier_attr TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8867 (class 0 OID 0)
+-- Dependencies: 2048
+-- Name: TABLE trd_swatches; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_swatches TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8868 (class 0 OID 0)
+-- Dependencies: 2049
+-- Name: TABLE trd_v_memberbasedvalidvalues; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_v_memberbasedvalidvalues TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8869 (class 0 OID 0)
+-- Dependencies: 2050
+-- Name: TABLE trd_v_memberbasedvalidvalues_bkp; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_v_memberbasedvalidvalues_bkp TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8870 (class 0 OID 0)
+-- Dependencies: 2051
+-- Name: TABLE trd_v_memberbasedvalidvalues_bkp_03292025; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.trd_v_memberbasedvalidvalues_bkp_03292025 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8871 (class 0 OID 0)
+-- Dependencies: 2052
+-- Name: TABLE tyly; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.tyly TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8872 (class 0 OID 0)
+-- Dependencies: 2053
+-- Name: TABLE tyly_backup_refresh; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.tyly_backup_refresh TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8873 (class 0 OID 0)
+-- Dependencies: 2054
+-- Name: TABLE undo_display; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.undo_display TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8874 (class 0 OID 0)
+-- Dependencies: 2055
+-- Name: TABLE undo_log; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.undo_log TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8875 (class 0 OID 0)
+-- Dependencies: 2056
+-- Name: TABLE undo_modifications; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.undo_modifications TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8876 (class 0 OID 0)
+-- Dependencies: 2057
+-- Name: TABLE user_metadata; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.user_metadata TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8877 (class 0 OID 0)
+-- Dependencies: 2058
+-- Name: TABLE user_tbl; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.user_tbl TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8878 (class 0 OID 0)
+-- Dependencies: 2059
+-- Name: TABLE user_worklist; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.user_worklist TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8879 (class 0 OID 0)
+-- Dependencies: 2060
+-- Name: TABLE user_worklist_bkp_11172025; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.user_worklist_bkp_11172025 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8880 (class 0 OID 0)
+-- Dependencies: 2061
+-- Name: TABLE w38; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.w38 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8881 (class 0 OID 0)
+-- Dependencies: 2062
+-- Name: TABLE w41; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.w41 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8882 (class 0 OID 0)
+-- Dependencies: 2063
+-- Name: TABLE w42; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.w42 TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8883 (class 0 OID 0)
+-- Dependencies: 2064
+-- Name: TABLE worklist_map; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.worklist_map TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8884 (class 0 OID 0)
+-- Dependencies: 2065
+-- Name: TABLE xt; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.xt TO s5_copilot_ro;
+
+
+--
+-- TOC entry 8885 (class 0 OID 0)
+-- Dependencies: 2066
+-- Name: TABLE yt; Type: ACL; Schema: public; Owner: psql
+--
+
+GRANT SELECT ON TABLE public.yt TO s5_copilot_ro;
+
+
+--
+-- TOC entry 5387 (class 826 OID 136040410)
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: psql
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE psql IN SCHEMA public GRANT SELECT ON TABLES TO s5_copilot_ro;
+
+
+-- Completed on 2026-10-01 15:09:30 IST
+
+--
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 1giFFTCBgsWr7eOJZkO4Gb6H3o2cHQOuq5eW9cwDaxJ2xFHJgxcU4RGdtfhug2m
+\unrestrict gEQl7uGwvF0FzMHwjDBzZ6Yh0uIp3jEbbkhbsid3tMX83sRidbFDGbzvxSxiX6o
 

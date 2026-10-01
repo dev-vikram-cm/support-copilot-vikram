@@ -47,24 +47,41 @@ file gets a row here.**
 | `customers/<CLIENT>/profile.md` | Start of any ticket — that client's repos, envs, quirks |
 | `customers/<CLIENT>/repos.json` | **Per-client** repos only (ETL + config) + branch |
 | `knowledge/platform-repos.json` | **Shared** repos (frontend `assortmentui`, backend `darwin`) — one instance for ALL clients |
-| `customers/<CLIENT>/db/README.md` | DB questions — PG trigger/function map (hidden business logic) |
-| `customers/<CLIENT>/db/postgres_schema.sql` | Exact PG DDL/triggers/functions/views (grep it) |
+| `customers/<CLIENT>/db/README.md` | DB questions — PG trigger/function map (hidden business logic), quirks, triage implications. Hand-written |
+| `customers/<CLIENT>/db/postgres_schema.sql` | Exact PG DDL/triggers/functions/views (grep it). QA, schema-only, 2026-10-01 for every client. Sibling tenants/brands with their own DB in `db/<tenant>/` (AEO: aer/tsn/uns; KW: ann/atfs/loft/los) |
+| `customers/<CLIENT>/db/SCHEMA_MAP.md` | Generated per dump: object counts, **every trigger with WHEN + function line**, unattached trigger fns, big routines, views/MVs; sibling maps end with a diff vs the reference tenant. Quick "does table X have triggers?" lookup |
+| `knowledge/db-trigger-matrix.md` | Generated: every PG trigger x every client, same letter = identical behaviour (events + WHEN + body). **Check before porting a trigger/function fix to another client**, or when asking "does client Y have this rule too?" |
 | `customers/<CLIENT>/db/connections.json` | (gitignored) live read-only DB access config for the db MCP |
 | `customers/TRD/weekly-product-master-lineage.md` | TRD product-master pipeline (worked example of ETL lineage) |
-| `customers/BOD/db/bd_ma_stylecolorchannelattributes.sql` | Boden lifecycle triggers + functions (QA = Bonus/Staging, 2026-09-29) — the only copy of this DDL anywhere; diff other envs against it. Any "MD/Exit/Debut week reverts / won't save" ticket |
+| `customers/BOD/db/bd_ma_stylecolorchannelattributes.sql` | Boden lifecycle triggers + functions as pasted in SUP-3857 (QA = Bonus/Staging, 2026-09-29). The full QA dump is now `db/postgres_schema.sql`; keep this one as the Staging/Bonus reference. Any "MD/Exit/Debut week reverts / won't save" ticket |
+| `customers/AEO/db/README.md` + `postgres_schema.sql` | AEO PG trigger map (QA, 2026-10-01): 15 lifecycle triggers on `aeo_ma_stylecolorchannelattributes`; validity reverts hit **every channel**; MD move wipes DC user adj; `ccrangecode` change regenerates size members; PO publish gated on `dc_publish`. Sibling tenants AER/TSN/UNS have **identical** triggers/functions (only AEO has bulk_import tables). Any AEO "reverts / disappeared / won't stick" ticket |
+| Other clients' `db/README.md` (QA, 2026-10-01) | **TRD**: lifecycle triggers = AEO's; style split/merge dropped since July; ETL disables 11 triggers during loads. **BOD**: no drift vs SUP-3857 capture; upload path still locks passed MD; ticket-price lock resets all channels. **EE**: locked PIM items silently drop saves (`revert_to_original`); IRW = debut, last DC order MD−6. **KW**: IRW debut−2 (ann/loft) vs −3 (atfs/los), so ports between brands can break; size-concept families; exit-revert recursion risk. **EXP**: passed-week locks per row `plan_current`; pricing trigger disabled on purpose. **GAP**: no revert triggers, BEFORE `scch_*` chain instead; pricing propagation; zero price breaks cost saves. **BELK**: PLM/lock/revert triggers on stylecolor attrs; 4 triggers new since Aug. **TB/LP**: no business triggers |
 | `customers/LP/hindsighting-build-log.md` | **Why each step** of the LP Hindsighting ETL+config build — learning-oriented, cross-client grounded, grows per session. Read when working any LP AP/hindsighting step or learning the inbound→landing→staging→model→PG/CH pipeline generally |
 | `customers/<CLIENT>/captured-knowledge.md` | Facts users dropped during tickets (newest first, provenance-stamped by `learn.py`) — check before asking; promote durable ones into profile.md |
 | `knowledge/captured-knowledge.md` | Same, but platform-wide (not client-specific) |
 
 Known customers: TRD (deepest), EE (Evereve — note: JIRA tag `EE`, but
 repos/app/table-prefix use `eve`/`evereve`, see customers/EE/profile.md
-naming note), BELK, AEO, BOD (Boden — JIRA tag `[BD]`, table prefix `bd`;
-Staging = Upgrade = "Bonus"; profile + db/README from SUP-3857, no full
-schema dump yet), KW, TB, EXP, LP (Lilly Pulitzer — MFP in
-prod, Hindsighting/AP build in progress; repos.json + build log so far, no
-profile.md/db/ yet). Adding one = a new `customers/<CLIENT>/` folder
+naming note), BELK, AEO (+ sibling tenants AER/TSN/UNS, same `aeo_`
+prefix, own DBs), BOD (Boden — JIRA tag `[BD]`, table prefix `bd`;
+Staging = Upgrade = "Bonus"; profile + db/README from SUP-3857), KW
+(KnitWell Group: brands ann/atfs/loft/los, each its own DB + prefix), TB
+(prefix **`tb01_`**), EXP (Express, prefix **`exp01_`**), GAP (prefix
+`gap_`; **db/ only so far, no profile.md/repos.json**), LP (Lilly
+Pulitzer — MFP in prod, Hindsighting/AP build in progress; repos.json +
+build log + db/, no profile.md yet). Adding one = a new `customers/<CLIENT>/` folder
 (profile + repos.json, optionally db/) — **check both the JIRA tag and any
 app-level short name before creating a new folder**, they can differ (EE).
+
+Schema dump coverage: **Postgres — every client** (AEO+AER/TSN/UNS,
+BELK, BOD, EE, EXP, GAP, KW ann/atfs/loft/los, LP, TB, TRD) in
+`customers/<CLIENT>/db/`, QA, 2026-10-01. TB and LP have **no business
+triggers** (MFP/thin tenants). **ClickHouse**: TRD (`db/`), EE
+(`customers/EE/clickhouse_schema.sql`), BELK
+(`customers/BELK/belk_clickhouse_schema.sql`). **Vertica**: TRD only.
+Older, superseded PG dumps are still at `customers/EE/postgres_schema.sql`
+(Aug) and `customers/BELK/belk_schema_only.sql` (Aug); use `db/`.
+Refresh per `knowledge/runbooks/db-schema-snapshot.md`.
 
 ## Tools (run in Claude Code / Cowork with the hub folder)
 
@@ -74,6 +91,7 @@ app-level short name before creating a new folder**, they can differ (EE).
 | `tooling/lineage/query.py` | Same, as CLI: `find/upstream/downstream/impact/path/stats`. Also reaches pivot temps + screens now |
 | `tooling/lineage/regen.sh <CID> <etl> <config>` | Rebuild ALL graphs for a customer end-to-end (extract→merge→pivot→unified→sqlite) |
 | `tooling/lineage-viz/` (web tool) | Human visual explorer — 3 scopes (ETL / Pivot / End-to-End), expand-pivot. `cd tooling/lineage-viz && python3 server.py`. NOT how the agent uses lineage (that's the MCP) |
+| `tooling/db/schema_map.py` | `map <dump>` / `diff <a> <b>` (drift between snapshots, or tenant vs tenant) / `regen` (rewrites every `db/**/SCHEMA_MAP.md` + `knowledge/db-trigger-matrix.md`). Run after any PG re-dump |
 | db read-only MCP (`.mcp.json` → `tooling/db/mcp_server.py`) | Run SELECT/SHOW against a customer's QA Vertica/PG/CH over SSH. PG via that endpoint is admin-proxied — prefer Vertica; CH pending infra |
 | clickhouse-docs MCP (`.mcp.json` → `https://clickhouse.com/docs/mcp`) | Look up ClickHouse SQL/functions/engines/settings from official docs when composing or debugging CH queries. Docs-only (no DB). **Caveat:** docs reflect current CH; for 21.4-specific truth, confirm with `tooling/validation/ch_validate.py` version+capability probe |
 | knowledge MCP (`.mcp.json` → `tooling/knowledge/mcp_server.py`) | **`knowledge_search`** — full-text (FTS5) search across ALL prose knowledge (this INDEX is the curated map; search finds the long tail: LMS, notes, solution notes, captured facts, customer profiles). Cited to file › section. Build/refresh with `tooling/knowledge/index_build.py`. Use it when INDEX doesn't obviously point at the file |

@@ -1,0 +1,164 @@
+{
+  "ticket": "SUP-4738",
+  "client": "TB",
+  "owner": "vikram.chandrasekaran@s5stratos.com",
+  "mode": "pair",
+  "stage": "validate",
+  "updated_at": "2026-09-22",
+
+  "classification": {
+    "type": "enhancement",
+    "type_source": "reporter-confirmed",
+    "component": ["etl"],
+    "component_source": "reporter-confirmed",
+    "environment": "qa"
+  },
+
+  "requirement": {
+    "statement": "Make TB's V_MemberBasedValidValues table in Vertica a constant table (versioned CSV, truncate+reload every batch), and make the relevant ETL changes so it correctly populates V_MemberBasedValidValues in Vertica and flows through to the downstream Postgres (and ClickHouse, if applicable) tables.",
+    "confirmed": true,
+    "acceptance": "V_MemberBasedValidValues in Vertica is truncated and reloaded from a git-tracked CSV every run; tb01_v_memberbasedvalidvalues in Postgres reflects those values after the normal export/load chain; any ClickHouse consumer (if one actually exists for TB) also reflects them."
+  },
+
+  "prior_art": [
+    {
+      "ref": "SUP-3061",
+      "why_relevant": "Root-caused this exact table's empty-load problem for TB: the Vertica view V_MemberBasedValidValues_View was never created, so tb01_v_memberbasedvalidvalues loaded empty every batch and darwin's BandingProcessor silently failed ccperf ('Performance') banding. Its shipped fix (commits 1be7df2, 46deb35) repointed export_mod.sql at an already-existing real Vertica table named V_MemberBasedValidValues (not the phantom _View) and fixed a ccperf casing bug in pg/load.sql. That real table had no git-tracked definition/refresh mechanism at all — SUP-4738 is the follow-through: turn it into a properly maintained constant table."
+    }
+  ],
+
+  "evidence": [
+    {
+      "claim": "SUP-4738's own commit touches exactly 3 files: 06_t.sh (modified), mappings/tb_v_memberbasedvalidvalues.csv (new, 17 rows across Grade/CCPerf/SlsR_Band), vertica/02.6_load_memberbasedvalidvalues.sql (new).",
+      "kind": "file",
+      "locator": "../etl-tb-batch, branch SUP-4738, commit df0d9d3 (`git show --stat df0d9d3`)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "The new script truncates V_MemberBasedValidValues and reloads it from the CSV every run, stamping eventdate with current_timestamp.",
+      "kind": "file",
+      "locator": "vertica/02.6_load_memberbasedvalidvalues.sql:1-7",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Wired into the batch right after the existing mappings-load step, before 11_ServiceParam.sql — same lightweight CSV-load mechanism TB already uses for other reference CSVs (TB has no constant_tables/ directory).",
+      "kind": "file",
+      "locator": "06_t.sh:27-33",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "export_mod.sql and pg/load.sql were already repointed at the real V_MemberBasedValidValues table and had a ccperf-casing normalize added by the earlier, separate SUP-3061 fix — unchanged by this ticket's own commit.",
+      "kind": "file",
+      "locator": "../etl-tb-batch git show --stat 1be7df2 46deb35 -- vertica/export_mod.sql pg/load.sql",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "TB config references this data via lowercase attribute ids only: dataIndex \"grade\" and groupingKey/dataIndex \"ccperf\".",
+      "kind": "file",
+      "locator": "../tb-configs-v2/uidefn/view/TB01_HistoryStyleColorGroupBy.viewdefn:76-83",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "The new CSV ships mixed-case attributeids (Grade, CCPerf, SlsR_Band); pg/load.sql only lowercase-normalizes ccperf, not Grade or SlsR_Band.",
+      "kind": "file",
+      "locator": "mappings/tb_v_memberbasedvalidvalues.csv (header row); pg/load.sql:40",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "No ClickHouse ingestion of V_MemberBasedValidValues / tb01_v_memberbasedvalidvalues exists anywhere in etl-tb-batch on TB's active branch; darwin reads this data straight from Postgres.",
+      "kind": "file",
+      "locator": "grep -rli memberbasedvalidvalues 09_load_ch.sh ch/*.sql -> no match; tickets/SUP-3061/root-cause.md:114 (MemberBasedValidValuesFacade.java:36 reads Postgres)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "No consumer of the SlsR_Band attributeid was found in tb-configs-v2; the only 'slsr_band' hit is an unrelated ClickHouse-computed quantile band in a pivot include, not driven by this valid-values table.",
+      "kind": "file",
+      "locator": "grep -rl slsr_band ../tb-configs-v2 -> pivot/include/inline_banding.ftl (multiIf quantile calc, query-time, no valid-values lookup)",
+      "resolved": true,
+      "observed_or_inferred": "inferred"
+    },
+    {
+      "claim": "Author ran the QA batch and confirmed V_MemberBasedValidValues in Vertica was truncated and reloaded (eventdate refreshed to the run's timestamp), then confirmed tb01_v_memberbasedvalidvalues in Postgres picked up the values via the existing export->CSV->load chain and its UPDATE statements.",
+      "kind": "reporter",
+      "locator": "session 2026-09-22, Vikram CM (ticket author), verbal confirmation",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    }
+  ],
+
+  "requested_evidence": [
+    {
+      "item": "Confirm 'Grade' (and 'SlsR_Band', if it's actually consumed) attributeid casing matches what darwin/PG queries expect before this reaches staging/prod.",
+      "command": "Compare tb01_v_memberbasedvalidvalues.attributeid values post-load against tb-configs-v2 dataIndex/groupingKey strings (all lowercase); add a normalize UPDATE for 'grade' analogous to the existing ccperf one if darwin's query is case-sensitive.",
+      "status": "requested"
+    },
+    {
+      "item": "Confirm whether SlsR_Band rows in the new CSV are actually needed — no consumer found in tb-configs-v2.",
+      "command": "Ask reporter/PM which screen reads attributeid='SlsR_Band' from this table.",
+      "status": "requested"
+    },
+    {
+      "item": "Confirm the ticket's mention of ClickHouse ('further ... CH tables') applies to TB at all.",
+      "command": "Ask reporter/PM whether CH scope was boilerplate copied from a similar ticket on a tenant that does have a CH-side valid-values table (e.g. etl-modern branches per SUP-3061).",
+      "status": "requested"
+    },
+    {
+      "item": "Relocate the code change to the documented edit-clone path before merging.",
+      "command": "Clone etl-tb-batch @ SUP-4738 into /Users/vigneshn/Desktop/JIRAs/SUP-4738/etl-tb-batch/ per hub convention; the change currently lives directly on the shared investigation clone ../etl-tb-batch.",
+      "status": "requested"
+    }
+  ],
+
+  "hypotheses": [
+    {
+      "cause": "V_MemberBasedValidValues in Vertica was a manually-existing object with no git-tracked CREATE VIEW/TABLE or refresh logic anywhere in etl-tb-batch history (confirmed via SUP-3061's `git log --all -S` search) — so its contents could silently drift or be lost outside of batch control, same class of risk that caused SUP-3061.",
+      "status": "confirmed",
+      "evidence_refs": [0, 1, 3],
+      "ruled_out_because": ""
+    }
+  ],
+
+  "root_cause": {
+    "statement": "N/A (enhancement, not a bug) — this ticket proactively closes the drift risk SUP-3061 surfaced: V_MemberBasedValidValues had no version-controlled definition or refresh, so it depended on an out-of-band Vertica object. SUP-4738 converts it into a proper constant table (CSV in mappings/, truncate+reload every run via 02.6_load_memberbasedvalidvalues.sql), matching the pattern other tenants (TRD, AEO) already use for this same table.",
+    "evidence_refs": [0, 1, 2],
+    "confirmed_by_execution": true
+  },
+
+  "fix": {
+    "changes": [
+      "mappings/tb_v_memberbasedvalidvalues.csv — new constant CSV, 17 rows (Grade x6, CCPerf x5, SlsR_Band x5)",
+      "vertica/02.6_load_memberbasedvalidvalues.sql — new script: truncate + \\copy-load V_MemberBasedValidValues from the CSV, stamp eventdate",
+      "06_t.sh — call the new script right after 02.5_load_mappings.sql, before 11_ServiceParam.sql"
+    ],
+    "branch": "SUP-4738",
+    "pr": null,
+    "edit_clone": "Currently committed directly in ../etl-tb-batch (the shared investigation clone, sibling of this hub), not in the documented /Users/vigneshn/Desktop/JIRAs/SUP-4738/ edit-clone path. Flagged in requested_evidence — move before merging so the investigation clone stays a clean read-only reference."
+  },
+
+  "validation": {
+    "plan": [
+      "QA: run 06_t.sh (or just 02.6_load_memberbasedvalidvalues.sql) and confirm V_MemberBasedValidValues row count/eventdate refreshes each run — DONE",
+      "QA: confirm tb01_v_memberbasedvalidvalues in Postgres reflects the same rows after the export/load chain — DONE",
+      "Not yet done: staging/prod run; UI spot-check of a Grade and/or Performance group-by screen; darwin log check (no 'bailing early')",
+      "Not yet done: resolve the Grade-casing and SlsR_Band-consumer open items above before treating this as fully closeable"
+    ],
+    "pre_state_captured": false,
+    "results": [
+      {"check": "Vertica V_MemberBasedValidValues truncate+reload on QA", "verdict": "pass", "proof": "eventdate column refreshed to the run's timestamp (Vikram CM, 2026-09-22)"},
+      {"check": "Postgres tb01_v_memberbasedvalidvalues reflects loaded values on QA", "verdict": "pass", "proof": "verified post CSV export/load + existing UPDATE statements (Vikram CM, 2026-09-22)"},
+      {"check": "Staging/prod run + UI/darwin-log confirmation", "verdict": "pending", "proof": ""}
+    ]
+  },
+
+  "knowledge_gained": {
+    "technical": "TB's V_MemberBasedValidValues in Vertica had no git-tracked definition (per SUP-3061's full-history search). SUP-4738 makes it a real constant table: 02.6_load_memberbasedvalidvalues.sql truncates + \\copy-loads it from mappings/tb_v_memberbasedvalidvalues.csv every batch run, using the same lightweight mappings/ mechanism TB already uses (02.5_load_mappings.sql) rather than a heavier constant_tables/ deploy process (TB has neither). Downstream export/PG load, already fixed under SUP-3061, is untouched by this ticket. Valid-value attributeids must be lowercase to match config's dataIndex/groupingKey (e.g. 'grade', 'ccperf'); pg/load.sql normalizes only 'ccperf' — 'Grade' and 'SlsR_Band' ship mixed-case from the new CSV and are not normalized downstream.",
+    "functional": "Grade, CC Performance (a 1-5 sales-quintile band), and SlsR Band are planner-facing labels used to group/filter style-colors in Hindsighting screens (Style/Stylecolor/Collection Review). Making their source a version-controlled constant table means these labels are deterministic and deploy-reviewable, instead of depending on an untracked Vertica object that could silently go empty — the exact failure mode planners hit in SUP-3061."
+  }
+}

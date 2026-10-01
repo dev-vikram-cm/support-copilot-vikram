@@ -80,6 +80,11 @@ inform your reasoning, not the compose path.
 
 ## Start every ticket here
 
+0. **Sync the tool first.** `python3 tooling/triage/repo_sync_check.py` — is this
+   support-copilot checkout current with the team (git origin)? If it reports
+   you're BEHIND, `git pull --rebase` before starting so you get the latest
+   skills/tooling/knowledge/fixes (don't debug on a stale copy). `newticket.sh`
+   runs this automatically; in Reasoner mode, confirm the mirror is current.
 1. Read `knowledge/INDEX.md` — the routing table. It maps "use when" triggers to
    the exact file. Grep it first; don't hunt.
 2. Read `tooling/triage/README.md` — the engine overview.

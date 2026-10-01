@@ -22,6 +22,12 @@ REPOS_JSON="$HUB/customers/$CID/repos.json"
 PLATFORM_JSON="$HUB/knowledge/platform-repos.json"
 mkdir -p "$WS/repos" "$WS/logs" "$WS/live-config"
 
+# --- freshness: is this support-copilot checkout current with the team? -----
+# Non-fatal — just surfaces a sync suggestion so you don't start on a stale copy.
+echo "== support-copilot freshness =="
+python3 "$HERE/repo_sync_check.py" || true
+echo
+
 echo "== workspace: tickets/$TID (client $CID, component $COMP, env $ENV) =="
 
 # --- resolve which repos this component needs -------------------------------

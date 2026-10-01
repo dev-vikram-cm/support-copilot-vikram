@@ -58,6 +58,8 @@
   #tmode button{padding:5px 8px;font-size:11px}
   .tpanel{display:flex;flex-direction:column;gap:6px}
   #tnote{margin-top:6px;color:var(--muted);font-size:11.5px}
+  #repobar{padding:7px 14px;background:#332611;border-bottom:1px solid #5a4212;color:#ffd98a;font-size:12.5px}
+  #repobar code{background:#0d1322;color:#ffe9b0}
   #exec{border-top:1px solid var(--line);background:var(--panel);padding:10px 14px;max-height:40%;overflow:auto}
   #exec .exhead{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   #exec b{font-size:12px}
@@ -92,6 +94,7 @@
   <span id="roauth" class="sub" title="Database account used for all queries"></span>
   <span id="status"></span>
 </header>
+<div id="repobar" style="display:none"></div>
 <div id="main">
   <div id="left">
     <div id="verdict"><div class="vbar" id="vbar"></div></div>
@@ -201,6 +204,7 @@ async function init(){
   loadFilters();
   loadWhoami();
   loadSources();
+  loadRepoFreshness();
   $('cfgsource').onchange=e=>setSource(e.target.value);
   $('syncqa').onclick=syncQA;
   const resolveNow=()=>resolveAppUrl();
@@ -233,6 +237,16 @@ async function resolveAppUrl(){
 }
 // Show WHICH DB account the composer queries through, and whether it is
 // read-only — so it is explicit every query runs via the read-only account.
+// Nudge UI-only users to sync the tool repo before working, same as the ticket workflow.
+async function loadRepoFreshness(){
+  let r; try{ r=await api('/api/repo-freshness?fetch=true'); }catch(e){ return; }
+  const bar=$('repobar');
+  const msgs=[];
+  if(r.behind) msgs.push(`⚠ support-copilot is <b>${r.behind}</b> commit(s) behind <code>${r.upstream||'origin'}</code> — sync before working: <code>git pull --rebase</code>`+(r.changed_areas&&r.changed_areas.length?`  (updates in: ${r.changed_areas.join(', ')})`:''));
+  if(r.dirty_files) msgs.push(`${r.dirty_files} uncommitted local change(s) — commit/stash before pulling.`);
+  if(msgs.length){ bar.innerHTML=msgs.join(' &nbsp;·&nbsp; '); bar.style.display='block'; }
+  else { bar.style.display='none'; }
+}
 async function loadWhoami(){
   const el=$('roauth');
   try{

@@ -25,6 +25,8 @@ import compose as composer                # compose.compose(url, cfg, which, cat
 import compare as cmpmod                  # execute + compare vs UI
 import route_resolver as rr               # app URL -> screen/model/pivot
 import view_metrics as vmet               # viewdefn label metrics -> CH exprs
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "triage"))
+import repo_sync_check as reposync         # is the tool checkout current with origin?
 import config_sync as cfgsync             # repo vs live-QA (OCI overlay) config sources
 try:
     import members as members_mod          # live scope/filter members from read-only DB
@@ -263,6 +265,17 @@ def members(kind: str, refresh: bool = False):
         return members_mod.get_members(CLIENT, kind, refresh=refresh)
     except Exception as e:
         raise HTTPException(502, f"{e}")
+
+
+@app.get("/api/repo-freshness")
+def repo_freshness(fetch: bool = True):
+    """Is the support-copilot checkout current with origin? Powers the UI 'sync'
+    nudge so UI-only users get the same prompt as the ticket workflow."""
+    try:
+        o, _ = reposync.check(do_fetch=fetch)
+        return o
+    except Exception as e:
+        return {"is_git": False, "status": "unknown", "note": str(e)}
 
 
 @app.get("/api/config-sources")

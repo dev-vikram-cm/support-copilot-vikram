@@ -207,6 +207,9 @@ los `revert_to_original`, loft `set_prepublished_at`, `update_pim_style_id`, `up
 - **"DC user adjustments disappeared"** → MD moved (even if reverted), or `ccrangecode`/`sty_size_range` changed.
 - **"Style attribute edit doesn't stick"** → another style shares the `sty_specstyleid`.
 - **"Size concept won't add/remove"** → `validate_size_concept_addition`, the derived array, `can_remove_from_assortment`.
+- **"Ticket Price Override won't save / shows $NaN"** → the dropdown's `dataApi ids=` type must match
+  `ccticketpricechannel_override_txt` (String). A NULL key/value row in `<t>_v_memberbasedvalidvalues`
+  makes the dropdown return 500 `Tuple has null`. See `knowledge/notes/SUP-4786.md`.
 - **"Price band blank"** → first ticket price set from NULL. **"Grade/climate changed elsewhere"** →
   `upd_array_order` (other channels) and `propagate_assortment_to_floorsets` (later floorsets).
 - **"Outbound file missing a CC"** → `sync_outbound_dataqueue` writers: `RDY4PO`, `OP_SNAPSHOT`, `PO`,

@@ -150,12 +150,7 @@ Life-To-Date style pane architecture, pivotdefn filename-vs-`id=` routing),
 bd mfpapsync lock-race, SUP-4738 (TB `V_MemberBasedValidValues` converted to
 a real constant table — `mappings/*.csv` + `vertica/0N_load_*.sql` pattern;
 follow-through on SUP-3061; open casing/CH-scope questions noted),
-SUP-4610 (AEO Companion View image differs Cat Summary vs SKU View — both
-pivots ranked `top_stylecolor` by units from `aeo_sku_temp_flow_flag`, which
-repeats stylecolor units on every SKU row, so Cat Summary scored units × size
-count; fixed to #1 Net Sls $ from `p_history_agg` + tie-breaker; how
-`additionalDecorations` → `attribute:img:name` picks a group photo; draft,
-validation pending),
+
 PROD-EE-20260809 (EE/Evereve new-store onboarding missing backtest backfill
 → non-nullable NULL insert in `600_18_AllocAdjEve.sql`), PROD-TRD-20260813
 (Torrid duplicate MERGE key — new stylecolor sent without S5_ID, backfilled

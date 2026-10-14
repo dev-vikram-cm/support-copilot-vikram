@@ -44,6 +44,24 @@
       "branch": "planning_strategy",
       "local": "",
       "note": "Branch name is 'planning_strategy' (underscore) — do not confuse with similar-sounding names."
+    },
+    "ann": {
+      "repo": "git@github.com:s5-stratos/ann-configs.git",
+      "branch": "planning_strategy",
+      "local": "",
+      "note": "origin/HEAD = planning_strategy (also in config_sources.json). Style Edit viewdefns are byte-identical to loft's for the same files (e.g. SUP-4786), so a config fix in one brand usually needs the same change in all four."
+    },
+    "atfs": {
+      "repo": "git@github.com:s5-stratos/atfs-configs.git",
+      "branch": "planning_strategy",
+      "local": "",
+      "note": "origin/HEAD = planning_strategy. See ann note."
+    },
+    "los": {
+      "repo": "git@github.com:s5-stratos/los-configs.git",
+      "branch": "planning_strategy",
+      "local": "",
+      "note": "origin/HEAD = planning_strategy. See ann note."
     }
   },
   "oci": {

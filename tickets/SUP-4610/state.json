@@ -1,0 +1,229 @@
+{
+  "ticket": "SUP-4610",
+  "client": "AEO",
+  "mode": "pair",
+  "stage": "validate",
+  "updated_at": "2026-10-14",
+
+  "classification": {
+    "type": "bug",
+    "type_source": "router",
+    "component": ["config"],
+    "component_source": "system-map",
+    "environment": "qa"
+  },
+
+  "requirement": {
+    "statement": "In AEO Hindsighting, the Companion View on Category Recap > Cat Summary (BU and TD) and Size Views > SKU View (BU) shows a different product image for the same scope and the same Level (Department / Super Class / ERP Class), and the Cat Summary image is not the top seller. Explain how each image is chosen (and whether BU vs TD differ), make the rule consistent across both screens, and ideally pick the #1 style color by Net Sls $ (net_sls_r).",
+    "confirmed": true,
+    "acceptance": "Taken from the ticket's own Expectation section: at minimum, consistent image logic at levels above style on Cat Summary (TD + BU) and SKU View (BU); ideally the image is the #1 Net Sls $ style color in scope. Operationally: for the same scope and Level, both cards show the first row of Style Color Review > Grid View sorted by Net Sls $ descending (first row per group for Super Class / ERP Class)."
+  },
+
+  "prior_art": [
+    {
+      "ref": "SUP-4193",
+      "why_relevant": "Style-level image in Style Review (Grid View, TY/LY Grid View) fixed to pick the style's #1 stylecolor by sum(net_sls_r) from p_history_agg. SUP-4610 applies the same Net Sls $ rule to the group-level companion cards, adding exchange_rate (to match the grid's Net Sls $) and a deterministic tie-breaker."
+    },
+    {
+      "ref": "SUP-4330",
+      "why_relevant": "Origin of the COMPANION_METRICS tables and INV_LOCATION eComm/Store split inside the same two companion pivots; its Net Sls $ calculation (p_history_agg x INV_LOCATION x currency_conv) is the pattern the fix reuses."
+    }
+  ],
+
+  "evidence": [
+    {
+      "claim": "Cat Summary is a Worklist using model HistoryGrid_Companion in both bottom-up and top-down; SKU View is a Worklist using model HistorySkuCompanion (pivot HistoryGridSKU_Companion) in bottom-up only.",
+      "kind": "config",
+      "locator": "aeo-configs/uidefn/conf/AssortmentUiConf.confdefn:750-769 and :1417-1435; uidefn/model/HistorySkuCompanion.modeldefn:4",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "The card image is attribute:img:name, decorated from the pivot's top_stylecolor column via additionalDecorations {level: stylecolor, columnName: top_stylecolor}; img exists only at stylecolor level.",
+      "kind": "config",
+      "locator": "aeo-configs/uidefn/view/HistoryCatRecapCatSummaryWorklist.viewdefn:33, TD_HistoryCatRecapCatSummaryWorklist.viewdefn:33, HistorySKUWorklistView.viewdefn:42; uidefn/model/HistoryGrid_Companion.modeldefn + HistorySkuCompanion.modeldefn (additionalDecorations); conf/M_Meta.conf:154,390",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "darwin copies the additionalDecorations column (top_stylecolor) into the stylecolor level after the pivot runs.",
+      "kind": "file",
+      "locator": "darwin/assortment/src/main/java/com/darwin/pivot/processor/AdditionalLevelPostProcessor.java:21-44",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Pre-fix, both pivots picked the image with ORDER BY <level>, ttl_net_sls_u desc LIMIT 1 BY <level> over TOP_PRODUCT (units, not dollars).",
+      "kind": "file",
+      "locator": "aeo-configs 1a2ce34^:pivot/HistoryGrid_Companion.pivotdefn (TOP_PRODUCT + pick line) and 1a2ce34^:pivot/HistoryGridSKU_Companion.pivotdefn (same)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "ttl_net_sls_u = sum(net_sls_u) from aeo_sku_temp_flow_flag over the receipt/scope week window, grouped by stylecolor for Cat Summary and by product (SKU) for SKU View; no location filter.",
+      "kind": "file",
+      "locator": "aeo-configs/pivot/include/history_product_ty.ftl (PRODUCT table, GROUP BY stylecolor); pivot/include/history_product_ty_sku.ftl:50-75 (TY_PRODUCT, GROUP BY product)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "aeo_sku_temp_flow_flag repeats the stylecolor's net_sls_u on every SKU row: 2026_W21 every SKU of CO0123_4882_064 = 695 and of CO1229_5168_064 = 327, equal to each stylecolor's weekly total in aeo_p_history_agg (695 / 327).",
+      "kind": "query_result",
+      "locator": "AEO QA ClickHouse: SELECT stylecolor, product, sum(net_sls_u) FROM aeo.aeo_sku_temp_flow_flag WHERE time='2026_W21' AND stylecolor IN ('CO0123_4882_064','CO1229_5168_064') GROUP BY stylecolor, product WITH ROLLUP; and SELECT product, sum(net_sls_u) FROM aeo.aeo_p_history_agg WHERE time='2026_W21' AND product IN (...) GROUP BY product",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Re-creating the Cat Summary pick for MENS PANTS, 2025_W34-2026_W21: CO0123_4882_064 3,986,640 (#1; 81,360 units x 49 SKUs), CO0123_4882_342 3,213,337, CO0125_4711_238 2,637,090, CO0123_4882_219 2,294,550, CO1229_5168_064 1,875,302 (#5; 144,254 x 13). Re-creating the SKU View pick: top rows are CO1229_5168_064 SKUs at 144,254 (the stylecolor's real units).",
+      "kind": "query_result",
+      "locator": "AEO QA ClickHouse: sum(net_sls_u) from aeo.aeo_sku_temp_flow_flag WHERE time BETWEEN '2025_W34' AND '2026_W21' for the department's stylecolors, GROUP BY stylecolor (Cat Summary) vs GROUP BY stylecolor, product (SKU View), ORDER BY desc LIMIT 5",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Companion Order By 'Net Sls Rtl' and the grid/Key Financials 'Net Sls $' both bind dataIndex net_sls_r, i.e. the same measure.",
+      "kind": "config",
+      "locator": "aeo-configs/uidefn/view/HistoryCompanionListSort.viewdefn:9-10; HistoryRollUp.viewdefn:13-16; HistoryCatRecapCatSummaryKeyFinancials.viewdefn:5-6",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "North America is the only location in AEO Hindsighting scope, so the missing location filter on sku_temp_flow_flag has no effect on the pick.",
+      "kind": "reporter",
+      "locator": "ticket owner, during investigation (AEO QA location selector)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Top Down uses the same model and pivot as Bottom Up for Cat Summary; TD_HistoryCatRecapCatSummaryWorklist.viewdefn differs only by extra Level options (Brand Group, Brand, Division, Sub Division).",
+      "kind": "config",
+      "locator": "aeo-configs/uidefn/view/TD_HistoryCatRecapCatSummaryWorklist.viewdefn vs HistoryCatRecapCatSummaryWorklist.viewdefn",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "TOP_PRODUCT is created/read only in HistoryGrid_Companion and HistoryGridSKU_Companion (session-scoped ${SESSION_ID} table); models HistoryHistoryGrid_Companion and HistoryGridSKU_Companion_HindsightingSIZEVIEWSSKUView are not referenced by any screen.",
+      "kind": "file",
+      "locator": "repo-wide grep of TOP_PRODUCT / model ids across aeo-configs pivot/, pivot/include/, uidefn/",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "This ClickHouse version rejects a 2nd JOIN...USING at the same FROM level ('Multiple CROSS/COMMA JOIN do not support USING'), documented in an existing pivot comment.",
+      "kind": "file",
+      "locator": "aeo-configs/pivot/HistoryGridSKU_Companion.pivotdefn (comment above the COMPANION_METRICS join, line 139 at 1a2ce34)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Fix commit touches exactly 2 files (+40/-10): adds rank_net_sls_r (sum(net_sls_r * exchange_rate) from p_history_agg with week/prodlife/location/cluster filters) to TOP_PRODUCT via ANY LEFT JOIN, switches the hierarchy join to ON, and picks ORDER BY <level>, rank_net_sls_r desc, stylecolor LIMIT 1 BY <level>.",
+      "kind": "file",
+      "locator": "aeo-configs commit 1a2ce34 on branch SUP-4610 (git show --stat 1a2ce34)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "Unit-test document defines the oracle (Style Color Review > Grid View sorted by Net Sls $), the standard scope, before-fix pictures (Cat Summary 0123_4882_064 cargo, SKU View 1229_5168_064 jogger) and test cases TC-01 / TC-02.",
+      "kind": "screenshot",
+      "locator": "SUP-4610 Unit Test - Companion View Image.pdf (2026-10-08, 3 pages)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    }
+  ],
+
+  "requested_evidence": [
+    {
+      "item": "Pre-deploy check that the new ranking picks the Grid View #1 by Net Sls $ for the test scope.",
+      "command": "SELECT a.product AS stylecolor, sum(a.net_sls_r * d.exchange_rate) AS net_sls_r FROM aeo.aeo_p_history_agg a ANY LEFT JOIN aeo.aeo_store_hier_attr c ON a.location = c.location ANY LEFT JOIN aeo.aeo_currency_conv d ON a.time = d.time AND c.marketplace = d.location WHERE a.time >= '2025_W34' AND a.time <= '2026_W21' AND a.product IN (<department stylecolors>) GROUP BY stylecolor ORDER BY net_sls_r DESC, stylecolor LIMIT 5",
+      "status": "requested"
+    },
+    {
+      "item": "SKU pivot join key check: sku_hier_attr.stylecolor ids match p_history_agg.product (else every item ranks 0 and the lowest id wins).",
+      "command": "SELECT count() FROM aeo.aeo_p_history_agg WHERE product IN (SELECT DISTINCT stylecolor FROM aeo.aeo_sku_hier_attr WHERE product = '0043512060')  -- expect > 0",
+      "status": "requested"
+    },
+    {
+      "item": "Client confirmation that the Net Sls $ rule applies to every Level (Department / Super Class / ERP Class) and should not follow the companion Order By dropdown.",
+      "command": "Confirm on the Jira ticket.",
+      "status": "requested"
+    },
+    {
+      "item": "Sibling tenants AER/TSN/UNS: same aeo-configs branch, separate OCI prefixes; confirm overlays are synced once merged.",
+      "command": "python3 tooling/triage/qa_sync.py per tenant (customers/AEO/config_sources.json)",
+      "status": "requested"
+    }
+  ],
+
+  "hypotheses": [
+    {
+      "cause": "Image ranking ignores the location scope (sku_temp_flow_flag has no location filter), so the Cat Summary winner reflects other locations.",
+      "status": "ruled_out",
+      "evidence_refs": [4, 8],
+      "ruled_out_because": "North America is the only AEO location; all-locations equals the scope."
+    },
+    {
+      "cause": "SKU View favours items with few sizes because their units are concentrated in fewer SKUs.",
+      "status": "ruled_out",
+      "evidence_refs": [5],
+      "ruled_out_because": "sku_temp_flow_flag does not split units by size; every SKU row carries the stylecolor total, so the top SKU row equals the stylecolor's real units."
+    },
+    {
+      "cause": "Bottom Up and Top Down use different image logic.",
+      "status": "ruled_out",
+      "evidence_refs": [0, 9],
+      "ruled_out_because": "Same model and pivot; TD viewdefn only adds Level options."
+    },
+    {
+      "cause": "The companion Order By dropdown drives the image.",
+      "status": "ruled_out",
+      "evidence_refs": [3],
+      "ruled_out_because": "The pivot's LIMIT 1 BY always ordered by ttl_net_sls_u; Order By only re-sorts the companion list."
+    },
+    {
+      "cause": "Both pivots rank by Net Sls U from sku_temp_flow_flag, which repeats stylecolor units on every SKU row; Cat Summary sums those rows (units x size count, favouring many-size items) while SKU View takes the single top SKU row (real units). Two different rules, neither Net Sls $.",
+      "status": "confirmed",
+      "evidence_refs": [3, 4, 5, 6],
+      "ruled_out_because": ""
+    }
+  ],
+
+  "root_cause": {
+    "statement": "HistoryGrid_Companion (Cat Summary) and HistoryGridSKU_Companion (SKU View) chose top_stylecolor by ttl_net_sls_u = sum(net_sls_u) from aeo_sku_temp_flow_flag. That table holds stylecolor-grain units repeated on every SKU row. Cat Summary grouped by stylecolor, so the score was units x SKU count (CO0123_4882_064: 81,360 x 49 = 3,986,640 beat CO1229_5168_064: 144,254 x 13); SKU View grouped by SKU, so it picked the real top seller by units. The two screens therefore applied different unit-based rules and neither matched the requested Net Sls $ rule.",
+    "evidence_refs": [1, 3, 4, 5, 6],
+    "confirmed_by_execution": true
+  },
+
+  "fix": {
+    "changes": [
+      "aeo-configs/pivot/HistoryGrid_Companion.pivotdefn — TOP_PRODUCT: add rank_net_sls_r = ifNull(sum(net_sls_r * exchange_rate), 0) per stylecolor from p_history_agg (ty weeks, LEAF_PRODLIFE, LOCATION, LEAF_CLUSTER; INV_LOCATION -> currency_conv) via ANY LEFT JOIN ON p.product; hierarchy join USING -> ON; pick = ORDER BY <level>, rank_net_sls_r desc, stylecolor LIMIT 1 BY <level>",
+      "aeo-configs/pivot/HistoryGridSKU_Companion.pivotdefn — same change; dollar subquery keyed on PRODUCT.stylecolor (PRODUCT.product is the SKU here), p.stylecolor selected explicitly",
+      "Unchanged: COMPANION_METRICS, SCCOUNT_PRODUCT, agg_shp_u, history_product_ty*.ftl, pivot output columns"
+    ],
+    "branch": "SUP-4610",
+    "commit": "1a2ce34 (aeo-configs, 2026-10-08, pushed to origin/SUP-4610; cut from hindsighting)",
+    "pr": null,
+    "deploy": "Merge into hindsighting, QA/staging OCI sync (AEO + AER/TSN/UNS) and prod deploy not recorded locally."
+  },
+
+  "validation": {
+    "plan": [
+      "Oracle: Style Color Review > Grid View, same scope, sorted by Net Sls $ desc; first row = expected picture (first row per group for Super Class / ERP Class)",
+      "Standard scope: AEO QA Hindsighting, 012 - MENS PANTS, North America, 2025-W34-Sep-W4 to 2026-W21-Jun-W4, all flow checkboxes, Order By = Net Sls Rtl",
+      "TC-01: Cat Summary (BU), Level = Department -> MENS PANTS card shows the Grid View #1 by Net Sls $",
+      "TC-02: SKU View (BU), Level = Department -> same picture as TC-01",
+      "Also in scope per the fix: Super Class / ERP Class levels and Cat Summary Top Down"
+    ],
+    "pre_state_captured": true,
+    "results": [
+      {"check": "Pre-state: before-fix pictures on the standard scope", "verdict": "pass", "proof": "Unit-test document screenshots: Cat Summary = black cargo 0123_4882_064, SKU View = black jogger 1229_5168_064; neither the #1 by Net Sls $"},
+      {"check": "TC-01 Cat Summary picture = Grid View #1 by Net Sls $", "verdict": "pending", "proof": "No executed result recorded locally"},
+      {"check": "TC-02 SKU View picture = TC-01 picture", "verdict": "pending", "proof": "No executed result recorded locally"},
+      {"check": "SKU join-key check and pre-deploy ranking query", "verdict": "pending", "proof": "No result recorded locally"}
+    ]
+  },
+
+  "knowledge_gained": {
+    "technical": "Group-level companion images come from the pivot column named in the model's additionalDecorations (top_stylecolor), which darwin's AdditionalLevelPostProcessor maps to the stylecolor level so attribute:img:name resolves; the rule is the pivot's ORDER BY ... LIMIT 1 BY <level>. AEO aeo_sku_temp_flow_flag.net_sls_u is stylecolor-grain repeated on every SKU row, so summing it across SKUs multiplies by size count; rank stylecolors from p_history_agg with sum(net_sls_r * exchange_rate) and the grid's filters, add a stylecolor tie-breaker, and remember PRODUCT.product is the SKU in *_sku pivots. ClickHouse here rejects two JOIN...USING at one level; use ON with aliases.",
+    "functional": "At Department / Super Class / ERP Class the companion card photo is the visual face of the group; planners expect it to be the group's top seller by Net Sales $ for the selected scope, matching the #1 item in Style Color Review > Grid View and identical on every screen showing that group (same rule SUP-4193 set for the style-level photo)."
+  }
+}

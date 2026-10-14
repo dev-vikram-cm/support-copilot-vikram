@@ -150,12 +150,7 @@ Life-To-Date style pane architecture, pivotdefn filename-vs-`id=` routing),
 bd mfpapsync lock-race, SUP-4738 (TB `V_MemberBasedValidValues` converted to
 a real constant table — `mappings/*.csv` + `vertica/0N_load_*.sql` pattern;
 follow-through on SUP-3061; open casing/CH-scope questions noted),
-SUP-4786 (KW all 4 brands: Ticket Price Override won't save / `$NaN` in
-Style Edit - Size Concept. A validValues `dataApi` of a Float attribute fed a
-String `dataIndex`, so darwin `ColDesc.bindInput` cast failed and the edit
-rolled back. Config `ids=` → `_txt` + renderer `text`. ETL post-load
-`NULL → ''` for `<brand>_v_memberbasedvalidvalues` key/value, fixing
-`Tuple has null` 500s. `$NaN` = INT-6200 frontend regression),
+
 PROD-EE-20260809 (EE/Evereve new-store onboarding missing backtest backfill
 → non-nullable NULL insert in `600_18_AllocAdjEve.sql`), PROD-TRD-20260813
 (Torrid duplicate MERGE key — new stylecolor sent without S5_ID, backfilled

@@ -1,0 +1,197 @@
+{
+  "ticket": "SUP-4786",
+  "client": "KW",
+  "mode": "pair",
+  "stage": "validate",
+  "updated_at": "2026-10-14",
+
+  "classification": {
+    "type": "bug",
+    "type_source": "reporter-confirmed",
+    "component": ["config", "etl", "frontend"],
+    "component_source": "system-map",
+    "environment": "qa"
+  },
+
+  "requirement": {
+    "statement": "KWG (LOFT, LOS, ANN, ATFS), QA: in Assortment Build -> Style Review -> Style Edit - Size Concept -> Price & Cost, selecting a Ticket Price Override (e.g. 149.00) does not save. The field shows \"$NaN\", Final Ticket Price stays at the original Ticket Price ($160.00 for LOFT style 786335 / style color 533123), and only a lifecycleParams POST fires.",
+    "confirmed": true,
+    "acceptance": "The override saves and persists after refresh. Final Ticket Price equals the override, and returns to the Ticket Price when the override is cleared. The field shows blank (never $NaN) when no override is set. The fix survives the nightly batch. Same results in all 4 KWG brands."
+  },
+
+  "prior_art": [
+    {
+      "ref": "SUP-2132",
+      "why_relevant": "Previous KW pricing ticket on the same brands (Pricing mass edit / size concept). Same screens family, unrelated cause."
+    },
+    {
+      "ref": "customers/KW/db/README.md (trg_update_cctktprc_override, update_price_band)",
+      "why_relevant": "Documents the KW-only trigger that derives the numeric override from the _txt column and '$'-prefixes the text, and the price band trigger."
+    }
+  ],
+
+  "evidence": [
+    {
+      "claim": "The Ticket Price Override column saves into attribute:ccticketpricechannel_override_txt:id, but its dropdown options came from validValues/one?ids=ccticketpricechannel. The file is identical in all 4 brand config repos.",
+      "kind": "config",
+      "locator": "<brand>-configs uidefn/view/AssortmentStyleEditSectionPriceAndCostSizeConcept.viewdefn:32,36 (blob 33cda33 before the fix in loft/los/ann/atfs)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "ccticketpricechannel_override_txt is type String; ccticketpricechannel and ccticketpricechannel_override are type Float.",
+      "kind": "config",
+      "locator": "loft-configs conf/M_Meta.conf:731-733",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "darwin binds STRING columns with (String) o. A numeric option id throws ClassCastException, which is re-thrown as 'failed to cast input for column: <id> this may be a configuration issue', so the edit rolls back.",
+      "kind": "file",
+      "locator": "darwin assortment/src/main/java/com/darwin/metav2/ColDesc.java bindInput (STRING case)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "The frontend posts the selected option's id (value: option.id) to POST /api/assortment/lifecycleParams. The planningParams patch handler falls through to updateLifecycleParams, so the lifecycleParams POST is the save call.",
+      "kind": "file",
+      "locator": "assortmentui StyleEditSection.client.ts:57, :214-220; StyleEditSection.tsx:2040-2073",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "With ids=ccticketpricechannel_override_txt the validValues call returned HTTP 500 'java.lang.NullPointerException: Tuple has null: [null, null]' from MemberBasedValidValuesFacade.loadValidValues -> IdentTuple.of.",
+      "kind": "log",
+      "locator": "LOFT QA /asst/api/attribute/validValues/one?appName=Assortment&ids=ccticketpricechannel_override_txt response stack trace; darwin model/tuple/Tuple.java validate",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "LOFT QA PG had valid-value rows with NULL attributekey and attributevalue: ccticketpricechannel_override_txt (indx 51757) and sty_size_concept_types (indx 29).",
+      "kind": "query_result",
+      "locator": "SELECT attributeid, membertie, attributekey, attributevalue, indx FROM loft_v_memberbasedvalidvalues WHERE attributekey IS NULL OR attributevalue IS NULL; (LOFT QA)",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "The blank option is built as ''/'' in Vertica. The export sed writes empty fields unquoted, \\copy CSV loads unquoted empty as NULL, and the load repaired NULLs only for membertie.",
+      "kind": "file",
+      "locator": "etl-loft-batch vsql/daily/070_valid_values.sql:1555-1558; bash/daily/09_pg_export.sh:13; pgsql/daily/load_pgsql.sql:122,143",
+      "resolved": true,
+      "observed_or_inferred": "inferred"
+    },
+    {
+      "claim": "\"$NaN\" comes from usMoney formatting an empty value (numbro('') -> NaN). Frontend commit 33d4e8f53 (INT-6200, 2026-09-02) moved Style Edit formatting to a valueFormatter without the old NaN-to-blank guard.",
+      "kind": "file",
+      "locator": "assortmentui StyleEditSection.tsx ~1222-1229; NonFrameWorkToS5Renderer.ts:18-19 (pre-INT-6200); git show 33d4e8f53",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "After the line-36 config change plus a one-off NULL -> '' data fix in LOFT QA, selecting 149.00 saved the override as $149.00, Final Ticket Price went $160.00 -> $149.00, and Price Band updated to $125.00 - $150.00.",
+      "kind": "screenshot",
+      "locator": "LOFT QA, style 786335 / style color 533123, 2026-10-12",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    },
+    {
+      "claim": "One SUP-4786 commit per repo, pushed to origin/SUP-4786 in all 8 KW brand repos (4 config, 4 ETL).",
+      "kind": "file",
+      "locator": "git log SUP-4786: loft-configs 3af469b, los-configs 90f3776, ann-configs 2028c24, atfs-configs 202fa25, etl-loft-batch 300da28, etl-los-batch ff14041, etl-ann-batch 045f976, etl-atfs-batch ab7c2af",
+      "resolved": true,
+      "observed_or_inferred": "observed"
+    }
+  ],
+
+  "requested_evidence": [
+    {
+      "item": "Post-batch check that no NULL key/value rows remain in each brand's valid-values table (TC-05).",
+      "command": "SELECT count(*) FILTER (WHERE membertie IS NULL), count(*) FILTER (WHERE attributekey IS NULL), count(*) FILTER (WHERE attributevalue IS NULL) FROM <brand>_v_memberbasedvalidvalues; -- expect 0,0,0 after a batch with the ETL change",
+      "status": "requested"
+    },
+    {
+      "item": "Clear-override (TC-03), no-$NaN (TC-04) and LOS/ANN/ATFS (TC-06) results from the unit test plan.",
+      "command": "SUP-4786 Unit Test - Ticket Price Override, TC-03/TC-04/TC-06",
+      "status": "requested"
+    },
+    {
+      "item": "No saved override text without the '$' prefix (the text renderer relies on the trigger-added '$').",
+      "command": "SELECT ccticketpricechannel_override_txt, count(*) FROM <brand>_ma_stylecolorchannelattributes WHERE coalesce(ccticketpricechannel_override_txt,'') <> '' AND ccticketpricechannel_override_txt NOT LIKE '$%' GROUP BY 1;",
+      "status": "requested"
+    }
+  ],
+
+  "hypotheses": [
+    {
+      "cause": "Override is reverted by a Postgres lock/revert trigger (as in SUP-3857).",
+      "status": "ruled_out",
+      "ruled_out_because": "No lock or revert trigger touches the override columns. trg_update_cctktprc_override only derives the Float copy and '$'-prefixes the text, and it is identical in all 4 brands."
+    },
+    {
+      "cause": "Value never reaches the backend (no pivot3/redecorate call).",
+      "status": "ruled_out",
+      "ruled_out_because": "The lifecycleParams POST is the save call for this section. refreshSectionAfterEdit re-fetches the section instead of redecorating."
+    },
+    {
+      "cause": "Brand-specific config drift.",
+      "status": "ruled_out",
+      "ruled_out_because": "The viewdefn blob is identical in all 4 brand repos; the bug reproduces in all 4."
+    },
+    {
+      "cause": "Float-typed dropdown source (ids=ccticketpricechannel) feeding a String save target (ccticketpricechannel_override_txt), so darwin's String bind cast fails and the edit rolls back.",
+      "status": "confirmed",
+      "evidence_refs": [0, 1, 2, 3, 8]
+    },
+    {
+      "cause": "NULL blank valid-value row ('' in Vertica -> NULL in PG) makes the _txt dropdown return 500 Tuple has null.",
+      "status": "confirmed",
+      "evidence_refs": [4, 5, 6]
+    },
+    {
+      "cause": "usMoney renders an empty override as $NaN after the INT-6200 frontend change dropped the NaN guard.",
+      "status": "confirmed",
+      "evidence_refs": [7]
+    }
+  ],
+
+  "root_cause": {
+    "statement": "Config: the Size Concept Price & Cost viewdefn loads Ticket Price Override options from the Float attribute ccticketpricechannel, but saves into the String attribute ccticketpricechannel_override_txt. The option id is posted as a number, and darwin's ColDesc.bindInput (String) cast throws, so the whole edit rolls back. Pointing the dropdown at the _txt list then exposed an ETL defect: its blank option ('' in Vertica) reaches Postgres as NULL (unquoted empty + \\copy CSV), and darwin's IdentTuple rejects it with HTTP 500. \"$NaN\" is a separate display issue: usMoney formats the empty value, and the NaN guard was dropped by frontend commit 33d4e8f53 (INT-6200).",
+    "evidence_refs": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    "confirmed_by_execution": true
+  },
+
+  "fix": {
+    "changes": [
+      "<brand>-configs uidefn/view/AssortmentStyleEditSectionPriceAndCostSizeConcept.viewdefn:36 - dataApi ids=ccticketpricechannel -> ids=ccticketpricechannel_override_txt (loft 3af469b, los 90f3776, ann 2028c24, atfs 202fa25)",
+      "<brand>-configs same file :38 - renderer usMoney -> text (the stored text already carries '$'; empty shows blank)",
+      "etl-<brand>-batch pgsql/{daily,weekly,intraday}/load_pgsql.sql - after the membertie NULL clean-up, set attributekey='' and attributevalue='' where NULL on <brand>_v_memberbasedvalidvalues (loft 300da28, los ff14041, ann 045f976, atfs ab7c2af)",
+      "Out of scope: assortmentui valueFormatter empty/NaN guard (separate frontend ticket; status not recorded)"
+    ],
+    "branch": "SUP-4786",
+    "pr": null
+  },
+
+  "validation": {
+    "plan": [
+      "TC-01 dropdown loads (blank + price options, no 500)",
+      "TC-02 override saves and persists after refresh; Final Ticket Price = override; lifecycleParams succeeds",
+      "TC-03 clearing the override returns Final Ticket Price to the Ticket Price",
+      "TC-04 no override shows blank, never $NaN; a set override shows $149.00",
+      "TC-05 after the ETL change is deployed and a daily batch has run, repeat TC-01/TC-02 and run the NULL-count DB check (expect 0/0/0)",
+      "TC-06 repeat TC-01..TC-04 in LOS, ANN and ATFS QA"
+    ],
+    "pre_state_captured": true,
+    "results": [
+      {"check": "LOFT QA save after config line-36 change + one-off NULL -> '' fix (TC-01/TC-02 equivalent)", "verdict": "pass", "proof": "Override $149.00; Final Ticket Price $160.00 -> $149.00; Price Band $125.00 - $150.00 (style 786335 / style color 533123)"},
+      {"check": "TC-03 clear override", "verdict": "pending", "proof": "not recorded locally"},
+      {"check": "TC-04 no $NaN with text renderer", "verdict": "pending", "proof": "not recorded locally"},
+      {"check": "TC-05 fix survives batch + NULL-count check", "verdict": "pending", "proof": "not recorded locally"},
+      {"check": "TC-06 LOS / ANN / ATFS", "verdict": "pending", "proof": "not recorded locally"}
+    ]
+  },
+
+  "knowledge_gained": {
+    "technical": "For a Style Edit validValues column, the saved value is the option id, typed by the dataApi attribute's M_Meta type rather than the dataIndex attribute's type. A Float list feeding a String column makes darwin's ColDesc.bindInput throw 'failed to cast input for column', and the whole edit is rolled back. KW stores the override twice: ccticketpricechannel_override_txt (String, edited) and ccticketpricechannel_override (Float, derived by trg_update_cctktprc_override, which also '$'-prefixes the text). update_price_band then recomputes the price bands. <brand>_v_memberbasedvalidvalues must never hold NULL key/value (darwin IdentTuple -> 500). The Vertica->PG export turns '' into NULL, so text columns where blank matters need a post-load NULL->'' repair in daily, weekly and intraday loads.",
+    "functional": "Ticket Price is the planned tag price per style color and channel. Ticket Price Override lets the planner replace it for a channel without changing the original. Final Ticket Price is the override if set, otherwise the Ticket Price. The override is restricted to approved price points (a dropdown from the brand price band lookup), and setting it moves the style color's and style's price band. If the override doesn't save, the plan keeps using the original price."
+  }
+}
